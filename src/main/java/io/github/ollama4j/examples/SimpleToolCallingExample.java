@@ -1,7 +1,7 @@
 package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
-import io.github.ollama4j.examples.utils.Utilities;
+import io.github.ollama4j.utils.Utilities;
 import io.github.ollama4j.exceptions.OllamaBaseException;
 import io.github.ollama4j.exceptions.ToolInvocationException;
 import io.github.ollama4j.tools.OllamaToolsResult;

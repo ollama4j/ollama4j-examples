@@ -1,4 +1,4 @@
-package io.github.ollama4j.examples.utils;
+package io.github.ollama4j.utils;
 
 import com.sun.tools.javac.Main;
 
