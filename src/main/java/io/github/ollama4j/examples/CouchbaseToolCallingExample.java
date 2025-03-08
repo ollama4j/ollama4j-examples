@@ -45,13 +45,13 @@ public class CouchbaseToolCallingExample {
         OllamaAPI ollamaAPI = new OllamaAPI(host);
         ollamaAPI.setVerbose(false);
         ollamaAPI.setRequestTimeoutSeconds(60);
-        Tools.ToolSpecification toolSpec = getToolSpec(cluster, bucketName);
-        ollamaAPI.registerTool(toolSpec);
+        Tools.ToolSpecification callSignFinderToolSpec = getCallSignFinderToolSpec(cluster, bucketName);
+        ollamaAPI.registerTool(callSignFinderToolSpec);
 
         String prompt = "What is the call-sign of Astraeus?";
 
         for (OllamaToolsResult.ToolResult r : ollamaAPI.generateWithTools(modelName, new Tools.PromptBuilder()
-                .withToolSpecification(toolSpec)
+                .withToolSpecification(callSignFinderToolSpec)
                 .withPrompt(prompt)
                 .build(), new OptionsBuilder().build()).getToolResults()) {
             AirlineDetail airlineDetail = (AirlineDetail) r.getResult();
@@ -59,7 +59,7 @@ public class CouchbaseToolCallingExample {
         }
     }
 
-    public static Tools.ToolSpecification getToolSpec(Cluster cluster, String bucketName) {
+    public static Tools.ToolSpecification getCallSignFinderToolSpec(Cluster cluster, String bucketName) {
         return Tools.ToolSpecification.builder()
                 .functionName("airline-lookup")
                 .functionDescription("You are a tool who finds only the airline name and do not worry about any other parameters. You simply find the airline name and ignore the rest of the parameters. Do not validate airline names as I want to use fake/fictitious airline names as well.")
@@ -92,8 +92,6 @@ public class CouchbaseToolCallingExample {
                 )
                 .build();
     }
-
-
 }
 
 class CouchbaseQueryToolFunction implements ToolFunction {
