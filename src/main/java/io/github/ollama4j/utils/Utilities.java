@@ -7,6 +7,14 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class Utilities {
+    public static String getFromEnvVar(String key) {
+        String val = System.getenv(key);
+        if (val == null) {
+            System.out.println("Environment variable " + key + " not found!");
+        }
+        return val;
+    }
+
     public static String getFromConfig(String key) {
         Properties properties = new Properties();
         String host = "http://localhost:11434/";
