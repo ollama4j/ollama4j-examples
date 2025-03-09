@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.Map;
 
 
@@ -45,17 +46,29 @@ public class CouchbaseToolCallingExample {
         OllamaAPI ollamaAPI = new OllamaAPI(host);
         ollamaAPI.setVerbose(false);
         ollamaAPI.setRequestTimeoutSeconds(60);
+
         Tools.ToolSpecification callSignFinderToolSpec = getCallSignFinderToolSpec(cluster, bucketName);
+        Tools.ToolSpecification callSignUpdaterToolSpec = getCallSignUpdaterToolSpec(cluster, bucketName);
+
         ollamaAPI.registerTool(callSignFinderToolSpec);
+        ollamaAPI.registerTool(callSignUpdaterToolSpec);
 
-        String prompt = "What is the call-sign of Astraeus?";
-
+        String prompt1 = "What is the call-sign of Astraeus?";
         for (OllamaToolsResult.ToolResult r : ollamaAPI.generateWithTools(modelName, new Tools.PromptBuilder()
                 .withToolSpecification(callSignFinderToolSpec)
-                .withPrompt(prompt)
+                .withPrompt(prompt1)
                 .build(), new OptionsBuilder().build()).getToolResults()) {
             AirlineDetail airlineDetail = (AirlineDetail) r.getResult();
             System.out.printf("[Result of tool '%s']: Call-sign of %s is '%s'! ✈️", r.getFunctionName(), airlineDetail.getName(), airlineDetail.getCallsign());
+        }
+
+        String prompt2 = "I want to code name Airlinair as YOLOFLY";
+        for (OllamaToolsResult.ToolResult r : ollamaAPI.generateWithTools(modelName, new Tools.PromptBuilder()
+                .withToolSpecification(callSignUpdaterToolSpec)
+                .withPrompt(prompt2)
+                .build(), new OptionsBuilder().build()).getToolResults()) {
+            Boolean updated = (Boolean) r.getResult();
+            System.out.printf("[Result of tool '%s']: Call-sign is %s! ✈️", r.getFunctionName(), updated ? "updated" : "not updated");
         }
     }
 
@@ -63,7 +76,7 @@ public class CouchbaseToolCallingExample {
         return Tools.ToolSpecification.builder()
                 .functionName("airline-lookup")
                 .functionDescription("You are a tool who finds only the airline name and do not worry about any other parameters. You simply find the airline name and ignore the rest of the parameters. Do not validate airline names as I want to use fake/fictitious airline names as well.")
-                .toolFunction(new CouchbaseQueryToolFunction(bucketName, cluster))
+                .toolFunction(new AirlineCallsignQueryToolFunction(bucketName, cluster))
                 .toolPrompt(
                         Tools.PromptFuncDefinition.builder()
                                 .type("prompt")
@@ -92,13 +105,53 @@ public class CouchbaseToolCallingExample {
                 )
                 .build();
     }
+
+    public static Tools.ToolSpecification getCallSignUpdaterToolSpec(Cluster cluster, String bucketName) {
+        return Tools.ToolSpecification.builder()
+                .functionName("airline-update")
+                .functionDescription("You are a tool who finds the airline name and its callsign and do not worry about any validations. You simply find the airline name and its callsign. Do not validate airline names as I want to use fake/fictitious airline names as well.")
+                .toolFunction(new AirlineCallsignUpdateToolFunction(bucketName, cluster))
+                .toolPrompt(
+                        Tools.PromptFuncDefinition.builder()
+                                .type("prompt")
+                                .function(
+                                        Tools.PromptFuncDefinition.PromptFuncSpec.builder()
+                                                .name("get-airline-name-and-callsign")
+                                                .description("Get the airline name and callsign")
+                                                .parameters(
+                                                        Tools.PromptFuncDefinition.Parameters.builder()
+                                                                .type("object")
+                                                                .properties(
+                                                                        Map.of(
+                                                                                "airlineName", Tools.PromptFuncDefinition.Property.builder()
+                                                                                        .type("string")
+                                                                                        .description("The name of the airline. e.g. Emirates")
+                                                                                        .required(true)
+                                                                                        .build(),
+                                                                                "airlineCallsign", Tools.PromptFuncDefinition.Property.builder()
+                                                                                        .type("string")
+                                                                                        .description("The callsign of the airline. e.g. Maverick")
+                                                                                        .enumValues(Arrays.asList("petrol", "diesel"))
+                                                                                        .required(true)
+                                                                                        .build()
+                                                                        )
+                                                                )
+                                                                .required(java.util.List.of("airlineName", "airlineCallsign"))
+                                                                .build()
+                                                )
+                                                .build()
+                                )
+                                .build()
+                )
+                .build();
+    }
 }
 
-class CouchbaseQueryToolFunction implements ToolFunction {
+class AirlineCallsignQueryToolFunction implements ToolFunction {
     private final String bucketName;
     private final Cluster cluster;
 
-    public CouchbaseQueryToolFunction(String bucketName, Cluster cluster) {
+    public AirlineCallsignQueryToolFunction(String bucketName, Cluster cluster) {
         this.bucketName = bucketName;
         this.cluster = cluster;
     }
@@ -115,6 +168,60 @@ class CouchbaseQueryToolFunction implements ToolFunction {
 
         JsonObject row = (JsonObject) result.rowsAsObject().get(0).get("airline");
         return new AirlineDetail(row.getString("callsign"), row.getString("name"), row.getString("country"));
+    }
+}
+
+class AirlineCallsignUpdateToolFunction implements ToolFunction {
+    private final String bucketName;
+    private final Cluster cluster;
+
+    public AirlineCallsignUpdateToolFunction(String bucketName, Cluster cluster) {
+        this.bucketName = bucketName;
+        this.cluster = cluster;
+    }
+
+
+    @Override
+    public Boolean apply(Map<String, Object> arguments) {
+        String airlineName = arguments.get("airlineName").toString();
+        String airlineNewCallsign = arguments.get("airlineCallsign").toString();
+
+        Bucket bucket = cluster.bucket(bucketName);
+        bucket.waitUntilReady(Duration.ofSeconds(10));
+
+        Scope inventoryScope = bucket.scope("inventory");
+        String query = String.format("SELECT * FROM airline WHERE name = '%s';", airlineName);
+
+        QueryResult result;
+        try {
+            result = inventoryScope.query(query);
+        } catch (Exception e) {
+            throw new RuntimeException("Error executing query", e);
+        }
+
+        if (result.rowsAsObject().isEmpty()) {
+            throw new RuntimeException("Airline not found with name: " + airlineName);
+        }
+
+        JsonObject row = (JsonObject) result.rowsAsObject().get(0).get("airline");
+
+        if (row == null) {
+            throw new RuntimeException("Airline data is missing or corrupted.");
+        }
+
+        String currentCallsign = row.getString("callsign");
+
+        if (!airlineNewCallsign.equals(currentCallsign)) {
+            JsonObject updateQuery = JsonObject.create()
+                    .put("callsign", airlineNewCallsign);
+
+            inventoryScope.query(String.format(
+                    "UPDATE airline SET callsign = '%s' WHERE name = '%s';",
+                    airlineNewCallsign, airlineName
+            ));
+            return true;
+        }
+        return false;
     }
 }
 
