@@ -91,7 +91,7 @@
         <dependency>
             <groupId>io.github.ollama4j</groupId>
             <artifactId>ollama4j</artifactId>
-            <version>1.0.97</version>
+            <version>ollama4j-revision</version>
         </dependency>
         <!-- SLF4J API -->
         <dependency>
@@ -119,5 +119,12 @@
             <version>1.18.30</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>ollama</artifactId>
+            <version>1.20.2</version>
+        </dependency>
+
     </dependencies>
 </project>
