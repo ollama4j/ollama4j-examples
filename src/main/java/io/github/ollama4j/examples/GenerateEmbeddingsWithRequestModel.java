@@ -9,7 +9,7 @@ import io.github.ollama4j.utils.Utilities;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class GenerateEmbeddingsWIthRequestModel {
+public class GenerateEmbeddingsWithRequestModel {
 
     public static void main(String[] args) throws IOException, OllamaBaseException, InterruptedException {
 
