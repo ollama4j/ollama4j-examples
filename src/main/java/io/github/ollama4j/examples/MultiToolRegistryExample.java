@@ -1,6 +1,8 @@
 package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
+import io.github.ollama4j.examples.toolcalling.tools.FuelPriceTool;
+import io.github.ollama4j.examples.toolcalling.tools.WeatherTool;
 import io.github.ollama4j.utils.Utilities;
 import io.github.ollama4j.tools.OllamaToolsResult;
 import io.github.ollama4j.tools.Tools;
@@ -43,7 +45,7 @@ public class MultiToolRegistryExample {
         return Tools.ToolSpecification.builder()
                 .functionName("current-fuel-price")
                 .functionDescription("Get current fuel price")
-                .toolFunction(SampleTools::getCurrentFuelPrice)
+                .toolFunction(FuelPriceTool::getCurrentFuelPrice)
                 .toolPrompt(
                         Tools.PromptFuncDefinition.builder()
                                 .type("prompt")
@@ -82,7 +84,7 @@ public class MultiToolRegistryExample {
         return Tools.ToolSpecification.builder()
                 .functionName("current-weather")
                 .functionDescription("Get current weather")
-                .toolFunction(SampleTools::getCurrentWeather)
+                .toolFunction(WeatherTool::getCurrentWeather)
                 .toolPrompt(
                         Tools.PromptFuncDefinition.builder()
                                 .type("prompt")
@@ -109,21 +111,5 @@ public class MultiToolRegistryExample {
                                 )
                                 .build()
                 ).build();
-    }
-}
-
-
-class SampleTools {
-    public static String getCurrentFuelPrice(Map<String, Object> arguments) {
-        // Get details from fuel price API
-        String location = arguments.get("location").toString();
-        String fuelType = arguments.get("fuelType").toString();
-        return "Current price of " + fuelType + " in " + location + " is Rs.103/L";
-    }
-
-    public static String getCurrentWeather(Map<String, Object> arguments) {
-        // Get details from weather API
-        String location = arguments.get("city").toString();
-        return "Currently " + location + "'s weather is beautiful.";
     }
 }

@@ -13,7 +13,7 @@ public class GenerateAsync {
         String prompt = "List all cricket world cup teams of 2019.";
         OllamaAsyncResultStreamer streamer = ollamaAPI.generateAsync("llama3.2:1b", prompt, false);
 
-        // Set the poll interval according to your needs.
+        // Set the poll interval according to your need.
         // Smaller the poll interval, more frequently you receive the tokens.
         int pollIntervalMilliseconds = 1000;
 
