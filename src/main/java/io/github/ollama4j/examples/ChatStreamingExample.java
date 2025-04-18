@@ -17,11 +17,13 @@ public class ChatStreamingExample {
 
         ollamaAPI.setVerbose(false);
 
-        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance(OllamaModelType.LLAMA3);
+        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance("llama3.2:1b");
 
         OllamaChatRequest chatRequest = builder.withMessage(OllamaChatMessageRole.USER, "Give me a summary of the book 'The Great Gatsby'")
                 .build();
 
+        // Define a stream handler.
+        // Note: This API will allow a handler to receive each token separately without concatenating with previously received tokens.
         ollamaAPI.chatStreaming(chatRequest, token -> System.out.print(token.getMessage().getContent()));
     }
 }
