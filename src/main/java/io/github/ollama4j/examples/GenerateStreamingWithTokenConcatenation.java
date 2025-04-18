@@ -15,8 +15,7 @@ public class GenerateStreamingWithTokenConcatenation {
         OllamaAPI ollamaAPI = new OllamaAPI(host);
         ollamaAPI.setVerbose(false);
 
-        // define a stream handler (Consumer<String>)
-        OllamaStreamHandler streamHandler = System.out::print;
+        OllamaStreamHandler streamHandler = new MyStreamHandler();
 
         new MyStreamingGenerator(ollamaAPI, streamHandler).start();
     }
