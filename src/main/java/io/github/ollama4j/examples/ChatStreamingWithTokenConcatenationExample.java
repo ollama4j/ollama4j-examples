@@ -26,6 +26,7 @@ public class ChatStreamingWithTokenConcatenationExample {
         OllamaStreamHandler streamHandler = (s) -> {
             System.out.println(s);
         };
+
         // pass the stream handler to the chat method
         ollamaAPI.chat(chatRequest, streamHandler);
     }
