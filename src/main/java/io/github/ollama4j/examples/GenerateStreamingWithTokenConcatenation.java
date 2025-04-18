@@ -42,7 +42,7 @@ class MyStreamingGenerator extends Thread {
     public void run() {
         try {
             ollamaAPI.generate("llama3.2:1b",
-                    "Describe yourself in 10 words",
+                    "What is the capital of France",
                     true, new OptionsBuilder().build(), streamHandler);
         } catch (OllamaBaseException | InterruptedException | IOException e) {
             throw new RuntimeException(e);
