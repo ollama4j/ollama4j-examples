@@ -38,6 +38,6 @@ public class StructuredOutput {
         format.put("required", Arrays.asList("age", "available"));
 
         OllamaResult result = api.generate(chatModel, prompt, format);
-        System.out.println(result);
+        System.out.println(result.getResponse());
     }
 }

@@ -26,10 +26,7 @@ public class GenerateAsync {
             Thread.sleep(pollIntervalMilliseconds);
         }
 
-        System.out.println("\n------------------------");
-        System.out.println("Complete Response:");
-        System.out.println("------------------------");
-
-        System.out.println(streamer.getCompleteResponse());
+        // Get the full response as a string
+        // System.out.println(streamer.getCompleteResponse());
     }
 }

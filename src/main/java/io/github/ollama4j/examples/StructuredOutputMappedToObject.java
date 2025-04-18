@@ -46,8 +46,7 @@ public class StructuredOutputMappedToObject {
         OllamaResult result = api.generate(chatModel, prompt, format);
 
         Person person = result.as(Person.class);
-        System.out.println(person.getAge());
-        System.out.println(person.isAvailable());
+        System.out.println(person);
     }
 }
 
