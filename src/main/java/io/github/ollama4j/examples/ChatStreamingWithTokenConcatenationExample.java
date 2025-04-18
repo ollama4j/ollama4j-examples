@@ -18,7 +18,7 @@ public class ChatStreamingWithTokenConcatenationExample {
 
         OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance("llama3.2:1b");
 
-        OllamaChatRequest chatRequest = builder.withMessage(OllamaChatMessageRole.USER, "What is the capital of France? And what's France's connection with Mona Lisa? Give me a short answer.")
+        OllamaChatRequest chatRequest = builder.withMessage(OllamaChatMessageRole.USER, "What is the capital of France?")
                 .build();
 
         // Define a stream handler.
