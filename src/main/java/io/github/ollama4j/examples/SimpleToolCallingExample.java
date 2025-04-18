@@ -1,20 +1,16 @@
 package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
-import io.github.ollama4j.examples.toolcalling.tools.DBQueryFunction;
 import io.github.ollama4j.examples.toolcalling.toolspecs.DatabaseQueryToolSpec;
-import io.github.ollama4j.utils.Utilities;
 import io.github.ollama4j.exceptions.OllamaBaseException;
 import io.github.ollama4j.exceptions.ToolInvocationException;
 import io.github.ollama4j.tools.OllamaToolsResult;
-import io.github.ollama4j.tools.ToolFunction;
 import io.github.ollama4j.tools.Tools;
 import io.github.ollama4j.utils.OptionsBuilder;
+import io.github.ollama4j.utils.Utilities;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Map;
-import java.util.UUID;
 
 public class SimpleToolCallingExample {
     public static void main(String[] args) throws Exception {
