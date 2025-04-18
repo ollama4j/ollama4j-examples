@@ -28,7 +28,7 @@ public class ChatWithImage {
 
         OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance(OllamaModelType.LLAVA);
 
-        // ✅ Load image from resources and copy to a temporary file
+        // Load image from resources and copy to a temporary file
         InputStream is = ChatWithImage.class.getClassLoader().getResourceAsStream("dog-on-boat.jpg");
         if (is == null) {
             throw new FileNotFoundException("Image 'dog-on-boat.jpg' not found in resources!");
@@ -36,7 +36,7 @@ public class ChatWithImage {
         File tempImageFile = File.createTempFile("dog-on-boat", ".jpg");
         Files.copy(is, tempImageFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-        // 🧠 First request: Ask about the image
+        // First request: Ask about the image
         OllamaChatRequest requestModel =
                 builder.withMessage(OllamaChatMessageRole.USER, "What's in the picture?", null,
                         List.of(tempImageFile)).build();
@@ -46,7 +46,7 @@ public class ChatWithImage {
 
         builder.reset();
 
-        // 💬 Follow-up: Ask about the dog breed based on context
+        // Follow-up: Ask about the dog breed based on context
         requestModel =
                 builder.withMessages(chatResult.getChatHistory())
                         .withMessage(OllamaChatMessageRole.USER, "What's the dog's breed?").build();
