@@ -15,6 +15,7 @@ public class ChatExample {
         String host = Utilities.getFromConfig("host");
 
         OllamaAPI ollamaAPI = new OllamaAPI(host);
+        ollamaAPI.setVerbose(false);
 
         OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance(OllamaModelType.LLAMA3);
 
@@ -25,7 +26,7 @@ public class ChatExample {
         // start conversation with model
         OllamaChatResult chatResult = ollamaAPI.chat(requestModel);
 
-        System.out.println("First answer: " + chatResult);
+        System.out.println("First answer: " + chatResult.getResponseModel().getMessage().getContent());
 
         // create next userQuestion
         requestModel = builder.withMessages(chatResult.getChatHistory()).withMessage(OllamaChatMessageRole.USER, "And what is the second largest city?").build();
@@ -33,7 +34,7 @@ public class ChatExample {
         // "continue" conversation with model
         chatResult = ollamaAPI.chat(requestModel);
 
-        System.out.println("Second answer: " + chatResult);
+        System.out.println("Second answer: " + chatResult.getResponseModel().getMessage().getContent());
 
         System.out.println("Chat History: " + chatResult.getChatHistory());
     }
