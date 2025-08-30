@@ -6,14 +6,17 @@ import io.github.ollama4j.models.chat.OllamaChatMessageRole;
 import io.github.ollama4j.models.chat.OllamaChatRequest;
 import io.github.ollama4j.models.chat.OllamaChatRequestBuilder;
 import io.github.ollama4j.models.generate.OllamaStreamHandler;
+import io.github.ollama4j.utils.Utilities;
 
 public class ConsoleOutputStreamHandlerExample {
     public static void main(String[] args) throws Exception {
-        String host = "http://localhost:11434/";
+        String host = Utilities.getFromConfig("OLLAMA_HOST");
+        String modelName = Utilities.getFromConfig("TOOLS_MODEL");
+
         OllamaAPI ollamaAPI = new OllamaAPI(host);
         ollamaAPI.setVerbose(false);
 
-        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance("llama3.2:1b");
+        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance(modelName);
         OllamaChatRequest requestModel = builder.withMessage(OllamaChatMessageRole.USER, "List all cricket world cup teams of 2019. Name the teams!")
                 .build();
 

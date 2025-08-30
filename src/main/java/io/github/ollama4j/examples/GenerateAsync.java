@@ -2,16 +2,18 @@ package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.models.response.OllamaAsyncResultStreamer;
-import io.github.ollama4j.types.OllamaModelType;
+import io.github.ollama4j.utils.Utilities;
 
 public class GenerateAsync {
 
     public static void main(String[] args) throws Exception {
-        String host = "http://localhost:11434/";
+        String host = Utilities.getFromConfig("OLLAMA_HOST");
+        String modelName = Utilities.getFromConfig("TOOLS_MODEL");
+
         OllamaAPI ollamaAPI = new OllamaAPI(host);
         ollamaAPI.setRequestTimeoutSeconds(60);
         String prompt = "List all cricket world cup teams of 2019.";
-        OllamaAsyncResultStreamer streamer = ollamaAPI.generateAsync("llama3.2:1b", prompt, false);
+        OllamaAsyncResultStreamer streamer = ollamaAPI.generateAsync(modelName, prompt, false);
 
         // Set the poll interval according to your need.
         // Smaller the poll interval, more frequently you receive the tokens.

@@ -14,12 +14,14 @@ import java.util.List;
 public class GenerateWithImageURL {
 
     public static void main(String[] args) throws OllamaBaseException, IOException, URISyntaxException, InterruptedException {
-        String host = Utilities.getFromConfig("host");
+        String host = Utilities.getFromConfig("OLLAMA_HOST");
+        String modelName = Utilities.getFromConfig("IMAGE_MODEL");
+
         OllamaAPI ollamaAPI = new OllamaAPI(host);
         ollamaAPI.setVerbose(false);
         ollamaAPI.setRequestTimeoutSeconds(10);
 
-        OllamaResult result = ollamaAPI.generateWithImageURLs(OllamaModelType.LLAVA,
+        OllamaResult result = ollamaAPI.generateWithImageURLs(modelName,
                 "What's in this image?",
                 List.of(
                         "https://t3.ftcdn.net/jpg/02/96/63/80/360_F_296638053_0gUVA4WVBKceGsIr7LNqRWSnkusi07dq.jpg"),

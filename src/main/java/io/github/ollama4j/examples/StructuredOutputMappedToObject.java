@@ -3,6 +3,7 @@ package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.models.response.OllamaResult;
+import io.github.ollama4j.utils.Utilities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,8 +15,8 @@ import java.util.Map;
 public class StructuredOutputMappedToObject {
 
     public static void main(String[] args) throws Exception {
-        String host = "http://localhost:11434/";
-        String chatModel = "qwen2.5:0.5b";
+        String host = Utilities.getFromConfig("OLLAMA_HOST");
+        String model = Utilities.getFromConfig("TOOLS_MODEL");
 
         OllamaAPI api = new OllamaAPI(host);
 
@@ -43,7 +44,7 @@ public class StructuredOutputMappedToObject {
         });
         format.put("required", Arrays.asList("age", "available"));
 
-        OllamaResult result = api.generate(chatModel, prompt, format);
+        OllamaResult result = api.generate(model, prompt, format);
 
         Person person = result.as(Person.class);
         System.out.println(person);

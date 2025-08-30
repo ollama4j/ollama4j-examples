@@ -12,12 +12,12 @@ import io.github.ollama4j.types.OllamaModelType;
 public class ChatExample {
 
     public static void main(String[] args) throws Exception {
-        String host = Utilities.getFromConfig("host");
+        String host = Utilities.getFromConfig("OLLAMA_HOST");
 
         OllamaAPI ollamaAPI = new OllamaAPI(host);
         ollamaAPI.setVerbose(false);
 
-        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance(OllamaModelType.LLAMA3);
+        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance("gemma3:270m");
 
         // create first user question
         OllamaChatRequest requestModel = builder.withMessage(OllamaChatMessageRole.USER, "What is the capital of France?")

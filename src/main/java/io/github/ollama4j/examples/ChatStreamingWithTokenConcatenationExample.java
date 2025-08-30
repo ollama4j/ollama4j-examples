@@ -10,13 +10,13 @@ import io.github.ollama4j.utils.Utilities;
 public class ChatStreamingWithTokenConcatenationExample {
 
     public static void main(String[] args) throws Exception {
-        String host = Utilities.getFromConfig("host");
+        String host = Utilities.getFromConfig("OLLAMA_HOST");
 
         OllamaAPI ollamaAPI = new OllamaAPI(host);
 
         ollamaAPI.setVerbose(false);
 
-        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance("llama3.2:1b");
+        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance("gemma3:270m");
 
         OllamaChatRequest chatRequest = builder.withMessage(OllamaChatMessageRole.USER, "What is the capital of France?")
                 .build();

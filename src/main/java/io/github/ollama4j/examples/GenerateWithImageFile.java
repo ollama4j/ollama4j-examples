@@ -18,7 +18,8 @@ import java.util.List;
 public class GenerateWithImageFile {
 
     public static void main(String[] args) throws OllamaBaseException, IOException, InterruptedException {
-        String host = Utilities.getFromConfig("host");
+        String host = Utilities.getFromConfig("OLLAMA_HOST");
+        String modelName = Utilities.getFromConfig("IMAGE_MODEL");
 
         OllamaAPI ollamaAPI = new OllamaAPI(host);
         ollamaAPI.setVerbose(false);
@@ -32,7 +33,7 @@ public class GenerateWithImageFile {
         File tempImageFile = File.createTempFile("dog-on-boat", ".jpg");
         Files.copy(is, tempImageFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-        OllamaResult result = ollamaAPI.generateWithImageFiles(OllamaModelType.LLAVA,
+        OllamaResult result = ollamaAPI.generateWithImageFiles(modelName,
                 "What's in this image?", List.of(tempImageFile),
                 new OptionsBuilder().build()
         );

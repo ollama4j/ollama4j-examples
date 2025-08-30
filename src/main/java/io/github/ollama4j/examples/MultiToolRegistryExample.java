@@ -3,16 +3,17 @@ package io.github.ollama4j.examples;
 import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.examples.toolcalling.toolspecs.DatabaseQueryToolSpec;
 import io.github.ollama4j.examples.toolcalling.toolspecs.FuelPriceToolSpec;
-import io.github.ollama4j.examples.toolcalling.toolspecs.WeatherToolSpec;
 import io.github.ollama4j.tools.OllamaToolsResult;
 import io.github.ollama4j.tools.Tools;
+import io.github.ollama4j.utils.Options;
 import io.github.ollama4j.utils.OptionsBuilder;
 import io.github.ollama4j.utils.Utilities;
+import io.github.ollama4j.tools.sampletools.WeatherTool;
 
 public class MultiToolRegistryExample {
     public static void main(String[] args) throws Exception {
-        String host = Utilities.getFromConfig("host");
-        String model = Utilities.getFromConfig("tools_model_mistral");
+        String host = Utilities.getFromConfig("OLLAMA_HOST");
+        String model = Utilities.getFromConfig("TOOLS_MODEL");
 
         OllamaAPI ollamaAPI = new OllamaAPI(host);
         ollamaAPI.setVerbose(false);
@@ -20,7 +21,7 @@ public class MultiToolRegistryExample {
 
         // Get the references to the tool specifications
         Tools.ToolSpecification fuelPriceToolSpecification = FuelPriceToolSpec.getSpecification();
-        Tools.ToolSpecification weatherToolSpecification = WeatherToolSpec.getSpecification();
+        Tools.ToolSpecification weatherToolSpecification = new WeatherTool().getSpecification();
         Tools.ToolSpecification databaseQueryToolSpecification = DatabaseQueryToolSpec.getSpecification();
 
         // Register the tool specifications
@@ -28,27 +29,21 @@ public class MultiToolRegistryExample {
         ollamaAPI.registerTool(weatherToolSpecification);
         ollamaAPI.registerTool(databaseQueryToolSpecification);
 
+        boolean think = false;
+        Options options = new OptionsBuilder().build();
+
         // Use the fuel-price tool specifications in the prompt
-        for (OllamaToolsResult.ToolResult r : ollamaAPI.generateWithTools(model, new Tools.PromptBuilder()
-                .withToolSpecification(fuelPriceToolSpecification)
-                .withPrompt("What is the petrol price in Bengaluru?")
-                .build(), new OptionsBuilder().build()).getToolResults()) {
+        for (OllamaToolsResult.ToolResult r : ollamaAPI.generateWithTools(model, new Tools.PromptBuilder().withToolSpecification(fuelPriceToolSpecification).withPrompt("What is the petrol price in Bengaluru?").build(), think, options).getToolResults()) {
             System.out.printf("[Result of executing tool '%s']: %s%n", r.getFunctionName(), r.getResult().toString());
         }
 
         // Use the weather tool specifications in the prompt
-        for (OllamaToolsResult.ToolResult r : ollamaAPI.generateWithTools(model, new Tools.PromptBuilder()
-                .withToolSpecification(weatherToolSpecification)
-                .withPrompt("What is the current weather in Bengaluru?")
-                .build(), new OptionsBuilder().build()).getToolResults()) {
+        for (OllamaToolsResult.ToolResult r : ollamaAPI.generateWithTools(model, new Tools.PromptBuilder().withToolSpecification(weatherToolSpecification).withPrompt("What is the current weather in Bengaluru?").build(), think, new OptionsBuilder().build()).getToolResults()) {
             System.out.printf("[Result of executing tool '%s']: %s%n", r.getFunctionName(), r.getResult().toString());
         }
 
         // Use the database query tool specifications in the prompt
-        for (OllamaToolsResult.ToolResult r : ollamaAPI.generateWithTools(model, new Tools.PromptBuilder()
-                .withToolSpecification(databaseQueryToolSpecification)
-                .withPrompt("Give me the details of the employee named 'Rahul Kumar'?")
-                .build(), new OptionsBuilder().build()).getToolResults()) {
+        for (OllamaToolsResult.ToolResult r : ollamaAPI.generateWithTools(model, new Tools.PromptBuilder().withToolSpecification(databaseQueryToolSpecification).withPrompt("Give me the details of the employee named 'Rahul Kumar'?").build(), think, new OptionsBuilder().build()).getToolResults()) {
             System.out.printf("[Result of executing tool '%s']: %s%n", r.getFunctionName(), r.getResult().toString());
         }
     }

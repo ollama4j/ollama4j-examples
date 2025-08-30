@@ -16,12 +16,12 @@ import java.io.IOException;
 public class AnnotatedToolCallingExample {
 
     public static void main(String[] args) throws ToolInvocationException, OllamaBaseException, IOException, InterruptedException {
-        String host = Utilities.getFromConfig("host");
+        String host = Utilities.getFromConfig("OLLAMA_HOST");
+        String modelName = Utilities.getFromConfig("TOOLS_MODEL");
+
         OllamaAPI ollamaAPI = new OllamaAPI(host);
         ollamaAPI.setRequestTimeoutSeconds(60);
         ollamaAPI.setVerbose(false);
-
-        String modelName = Utilities.getFromConfig("tools_model_mistral");
 
         // Inject the annotated method to the ollama tools-registry
         ollamaAPI.registerAnnotatedTools();

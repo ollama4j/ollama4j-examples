@@ -8,6 +8,7 @@ import io.github.ollama4j.models.chat.OllamaChatMessageRole;
 import io.github.ollama4j.models.chat.OllamaChatRequest;
 import io.github.ollama4j.models.chat.OllamaChatRequestBuilder;
 import io.github.ollama4j.models.chat.OllamaChatResult;
+import io.github.ollama4j.utils.Utilities;
 
 import java.io.IOException;
 
@@ -15,13 +16,12 @@ import java.io.IOException;
 public class ChatWithCustomSystemPrompt {
 
     public static void main(String[] args) throws ToolInvocationException, OllamaBaseException, IOException, InterruptedException {
-
-        String host = "http://localhost:11434/";
+        String host = Utilities.getFromConfig("OLLAMA_HOST");
 
         OllamaAPI ollamaAPI = new OllamaAPI(host);
         ollamaAPI.setVerbose(false);
 
-        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance("llama3.2:1b");
+        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance("gemma3:270m");
 
         // create request with system-prompt (overriding the model defaults) and user question
         OllamaChatRequest requestModel = builder.withMessage(OllamaChatMessageRole.SYSTEM, "You are a silent bot that only says 'Shhh!'. Do not say anything else under any circumstances!")

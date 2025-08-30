@@ -16,7 +16,7 @@ public class GenerateEmbeddingsWithRequestModel {
 
     public static void main(String[] args) throws IOException, OllamaBaseException, InterruptedException {
 
-        String host = Utilities.getFromConfig("host");
+        String host = Utilities.getFromConfig("OLLAMA_HOST");
 
         OllamaAPI ollamaAPI = new OllamaAPI(host);
 

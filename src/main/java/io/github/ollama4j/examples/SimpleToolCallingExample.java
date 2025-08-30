@@ -14,9 +14,9 @@ import java.net.URISyntaxException;
 
 public class SimpleToolCallingExample {
     public static void main(String[] args) throws Exception {
-        String host = Utilities.getFromConfig("host");
-
-        askModel(host, Utilities.getFromConfig("tools_model_mistral"));
+        String host = Utilities.getFromConfig("OLLAMA_HOST");
+        String model = Utilities.getFromConfig("TOOLS_MODEL");
+        askModel(host, model);
     }
 
     public static void askModel(String ollamaHost, String modelName) throws ToolInvocationException, OllamaBaseException, IOException, InterruptedException, URISyntaxException {
@@ -34,7 +34,7 @@ public class SimpleToolCallingExample {
                 .withPrompt("Give me the details of the employee named 'Rahul Kumar'?")
                 .build();
 
-        OllamaToolsResult toolsResult = ollamaAPI.generateWithTools(modelName, prompt, new OptionsBuilder().build());
+        OllamaToolsResult toolsResult = ollamaAPI.generateWithTools(modelName, prompt, false, new OptionsBuilder().build());
         for (OllamaToolsResult.ToolResult r : toolsResult.getToolResults()) {
             System.out.printf("[Result of executing tool '%s']: %s%n", r.getFunctionName(), r.getResult().toString());
         }

@@ -15,12 +15,13 @@ import java.io.IOException;
 
 public class ChatWithTools {
     public static void main(String[] args) throws ToolInvocationException, OllamaBaseException, IOException, InterruptedException {
-        String host = Utilities.getFromConfig("host");
+        String host = Utilities.getFromConfig("OLLAMA_HOST");
+        String modelName = Utilities.getFromConfig("TOOLS_MODEL");
+
         OllamaAPI ollamaAPI = new OllamaAPI(host);
         ollamaAPI.setRequestTimeoutSeconds(60);
         ollamaAPI.setVerbose(false);
 
-        String modelName = Utilities.getFromConfig("tools_model_mistral");
         OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance(modelName);
 
         final Tools.ToolSpecification databaseQueryToolSpecification = DatabaseQueryToolSpec.getSpecification();

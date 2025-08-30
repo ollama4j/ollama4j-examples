@@ -11,11 +11,12 @@ import java.util.Arrays;
 public class GenerateEmbeddings {
 
     public static void main(String[] args) throws IOException, OllamaBaseException, InterruptedException {
-        String host = Utilities.getFromConfig("host");
+        String host = Utilities.getFromConfig("OLLAMA_HOST");
+        String modelName = Utilities.getFromConfig("EMBEDDING_MODEL");
 
         OllamaAPI ollamaAPI = new OllamaAPI(host);
 
-        OllamaEmbedResponseModel embeddings = ollamaAPI.embed("all-minilm", Arrays.asList("Why is the sky blue?", "Why is the grass green?"));
+        OllamaEmbedResponseModel embeddings = ollamaAPI.embed(modelName, Arrays.asList("Why is the sky blue?", "Why is the grass green?"));
 
         System.out.println(embeddings.getEmbeddings());
     }

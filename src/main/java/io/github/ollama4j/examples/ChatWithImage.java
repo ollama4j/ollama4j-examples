@@ -21,12 +21,13 @@ import java.util.List;
 public class ChatWithImage {
 
     public static void main(String[] args) throws ToolInvocationException, OllamaBaseException, IOException, InterruptedException {
-        String host = Utilities.getFromConfig("host");
+        String host = Utilities.getFromConfig("OLLAMA_HOST");
+        String imageModel = Utilities.getFromConfig("IMAGE_MODEL");
 
         OllamaAPI ollamaAPI = new OllamaAPI(host);
         ollamaAPI.setVerbose(false);
 
-        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance(OllamaModelType.LLAVA);
+        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance(imageModel);
 
         // Load image from resources and copy to a temporary file
         InputStream is = ChatWithImage.class.getClassLoader().getResourceAsStream("dog-on-boat.jpg");

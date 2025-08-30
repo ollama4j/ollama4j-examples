@@ -3,6 +3,7 @@ package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.models.response.OllamaResult;
+import io.github.ollama4j.utils.Utilities;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -11,11 +12,12 @@ import java.util.Map;
 public class StructuredOutput {
 
     public static void main(String[] args) throws Exception {
-        String host = "http://localhost:11434/";
+        String host = Utilities.getFromConfig("OLLAMA_HOST");
+        String model = Utilities.getFromConfig("TOOLS_MODEL");
 
         OllamaAPI api = new OllamaAPI(host);
 
-        String chatModel = "qwen2.5:0.5b";
+        String chatModel = model;
         api.pullModel(chatModel);
 
         String prompt = "Ollama is 22 years old and is busy saving the world. Respond using JSON";

@@ -7,12 +7,12 @@ import io.github.ollama4j.utils.Utilities;
 
 public class PromptingExample {
     public static void main(String[] args) throws Exception {
-        String host = Utilities.getFromConfig("host");
+        String host = Utilities.getFromConfig("OLLAMA_HOST");
+        String model = Utilities.getFromConfig("TOOLS_MODEL");
+
         OllamaAPI ollamaAPI = new OllamaAPI(host);
         ollamaAPI.setRequestTimeoutSeconds(10);
         ollamaAPI.setVerbose(false);
-
-        String model = "llama3.2:1b";
 
         StringBuilder promptBuilder = new StringBuilder();
         promptBuilder.append("You are an expert coder and understand different programming languages.\n");
@@ -36,7 +36,7 @@ public class PromptingExample {
         String prompt = promptBuilder.toString();
 
         boolean raw = false;
-        OllamaResult response = ollamaAPI.generate(model, prompt, raw, new OptionsBuilder().build());
+        OllamaResult response = ollamaAPI.generate(model, prompt, raw, false, new OptionsBuilder().build());
         System.out.println(response.getResponse());
     }
 }

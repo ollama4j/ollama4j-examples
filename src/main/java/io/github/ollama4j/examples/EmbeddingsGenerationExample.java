@@ -8,15 +8,14 @@ import java.util.Arrays;
 
 public class EmbeddingsGenerationExample {
     public static void main(String[] args) throws Exception {
-        String host = Utilities.getFromConfig("host");
-
-        String embeddingModelMinilm = Utilities.getFromConfig("embedding_model_minilm");
+        String host = Utilities.getFromConfig("OLLAMA_HOST");
+        String modelName = Utilities.getFromConfig("TOOLS_MODEL");
 
         OllamaAPI ollamaAPI = new OllamaAPI(host);
 
-        ollamaAPI.pullModel(embeddingModelMinilm);
+        ollamaAPI.pullModel(modelName);
 
-        OllamaEmbedResponseModel embeddings = ollamaAPI.embed(embeddingModelMinilm, Arrays.asList("Why is the sky blue?", "Why is the grass green?"));
+        OllamaEmbedResponseModel embeddings = ollamaAPI.embed(modelName, Arrays.asList("Why is the sky blue?", "Why is the grass green?"));
 
         System.out.println(embeddings);
     }
