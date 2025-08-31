@@ -9,8 +9,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import static io.github.ollama4j.utils.Utils.getObjectMapper;
-
 public class GenerateStructuredOutputMappedToObject {
 
     public static void main(String[] args) throws Exception {

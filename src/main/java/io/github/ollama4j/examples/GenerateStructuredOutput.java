@@ -3,13 +3,10 @@ package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.models.response.OllamaResult;
-import lombok.*;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
-import static io.github.ollama4j.utils.Utils.getObjectMapper;
 
 public class GenerateStructuredOutput {
 
