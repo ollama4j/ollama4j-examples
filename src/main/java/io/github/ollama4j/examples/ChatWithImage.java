@@ -7,8 +7,6 @@ import io.github.ollama4j.models.chat.OllamaChatMessageRole;
 import io.github.ollama4j.models.chat.OllamaChatRequest;
 import io.github.ollama4j.models.chat.OllamaChatRequestBuilder;
 import io.github.ollama4j.models.chat.OllamaChatResult;
-import io.github.ollama4j.types.OllamaModelType;
-import io.github.ollama4j.utils.Utilities;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,8 +19,8 @@ import java.util.List;
 public class ChatWithImage {
 
     public static void main(String[] args) throws ToolInvocationException, OllamaBaseException, IOException, InterruptedException {
-        String host = Utilities.getFromConfig("OLLAMA_HOST");
-        String imageModel = Utilities.getFromConfig("IMAGE_MODEL");
+        String host = "http://192.168.29.223:11434/";
+        String imageModel = "moondream:1.8b";
 
         OllamaAPI ollamaAPI = new OllamaAPI(host);
         ollamaAPI.setVerbose(false);

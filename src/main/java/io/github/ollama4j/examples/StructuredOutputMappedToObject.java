@@ -3,7 +3,6 @@ package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.models.response.OllamaResult;
-import io.github.ollama4j.utils.Utilities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,8 +14,8 @@ import java.util.Map;
 public class StructuredOutputMappedToObject {
 
     public static void main(String[] args) throws Exception {
-        String host = Utilities.getFromConfig("OLLAMA_HOST");
-        String model = Utilities.getFromConfig("TOOLS_MODEL");
+        String host = "http://192.168.29.223:11434/";
+        String model = "mistral:7b";
 
         OllamaAPI api = new OllamaAPI(host);
 

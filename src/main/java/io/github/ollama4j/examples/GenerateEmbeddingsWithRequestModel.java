@@ -5,18 +5,14 @@ import io.github.ollama4j.exceptions.OllamaBaseException;
 import io.github.ollama4j.models.embeddings.OllamaEmbedRequestModel;
 import io.github.ollama4j.models.embeddings.OllamaEmbedResponseModel;
 import io.github.ollama4j.utils.OptionsBuilder;
-import io.github.ollama4j.utils.Utilities;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public class GenerateEmbeddingsWithRequestModel {
 
     public static void main(String[] args) throws IOException, OllamaBaseException, InterruptedException {
-
-        String host = Utilities.getFromConfig("OLLAMA_HOST");
+        String host = "http://192.168.29.223:11434/";
 
         OllamaAPI ollamaAPI = new OllamaAPI(host);
 

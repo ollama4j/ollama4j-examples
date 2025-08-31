@@ -1,9 +1,9 @@
 package io.github.ollama4j.examples.toolcalling.annotated;
 
-import java.math.BigDecimal;
-
-import io.github.ollama4j.tools.annotations.ToolSpec;
 import io.github.ollama4j.tools.annotations.ToolProperty;
+import io.github.ollama4j.tools.annotations.ToolSpec;
+
+import java.math.BigDecimal;
 
 public class GlobalConstantGenerator {
     public GlobalConstantGenerator() {

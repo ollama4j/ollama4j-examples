@@ -6,12 +6,11 @@ import io.github.ollama4j.models.chat.OllamaChatMessageRole;
 import io.github.ollama4j.models.chat.OllamaChatRequest;
 import io.github.ollama4j.models.chat.OllamaChatRequestBuilder;
 import io.github.ollama4j.models.generate.OllamaStreamHandler;
-import io.github.ollama4j.utils.Utilities;
 
 public class ConsoleOutputStreamHandlerExample {
     public static void main(String[] args) throws Exception {
-        String host = Utilities.getFromConfig("OLLAMA_HOST");
-        String modelName = Utilities.getFromConfig("TOOLS_MODEL");
+        String host = "http://192.168.29.223:11434/";
+        String modelName = "mistral:7b";
 
         OllamaAPI ollamaAPI = new OllamaAPI(host);
         ollamaAPI.setVerbose(false);
@@ -20,9 +19,10 @@ public class ConsoleOutputStreamHandlerExample {
         OllamaChatRequest requestModel = builder.withMessage(OllamaChatMessageRole.USER, "List all cricket world cup teams of 2019. Name the teams!")
                 .build();
 
-        // Define a stream handler.
-        // Note: This handler will receive each token and prints it to the console without string concatenation with previously received tokens.
-        OllamaStreamHandler streamHandler = new ConsoleOutputStreamHandler();
-        ollamaAPI.chat(requestModel, streamHandler);
+        // Define a stream handlers.
+        OllamaStreamHandler thinkingStreamHandler = new ConsoleOutputStreamHandler();
+        OllamaStreamHandler responseStreamHandler = new ConsoleOutputStreamHandler();
+
+        ollamaAPI.chat(requestModel, thinkingStreamHandler, responseStreamHandler);
     }
 }

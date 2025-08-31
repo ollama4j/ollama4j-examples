@@ -9,14 +9,13 @@ import io.github.ollama4j.models.chat.OllamaChatRequest;
 import io.github.ollama4j.models.chat.OllamaChatRequestBuilder;
 import io.github.ollama4j.models.chat.OllamaChatResult;
 import io.github.ollama4j.tools.Tools;
-import io.github.ollama4j.utils.Utilities;
 
 import java.io.IOException;
 
 public class ChatWithTools {
     public static void main(String[] args) throws ToolInvocationException, OllamaBaseException, IOException, InterruptedException {
-        String host = Utilities.getFromConfig("OLLAMA_HOST");
-        String modelName = Utilities.getFromConfig("TOOLS_MODEL");
+        String host = "http://192.168.29.223:11434/";
+        String modelName = "mistral:7b";
 
         OllamaAPI ollamaAPI = new OllamaAPI(host);
         ollamaAPI.setRequestTimeoutSeconds(60);
@@ -38,7 +37,7 @@ public class ChatWithTools {
 
         requestModel =
                 builder.withMessages(chatResult.getChatHistory())
-                        .withMessage(OllamaChatMessageRole.USER, "What's the last name?").build();
+                        .withMessage(OllamaChatMessageRole.USER, "What's his last name?").build();
 
         chatResult = ollamaAPI.chat(requestModel);
         System.out.println("Second answer: " + chatResult.getResponseModel().getMessage().getContent());

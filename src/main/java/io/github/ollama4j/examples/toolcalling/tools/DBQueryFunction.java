@@ -8,11 +8,20 @@ import java.util.UUID;
 public class DBQueryFunction implements ToolFunction {
     @Override
     public Object apply(Map<String, Object> arguments) {
-        if (arguments == null || arguments.isEmpty() || arguments.get("employee-name") == null || arguments.get("employee-address") == null || arguments.get("employee-phone") == null) {
-            System.out.println("Tool was called but the model failed to provide all the required arguments.");
-            return null;
+        System.out.println("Invoking employee finder tool with arguments: " + arguments);
+        String employeeName = arguments.get("employee-name").toString();
+        String address = null;
+        String phone = null;
+        if (employeeName.equalsIgnoreCase("Rahul Kumar")) {
+            address = "Pune, Maharashtra, India";
+            phone = "9911223344";
+        } else {
+            address = "Karol Bagh, Delhi, India";
+            phone = "9911002233";
         }
         // perform DB operations here
-        return String.format("Employee Details {ID: %s, Name: %s, Address: %s, Phone: %s}", UUID.randomUUID(), arguments.get("employee-name").toString(), arguments.get("employee-address").toString(), arguments.get("employee-phone").toString());
+        return String.format(
+                "Employee Details {ID: %s, Name: %s, Address: %s, Phone: %s}",
+                UUID.randomUUID(), employeeName, address, phone);
     }
 }

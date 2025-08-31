@@ -80,8 +80,8 @@ import java.util.Map;
 public class CouchbaseToolCallingExample {
 
     public static void main(String[] args) throws IOException, ToolInvocationException, OllamaBaseException, InterruptedException {
-        String host = Utilities.getFromConfig("OLLAMA_HOST");
-        String modelName = Utilities.getFromConfig("TOOLS_MODEL");
+        String host = "http://192.168.29.223:11434/";
+        String modelName = "mistral:7b";
 
         String connectionString = Utilities.getFromEnvVar("CB_CLUSTER_URL");
         String username = Utilities.getFromEnvVar("CB_CLUSTER_USERNAME");
@@ -103,19 +103,19 @@ public class CouchbaseToolCallingExample {
         ollamaAPI.registerTool(callSignUpdaterToolSpec);
 
         String prompt1 = "What is the call-sign of Astraeus?";
-        for (OllamaToolsResult.ToolResult r : ollamaAPI.generateWithTools(modelName, new Tools.PromptBuilder().withToolSpecification(callSignFinderToolSpec).withPrompt(prompt1).build(), false, new OptionsBuilder().build()).getToolResults()) {
+        for (OllamaToolsResult.ToolResult r : ollamaAPI.generateWithTools(modelName, new Tools.PromptBuilder().withToolSpecification(callSignFinderToolSpec).withPrompt(prompt1).build(), new OptionsBuilder().build()).getToolResults()) {
             AirlineDetail airlineDetail = (AirlineDetail) r.getResult();
             System.out.println(String.format("[Result of tool '%s']: Call-sign of %s is '%s'! ✈️", r.getFunctionName(), airlineDetail.getName(), airlineDetail.getCallsign()));
         }
 
         String prompt2 = "I want to code name Astraeus as STARBOUND";
-        for (OllamaToolsResult.ToolResult r : ollamaAPI.generateWithTools(modelName, new Tools.PromptBuilder().withToolSpecification(callSignUpdaterToolSpec).withPrompt(prompt2).build(), false, new OptionsBuilder().build()).getToolResults()) {
+        for (OllamaToolsResult.ToolResult r : ollamaAPI.generateWithTools(modelName, new Tools.PromptBuilder().withToolSpecification(callSignUpdaterToolSpec).withPrompt(prompt2).build(), new OptionsBuilder().build()).getToolResults()) {
             Boolean updated = (Boolean) r.getResult();
             System.out.println(String.format("[Result of tool '%s']: Call-sign is %s! ✈️", r.getFunctionName(), updated ? "updated" : "not updated"));
         }
 
         String prompt3 = "What is the call-sign of Astraeus?";
-        for (OllamaToolsResult.ToolResult r : ollamaAPI.generateWithTools(modelName, new Tools.PromptBuilder().withToolSpecification(callSignFinderToolSpec).withPrompt(prompt3).build(), false, new OptionsBuilder().build()).getToolResults()) {
+        for (OllamaToolsResult.ToolResult r : ollamaAPI.generateWithTools(modelName, new Tools.PromptBuilder().withToolSpecification(callSignFinderToolSpec).withPrompt(prompt3).build(), new OptionsBuilder().build()).getToolResults()) {
             AirlineDetail airlineDetail = (AirlineDetail) r.getResult();
             System.out.println(String.format("[Result of tool '%s']: Call-sign of %s is '%s'! ✈️", r.getFunctionName(), airlineDetail.getName(), airlineDetail.getCallsign()));
         }

@@ -5,13 +5,11 @@ import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.models.chat.OllamaChatMessageRole;
 import io.github.ollama4j.models.chat.OllamaChatRequest;
 import io.github.ollama4j.models.chat.OllamaChatRequestBuilder;
-import io.github.ollama4j.types.OllamaModelType;
-import io.github.ollama4j.utils.Utilities;
 
 public class ChatStreamingExample {
 
     public static void main(String[] args) throws Exception {
-        String host = Utilities.getFromConfig("OLLAMA_HOST");
+        String host = "http://192.168.29.223:11434/";
 
         OllamaAPI ollamaAPI = new OllamaAPI(host);
 
@@ -19,8 +17,7 @@ public class ChatStreamingExample {
 
         OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance("gemma3:270m");
 
-        OllamaChatRequest chatRequest = builder.withMessage(OllamaChatMessageRole.USER, "Give me a summary of the book 'The Great Gatsby'")
-                .build();
+        OllamaChatRequest chatRequest = builder.withMessage(OllamaChatMessageRole.USER, "Give me a summary of the book 'The Great Gatsby'").build();
 
         // Define a stream handler.
         // Note: This API will allow a handler to receive each token separately without concatenating with previously received tokens.
