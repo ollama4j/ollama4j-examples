@@ -13,7 +13,7 @@ public class GenerateAsyncWithThinking {
         ollamaAPI.setVerbose(true);
         ollamaAPI.setRequestTimeoutSeconds(60);
 
-        String prompt = "List all cricket world cup teams of 2019.";
+        String prompt = "How long does it take for the light from the Sun to reach Earth?";
 
         boolean raw = false;
         boolean think = true;

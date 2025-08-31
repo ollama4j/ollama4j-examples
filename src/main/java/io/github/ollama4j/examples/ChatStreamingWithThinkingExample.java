@@ -5,6 +5,7 @@ import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.models.chat.OllamaChatMessageRole;
 import io.github.ollama4j.models.chat.OllamaChatRequest;
 import io.github.ollama4j.models.chat.OllamaChatRequestBuilder;
+import io.github.ollama4j.models.chat.OllamaChatResult;
 import io.github.ollama4j.models.generate.OllamaStreamHandler;
 
 @SuppressWarnings("DuplicatedCode")
@@ -30,6 +31,10 @@ public class ChatStreamingWithThinkingExample {
             System.out.print(s.toLowerCase());
         };
         // pass the stream handlers to the chat method
-        ollamaAPI.chat(chatRequest, thinkingStreamHandler, responseStreamHandler);
+        OllamaChatResult chatResult = ollamaAPI.chat(chatRequest, thinkingStreamHandler, responseStreamHandler);
+        chatRequest = builder.withMessages(chatResult.getChatHistory()).withMessage(OllamaChatMessageRole.USER, "And what is the second largest city?").build();
+
+        // "continue" conversation with model
+        chatResult = ollamaAPI.chat(chatRequest, thinkingStreamHandler, responseStreamHandler);
     }
 }
