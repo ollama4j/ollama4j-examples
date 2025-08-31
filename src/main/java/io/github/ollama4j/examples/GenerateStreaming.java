@@ -7,7 +7,7 @@ import io.github.ollama4j.utils.OptionsBuilder;
 
 import java.io.IOException;
 
-public class GenerateStreamingWithTokenConcatenation {
+public class GenerateStreaming {
     public static void main(String[] args) throws OllamaBaseException, IOException, InterruptedException {
         String host = "http://192.168.29.223:11434/";
         String modelName = "mistral:7b";
