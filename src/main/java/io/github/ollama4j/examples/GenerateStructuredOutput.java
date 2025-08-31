@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StructuredOutput {
+public class GenerateStructuredOutput {
 
     public static void main(String[] args) throws Exception {
         String host = "http://192.168.29.223:11434/";
