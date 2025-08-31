@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import static io.github.ollama4j.utils.Utils.getObjectMapper;
+
 public class GenerateStructuredOutput {
 
     public static void main(String[] args) throws Exception {
@@ -39,16 +41,6 @@ public class GenerateStructuredOutput {
         format.put("required", Arrays.asList("ageOfPerson", "heroName"));
 
         OllamaResult result = api.generate(model, prompt, format);
-        System.out.println(result.as(HeroInfo.class));
+        System.out.println(result.getResponse());
     }
-}
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-class HeroInfo {
-    private String heroName;
-    private int ageOfPerson;
 }

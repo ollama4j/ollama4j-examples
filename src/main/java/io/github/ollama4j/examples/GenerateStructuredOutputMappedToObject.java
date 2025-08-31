@@ -3,15 +3,15 @@ package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.models.response.OllamaResult;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StructuredOutputMappedToObject {
+import static io.github.ollama4j.utils.Utils.getObjectMapper;
+
+public class GenerateStructuredOutputMappedToObject {
 
     public static void main(String[] args) throws Exception {
         String host = "http://192.168.29.223:11434/";
@@ -19,41 +19,40 @@ public class StructuredOutputMappedToObject {
 
         OllamaAPI api = new OllamaAPI(host);
 
-        int age = 28;
-        boolean available = false;
-
-        String prompt = "Batman is " + age + " years old and is " + (available ? "available" : "not available")
-                + " because he is busy saving Gotham City. Respond using JSON";
+        String prompt = "Batman is thirty years old and is busy saving Gotham. Respond using JSON in the given format only. Be very precise about picking the values.";
 
         Map<String, Object> format = new HashMap<>();
         format.put("type", "object");
         format.put("properties", new HashMap<String, Object>() {
             {
-                put("age", new HashMap<String, Object>() {
+                put("ageOfPerson", new HashMap<String, Object>() {
                     {
-                        put("type", "integer");
+                        put("type", "number");
                     }
                 });
-                put("available", new HashMap<String, Object>() {
+                put("heroName", new HashMap<String, Object>() {
                     {
-                        put("type", "boolean");
+                        put("type", "string");
                     }
                 });
             }
         });
-        format.put("required", Arrays.asList("age", "available"));
+        format.put("required", Arrays.asList("ageOfPerson", "heroName"));
 
         OllamaResult result = api.generate(model, prompt, format);
 
-        Person person = result.as(Person.class);
-        System.out.println(person);
+        HeroInfo hero = result.as(HeroInfo.class);
+        System.out.println(hero);
     }
 }
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-class Person {
-    private int age;
-    private boolean available;
+@Getter
+@Setter
+class HeroInfo {
+    private String heroName;
+    private int ageOfPerson;
 }
