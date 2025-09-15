@@ -15,7 +15,7 @@ public class MultiToolRegistryExample {
         String model = "mistral:7b";
 
         OllamaAPI ollamaAPI = new OllamaAPI(host);
-        ollamaAPI.setVerbose(false);
+        
         ollamaAPI.setRequestTimeoutSeconds(60);
 
         // Get the references to the tool specifications

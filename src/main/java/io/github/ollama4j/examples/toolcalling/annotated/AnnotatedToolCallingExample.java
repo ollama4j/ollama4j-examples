@@ -20,7 +20,6 @@ public class AnnotatedToolCallingExample {
 
         OllamaAPI ollamaAPI = new OllamaAPI(host);
         ollamaAPI.setRequestTimeoutSeconds(60);
-        ollamaAPI.setVerbose(false);
 
         // Inject the annotated method to the ollama tools-registry
         ollamaAPI.registerAnnotatedTools();
@@ -34,14 +33,14 @@ public class AnnotatedToolCallingExample {
                         "Compute the most important constant in the world using 10 digits.")
                 .build();
 
-        OllamaChatResult chatResult = ollamaAPI.chat(requestModel);
+        OllamaChatResult chatResult = ollamaAPI.chat(requestModel, null);
         System.out.println("First answer: " + chatResult.getResponseModel().getMessage().getContent());
 
         requestModel =
                 builder.withMessages(chatResult.getChatHistory())
                         .withMessage(OllamaChatMessageRole.USER, "Compute another most important constant in the world using 3 digits.").build();
 
-        chatResult = ollamaAPI.chat(requestModel);
+        chatResult = ollamaAPI.chat(requestModel, null);
         System.out.println("Second answer: " + chatResult.getResponseModel().getMessage().getContent());
     }
 

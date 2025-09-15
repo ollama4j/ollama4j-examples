@@ -12,7 +12,7 @@ public class DeleteModel {
 
         OllamaAPI ollamaAPI = new OllamaAPI(host);
 
-        ollamaAPI.setVerbose(false);
+        
 
         ollamaAPI.deleteModel("mario", true);
     }

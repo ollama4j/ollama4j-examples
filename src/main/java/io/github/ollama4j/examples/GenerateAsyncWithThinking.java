@@ -9,8 +9,8 @@ public class GenerateAsyncWithThinking {
         String host = "http://192.168.29.223:11434/";
         String modelName = "gpt-oss:20b";
 
-        OllamaAPI ollamaAPI = new OllamaAPI(host);
-        ollamaAPI.setVerbose(true);
+        OllamaAPI ollamaAPI = new OllamaAPI();
+        
         ollamaAPI.setRequestTimeoutSeconds(60);
 
         String prompt = "How long does it take for the light from the Sun to reach Earth?";
@@ -18,7 +18,7 @@ public class GenerateAsyncWithThinking {
         boolean raw = false;
         boolean think = true;
 
-        OllamaAsyncResultStreamer resultStreamer = ollamaAPI.generateAsync(modelName, prompt, raw, think);
+        OllamaAsyncResultStreamer resultStreamer = ollamaAPI.generate(modelName, prompt, raw, think);
 
         int pollIntervalMilliseconds = 1000;
         while (true) {

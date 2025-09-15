@@ -20,7 +20,6 @@ public class SimpleToolCallingExample {
 
     public static void askModel(String ollamaHost, String modelName) throws ToolInvocationException, OllamaBaseException, IOException, InterruptedException, URISyntaxException {
         OllamaAPI ollamaAPI = new OllamaAPI(ollamaHost);
-        ollamaAPI.setVerbose(true);
         ollamaAPI.setRequestTimeoutSeconds(60);
         ollamaAPI.pullModel(modelName);
 

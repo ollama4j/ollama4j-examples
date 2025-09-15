@@ -13,7 +13,7 @@ public class GenerateStreaming {
         String modelName = "mistral:7b";
 
         OllamaAPI ollamaAPI = new OllamaAPI(host);
-        ollamaAPI.setVerbose(false);
+        
 
         OllamaStreamHandler streamHandler = new MyStreamHandler();
 

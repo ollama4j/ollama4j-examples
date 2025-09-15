@@ -2,10 +2,7 @@ package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.exceptions.OllamaBaseException;
-import io.github.ollama4j.models.chat.OllamaChatMessageRole;
-import io.github.ollama4j.models.chat.OllamaChatRequest;
-import io.github.ollama4j.models.chat.OllamaChatRequestBuilder;
-import io.github.ollama4j.models.chat.OllamaChatResult;
+import io.github.ollama4j.models.chat.*;
 import io.github.ollama4j.models.generate.OllamaStreamHandler;
 import io.github.ollama4j.models.response.OllamaAsyncResultStreamer;
 import io.github.ollama4j.models.response.OllamaResult;
@@ -17,7 +14,7 @@ public class NewStructure {
     public static void main(String[] args) throws Exception {
         String host = "http://192.168.29.223:11434/";
 
-        OllamaAPI ollamaAPI = new OllamaAPI(host);
+        OllamaAPI ollamaAPI = new OllamaAPI();
         ollamaAPI.setRequestTimeoutSeconds(120);
 
 //        OllamaResult ollamaResult = ollamaAPI.generate("gemma3:270m", "WHo are you", false, new OptionsBuilder().build(), System.out::print);
@@ -31,7 +28,7 @@ public class NewStructure {
     }
 
     public static void generateAsync(OllamaAPI ollamaAPI) throws OllamaBaseException, IOException, InterruptedException {
-        OllamaAsyncResultStreamer resultStreamer = ollamaAPI.generateAsync("gpt-oss:20b", "Who are you", false, true);
+        OllamaAsyncResultStreamer resultStreamer = ollamaAPI.generate("gpt-oss:20b", "Who are you", false, true);
         int pollIntervalMilliseconds = 1000;
         while (true) {
             String thinkingTokens = resultStreamer.getThinkingResponseStream().poll();
@@ -53,13 +50,13 @@ public class NewStructure {
         OllamaChatRequest requestModel = builder.withMessage(OllamaChatMessageRole.USER, "Tell me a small story")
                 .build();
         // start conversation with model
-        OllamaChatResult chatResult = ollamaAPI.chat(requestModel);
+        OllamaChatResult chatResult = ollamaAPI.chat(requestModel, null);
         System.out.println("First thinking: " + chatResult.getResponseModel().getMessage().getThinking().toUpperCase());
         System.out.println("First answer: " + chatResult.getResponseModel().getMessage().getContent().toLowerCase());
         // create next userQuestion
         requestModel = builder.withMessages(chatResult.getChatHistory()).withMessage(OllamaChatMessageRole.USER, "And tell me more").build();
         // "continue" conversation with model
-        chatResult = ollamaAPI.chat(requestModel);
+        chatResult = ollamaAPI.chat(requestModel, null);
         System.out.println("Second thinking: " + chatResult.getResponseModel().getMessage().getThinking().toUpperCase());
         System.out.println("Second answer: " + chatResult.getResponseModel().getMessage().getContent().toLowerCase());
         System.out.println("Chat History: " + chatResult.getChatHistory());
@@ -82,7 +79,7 @@ public class NewStructure {
         };
 
         // pass the stream handler to the chat method
-        OllamaChatResult res = ollamaAPI.chat(chatRequest, thinkingStreamHandler, responseStreamHandler);
+        OllamaChatResult res = ollamaAPI.chat(chatRequest, new OllamaChatStreamObserver(thinkingStreamHandler, responseStreamHandler));
         System.out.println("\n\n[Full response]: " + res.getResponseModel().getMessage().getContent());
     }
 

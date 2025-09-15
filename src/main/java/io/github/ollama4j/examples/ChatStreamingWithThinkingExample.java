@@ -2,10 +2,7 @@ package io.github.ollama4j.examples;
 
 
 import io.github.ollama4j.OllamaAPI;
-import io.github.ollama4j.models.chat.OllamaChatMessageRole;
-import io.github.ollama4j.models.chat.OllamaChatRequest;
-import io.github.ollama4j.models.chat.OllamaChatRequestBuilder;
-import io.github.ollama4j.models.chat.OllamaChatResult;
+import io.github.ollama4j.models.chat.*;
 import io.github.ollama4j.models.generate.OllamaStreamHandler;
 
 @SuppressWarnings("DuplicatedCode")
@@ -16,7 +13,7 @@ public class ChatStreamingWithThinkingExample {
 
         OllamaAPI ollamaAPI = new OllamaAPI(host);
         ollamaAPI.setRequestTimeoutSeconds(120);
-        ollamaAPI.setVerbose(false);
+
 
         OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance("gpt-oss:20b");
 
@@ -31,10 +28,10 @@ public class ChatStreamingWithThinkingExample {
             System.out.print(s.toLowerCase());
         };
         // pass the stream handlers to the chat method
-        OllamaChatResult chatResult = ollamaAPI.chat(chatRequest, thinkingStreamHandler, responseStreamHandler);
+        OllamaChatResult chatResult = ollamaAPI.chat(chatRequest, new OllamaChatStreamObserver(thinkingStreamHandler, responseStreamHandler));
         chatRequest = builder.withMessages(chatResult.getChatHistory()).withMessage(OllamaChatMessageRole.USER, "And what is the second largest city?").build();
 
         // "continue" conversation with model
-        chatResult = ollamaAPI.chat(chatRequest, thinkingStreamHandler, responseStreamHandler);
+        chatResult = ollamaAPI.chat(chatRequest, new OllamaChatStreamObserver(thinkingStreamHandler, responseStreamHandler));
     }
 }

@@ -23,7 +23,7 @@ public class ChatWithImage {
         String imageModel = "moondream:1.8b";
 
         OllamaAPI ollamaAPI = new OllamaAPI(host);
-        ollamaAPI.setVerbose(false);
+        
 
         OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance(imageModel);
 
@@ -40,7 +40,7 @@ public class ChatWithImage {
                 builder.withMessage(OllamaChatMessageRole.USER, "What's in the picture?", null,
                         List.of(tempImageFile)).build();
 
-        OllamaChatResult chatResult = ollamaAPI.chat(requestModel);
+        OllamaChatResult chatResult = ollamaAPI.chat(requestModel,null);
         System.out.println("First answer: " + chatResult.getResponseModel().getMessage().getContent());
 
         builder.reset();
@@ -50,7 +50,7 @@ public class ChatWithImage {
                 builder.withMessages(chatResult.getChatHistory())
                         .withMessage(OllamaChatMessageRole.USER, "What's the dog's breed?").build();
 
-        chatResult = ollamaAPI.chat(requestModel);
+        chatResult = ollamaAPI.chat(requestModel, null);
         System.out.println("Second answer: " + chatResult.getResponseModel().getMessage().getContent());
     }
 }

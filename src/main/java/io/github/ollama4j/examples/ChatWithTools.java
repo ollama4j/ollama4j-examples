@@ -19,7 +19,7 @@ public class ChatWithTools {
 
         OllamaAPI ollamaAPI = new OllamaAPI(host);
         ollamaAPI.setRequestTimeoutSeconds(60);
-        ollamaAPI.setVerbose(false);
+
 
         OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance(modelName);
 
@@ -32,14 +32,14 @@ public class ChatWithTools {
                         "Give me the ID of the employee named 'Rahul Kumar'?")
                 .build();
 
-        OllamaChatResult chatResult = ollamaAPI.chat(requestModel);
+        OllamaChatResult chatResult = ollamaAPI.chat(requestModel, null);
         System.out.println("First answer: " + chatResult.getResponseModel().getMessage().getContent());
 
         requestModel =
                 builder.withMessages(chatResult.getChatHistory())
                         .withMessage(OllamaChatMessageRole.USER, "What's his last name?").build();
 
-        chatResult = ollamaAPI.chat(requestModel);
+        chatResult = ollamaAPI.chat(requestModel, null);
         System.out.println("Second answer: " + chatResult.getResponseModel().getMessage().getContent());
     }
 }
