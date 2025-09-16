@@ -12,8 +12,7 @@ public class ChatExample {
     public static void main(String[] args) throws Exception {
         String host = "http://192.168.29.223:11434/";
 
-        OllamaAPI ollamaAPI = new OllamaAPI(host);
-        
+        OllamaAPI ollamaAPI = new OllamaAPI();
 
         OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance("gemma3:270m");
 
