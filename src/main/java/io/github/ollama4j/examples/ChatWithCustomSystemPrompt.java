@@ -18,7 +18,7 @@ public class ChatWithCustomSystemPrompt {
         String host = "http://192.168.29.223:11434/";
 
         OllamaAPI ollamaAPI = new OllamaAPI(host);
-        ollamaAPI.setVerbose(false);
+
 
         OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance("qwen3:0.6b");
 
@@ -29,7 +29,7 @@ public class ChatWithCustomSystemPrompt {
                 .build();
 
         // start conversation with model
-        OllamaChatResult chatResult = ollamaAPI.chat(requestModel);
+        OllamaChatResult chatResult = ollamaAPI.chat(requestModel, null);
 
         System.out.println(chatResult.getResponseModel().getMessage().getContent());
     }

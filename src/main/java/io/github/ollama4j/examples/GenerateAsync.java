@@ -9,8 +9,8 @@ public class GenerateAsync {
         String host = "http://192.168.29.223:11434/";
         String modelName = "mistral:7b";
 
-        OllamaAPI ollamaAPI = new OllamaAPI(host);
-        ollamaAPI.setVerbose(true);
+        OllamaAPI ollamaAPI = new OllamaAPI();
+        
         ollamaAPI.setRequestTimeoutSeconds(60);
 
         String prompt = "List all cricket world cup teams of 2019.";
@@ -18,7 +18,7 @@ public class GenerateAsync {
         boolean raw = false;
         boolean think = false;
 
-        OllamaAsyncResultStreamer resultStreamer = ollamaAPI.generateAsync(modelName, prompt, raw, think);
+        OllamaAsyncResultStreamer resultStreamer = ollamaAPI.generate(modelName, prompt, raw, think);
 
         int pollIntervalMilliseconds = 1000;
         while (true) {

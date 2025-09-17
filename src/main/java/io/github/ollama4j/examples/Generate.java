@@ -12,7 +12,7 @@ public class Generate {
         String host = "http://192.168.29.223:11434/";
         String modelName = "mistral:7b";
 
-        OllamaAPI ollamaAPI = new OllamaAPI(host);
+        OllamaAPI ollamaAPI = new OllamaAPI();
 
         OllamaResult result =
                 ollamaAPI.generate(modelName, "Who are you?", null);

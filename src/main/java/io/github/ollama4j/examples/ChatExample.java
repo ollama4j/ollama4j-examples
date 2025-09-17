@@ -12,8 +12,7 @@ public class ChatExample {
     public static void main(String[] args) throws Exception {
         String host = "http://192.168.29.223:11434/";
 
-        OllamaAPI ollamaAPI = new OllamaAPI(host);
-        ollamaAPI.setVerbose(false);
+        OllamaAPI ollamaAPI = new OllamaAPI();
 
         OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance("gemma3:270m");
 
@@ -22,7 +21,7 @@ public class ChatExample {
                 .build();
 
         // start conversation with model
-        OllamaChatResult chatResult = ollamaAPI.chat(requestModel);
+        OllamaChatResult chatResult = ollamaAPI.chat(requestModel,null);
 
         System.out.println("First answer: " + chatResult.getResponseModel().getMessage().getContent());
 
@@ -30,7 +29,7 @@ public class ChatExample {
         requestModel = builder.withMessages(chatResult.getChatHistory()).withMessage(OllamaChatMessageRole.USER, "And what is the second largest city?").build();
 
         // "continue" conversation with model
-        chatResult = ollamaAPI.chat(requestModel);
+        chatResult = ollamaAPI.chat(requestModel,null);
 
         System.out.println("Second answer: " + chatResult.getResponseModel().getMessage().getContent());
 

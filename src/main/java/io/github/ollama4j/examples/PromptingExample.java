@@ -11,7 +11,7 @@ public class PromptingExample {
 
         OllamaAPI ollamaAPI = new OllamaAPI(host);
         ollamaAPI.setRequestTimeoutSeconds(10);
-        ollamaAPI.setVerbose(false);
+        
 
         StringBuilder promptBuilder = new StringBuilder();
         promptBuilder.append("You are an expert coder and understand different programming languages.\n");

@@ -13,7 +13,7 @@ public class ChatWithThinkingModelExample {
         String host = "http://192.168.29.223:11434/";
 
         OllamaAPI ollamaAPI = new OllamaAPI(host);
-        ollamaAPI.setVerbose(false);
+
         ollamaAPI.setRequestTimeoutSeconds(120);
 
         OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance("gpt-oss:20b");
@@ -23,7 +23,7 @@ public class ChatWithThinkingModelExample {
                 .build();
 
         // start conversation with model
-        OllamaChatResult chatResult = ollamaAPI.chat(requestModel);
+        OllamaChatResult chatResult = ollamaAPI.chat(requestModel, null);
 
         System.out.println("First thinking response: " + chatResult.getResponseModel().getMessage().getThinking());
         System.out.println("First answer response: " + chatResult.getResponseModel().getMessage().getContent());
@@ -31,7 +31,7 @@ public class ChatWithThinkingModelExample {
         requestModel = builder.withMessages(chatResult.getChatHistory()).withMessage(OllamaChatMessageRole.USER, "And what is the second largest city?").build();
 
         // "continue" conversation with model
-        chatResult = ollamaAPI.chat(requestModel);
+        chatResult = ollamaAPI.chat(requestModel, null);
 
         System.out.println("Second thinking response: " + chatResult.getResponseModel().getMessage().getThinking());
         System.out.println("Second answer response: " + chatResult.getResponseModel().getMessage().getContent());

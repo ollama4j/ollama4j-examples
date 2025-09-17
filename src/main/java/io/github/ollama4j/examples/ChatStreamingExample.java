@@ -11,9 +11,7 @@ public class ChatStreamingExample {
     public static void main(String[] args) throws Exception {
         String host = "http://192.168.29.223:11434/";
 
-        OllamaAPI ollamaAPI = new OllamaAPI(host);
-
-        ollamaAPI.setVerbose(false);
+        OllamaAPI ollamaAPI = new OllamaAPI();
 
         OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance("gemma3:270m");
 
@@ -21,6 +19,6 @@ public class ChatStreamingExample {
 
         // Define a stream handler.
         // Note: This API will allow a handler to receive each token separately without concatenating with previously received tokens.
-        ollamaAPI.chatStreaming(chatRequest, token -> System.out.print(token.getMessage().getContent()));
+        ollamaAPI.chat(chatRequest, token -> System.out.print(token.getMessage().getContent()));
     }
 }
