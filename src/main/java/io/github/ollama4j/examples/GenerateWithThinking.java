@@ -10,7 +10,7 @@ public class GenerateWithThinking {
 
     public static void main(String[] args) throws Exception {
 
-        String modelName = "gpt-oss:20b";
+        String modelName = "qwen3:0.6b";
 
         OllamaAPI ollamaAPI = Utilities.setUp();
 

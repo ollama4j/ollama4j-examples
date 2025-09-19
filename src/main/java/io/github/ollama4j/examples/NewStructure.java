@@ -24,7 +24,7 @@ public class NewStructure {
 
     public static void generateAsync(OllamaAPI ollamaAPI) throws Exception {
         OllamaAsyncResultStreamer resultStreamer =
-                ollamaAPI.generate("gpt-oss:20b", "Who are you", false, true);
+                ollamaAPI.generate("qwen3:0.6b", "Who are you", false, true);
         int pollIntervalMilliseconds = 1000;
         while (true) {
             String thinkingTokens = resultStreamer.getThinkingResponseStream().poll();
@@ -73,7 +73,7 @@ public class NewStructure {
     }
 
     public static void chatStreaming(OllamaAPI ollamaAPI) throws Exception {
-        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance("gpt-oss:20b");
+        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance("qwen3:0.6b");
 
         OllamaChatRequest chatRequest =
                 builder.withMessage(OllamaChatMessageRole.USER, "What is the capital of France?")
@@ -103,7 +103,7 @@ public class NewStructure {
     public static void generate(OllamaAPI ollamaAPI)
             throws OllamaBaseException, IOException, InterruptedException {
         String model = "gemma3:270m";
-        //        String model = "gpt-oss:20b";
+        //        String model = "qwen3:0.6b";
         OllamaResult ollamaResult =
                 ollamaAPI.generate(
                         model,
@@ -121,7 +121,7 @@ public class NewStructure {
             throws OllamaBaseException, IOException, InterruptedException {
         OllamaResult ollamaResult =
                 ollamaAPI.generate(
-                        "gpt-oss:20b",
+                        "qwen3:0.6b",
                         "Who are you",
                         false,
                         false,
@@ -137,7 +137,7 @@ public class NewStructure {
             throws OllamaBaseException, IOException, InterruptedException {
         OllamaResult ollamaResult =
                 ollamaAPI.generate(
-                        "gpt-oss:20b",
+                        "qwen3:0.6b",
                         "Who are you",
                         false,
                         true,

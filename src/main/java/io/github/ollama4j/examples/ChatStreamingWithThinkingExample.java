@@ -12,10 +12,11 @@ public class ChatStreamingWithThinkingExample {
 
         OllamaAPI ollamaAPI = Utilities.setUp();
 
-        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance("gpt-oss:20b");
+        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance("qwen3:0.6b");
 
         OllamaChatRequest chatRequest =
                 builder.withMessage(OllamaChatMessageRole.USER, "What is the capital of France?")
+                        .withThinking(true)
                         .build();
 
         // Define a thinking stream handler
@@ -37,6 +38,7 @@ public class ChatStreamingWithThinkingExample {
                 builder.withMessages(chatResult.getChatHistory())
                         .withMessage(
                                 OllamaChatMessageRole.USER, "And what is the second largest city?")
+                        .withThinking(true)
                         .build();
 
         // "continue" conversation with model

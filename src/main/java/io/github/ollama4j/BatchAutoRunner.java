@@ -25,15 +25,29 @@ public class BatchAutoRunner {
         for (Class<?> cls : mainClasses) {
             System.out.println("\t- " + cls.getName());
         }
-
+        List<Class<?>> failedClasses = new ArrayList<>();
         // Run each main method in sequence
         for (Class<?> cls : mainClasses) {
             System.out.println(
                     "============================================================================");
             System.out.println("[Running]: " + cls.getName());
-            runMainMethod(cls);
+            try {
+                runMainMethod(cls);
+            } catch (Exception e) {
+                failedClasses.add(cls);
+                e.printStackTrace();
+            }
             System.out.println("[Finished running]: " + cls.getName());
         }
+
+        System.out.println(
+                "\n--------------------------------SUMMARY----------------------------------");
+        System.out.println(failedClasses.size() + " classes failed! Here is the list:");
+        for (Class<?> cls : failedClasses) {
+            System.out.println("\t- " + cls.getName());
+        }
+        System.out.println(
+                "------------------------------------------------------------------------");
     }
 
     public static List<Class<?>> findMainClasses(String classesDir) throws Exception {
