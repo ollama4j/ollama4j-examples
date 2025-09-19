@@ -2,44 +2,44 @@ package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.examples.toolcalling.toolspecs.DatabaseQueryToolSpec;
-import io.github.ollama4j.exceptions.OllamaBaseException;
-import io.github.ollama4j.exceptions.ToolInvocationException;
 import io.github.ollama4j.models.chat.OllamaChatMessageRole;
 import io.github.ollama4j.models.chat.OllamaChatRequest;
 import io.github.ollama4j.models.chat.OllamaChatRequestBuilder;
 import io.github.ollama4j.models.chat.OllamaChatResult;
 import io.github.ollama4j.tools.Tools;
-
-import java.io.IOException;
+import io.github.ollama4j.utils.Utilities;
 
 public class ChatWithTools {
-    public static void main(String[] args) throws ToolInvocationException, OllamaBaseException, IOException, InterruptedException {
-        String host = "http://192.168.29.223:11434/";
+    public static void main(String[] args) throws Exception {
+
         String modelName = "mistral:7b";
 
-        OllamaAPI ollamaAPI = new OllamaAPI(host);
-        ollamaAPI.setRequestTimeoutSeconds(60);
-
+        OllamaAPI ollamaAPI = Utilities.setUp();
 
         OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance(modelName);
 
-        final Tools.ToolSpecification databaseQueryToolSpecification = DatabaseQueryToolSpec.getSpecification();
+        final Tools.ToolSpecification databaseQueryToolSpecification =
+                DatabaseQueryToolSpec.getSpecification();
 
         ollamaAPI.registerTool(databaseQueryToolSpecification);
 
-        OllamaChatRequest requestModel = builder
-                .withMessage(OllamaChatMessageRole.USER,
-                        "Give me the ID of the employee named 'Rahul Kumar'?")
-                .build();
+        OllamaChatRequest requestModel =
+                builder.withMessage(
+                                OllamaChatMessageRole.USER,
+                                "Give me the ID of the employee named 'Rahul Kumar'?")
+                        .build();
 
         OllamaChatResult chatResult = ollamaAPI.chat(requestModel, null);
-        System.out.println("First answer: " + chatResult.getResponseModel().getMessage().getContent());
+        System.out.println(
+                "First answer: " + chatResult.getResponseModel().getMessage().getResponse());
 
         requestModel =
                 builder.withMessages(chatResult.getChatHistory())
-                        .withMessage(OllamaChatMessageRole.USER, "What's his last name?").build();
+                        .withMessage(OllamaChatMessageRole.USER, "What's his last name?")
+                        .build();
 
         chatResult = ollamaAPI.chat(requestModel, null);
-        System.out.println("Second answer: " + chatResult.getResponseModel().getMessage().getContent());
+        System.out.println(
+                "Second answer: " + chatResult.getResponseModel().getMessage().getResponse());
     }
 }

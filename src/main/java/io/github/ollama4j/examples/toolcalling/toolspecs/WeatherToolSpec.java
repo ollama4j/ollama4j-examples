@@ -2,7 +2,6 @@ package io.github.ollama4j.examples.toolcalling.toolspecs;
 
 import io.github.ollama4j.examples.toolcalling.tools.WeatherTool;
 import io.github.ollama4j.tools.Tools;
-
 import java.util.Map;
 
 public class WeatherToolSpec {
@@ -20,23 +19,30 @@ public class WeatherToolSpec {
                                                 .name("get-location-weather-info")
                                                 .description("Get location details")
                                                 .parameters(
-                                                        Tools.PromptFuncDefinition.Parameters.builder()
+                                                        Tools.PromptFuncDefinition.Parameters
+                                                                .builder()
                                                                 .type("object")
                                                                 .properties(
                                                                         Map.of(
-                                                                                "city", Tools.PromptFuncDefinition.Property.builder()
-                                                                                        .type("string")
-                                                                                        .description("The city, e.g. New Delhi, India")
-                                                                                        .required(true)
-                                                                                        .build()
-                                                                        )
-                                                                )
+                                                                                "city",
+                                                                                Tools
+                                                                                        .PromptFuncDefinition
+                                                                                        .Property
+                                                                                        .builder()
+                                                                                        .type(
+                                                                                                "string")
+                                                                                        .description(
+                                                                                                "The city,"
+                                                                                                    + " e.g."
+                                                                                                    + " New Delhi,"
+                                                                                                    + " India")
+                                                                                        .required(
+                                                                                                true)
+                                                                                        .build()))
                                                                 .required(java.util.List.of("city"))
-                                                                .build()
-                                                )
-                                                .build()
-                                )
-                                .build()
-                ).build();
+                                                                .build())
+                                                .build())
+                                .build())
+                .build();
     }
 }

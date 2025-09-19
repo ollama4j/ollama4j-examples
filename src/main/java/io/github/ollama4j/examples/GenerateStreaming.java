@@ -2,26 +2,26 @@ package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.exceptions.OllamaBaseException;
-import io.github.ollama4j.models.generate.OllamaStreamHandler;
+import io.github.ollama4j.models.generate.OllamaGenerateStreamObserver;
+import io.github.ollama4j.models.generate.OllamaGenerateTokenHandler;
 import io.github.ollama4j.utils.OptionsBuilder;
-
+import io.github.ollama4j.utils.Utilities;
 import java.io.IOException;
 
 public class GenerateStreaming {
-    public static void main(String[] args) throws OllamaBaseException, IOException, InterruptedException {
-        String host = "http://192.168.29.223:11434/";
+    public static void main(String[] args) throws Exception {
+
         String modelName = "mistral:7b";
 
-        OllamaAPI ollamaAPI = new OllamaAPI(host);
-        
+        OllamaAPI ollamaAPI = Utilities.setUp();
 
-        OllamaStreamHandler streamHandler = new MyStreamHandler();
+        OllamaGenerateTokenHandler streamHandler = new MyStreamHandler();
 
         new MyStreamingGenerator(modelName, ollamaAPI, streamHandler).start();
     }
 }
 
-class MyStreamHandler implements OllamaStreamHandler {
+class MyStreamHandler implements OllamaGenerateTokenHandler {
 
     @Override
     public void accept(String message) {
@@ -31,10 +31,11 @@ class MyStreamHandler implements OllamaStreamHandler {
 
 class MyStreamingGenerator extends Thread {
     private final OllamaAPI ollamaAPI;
-    private OllamaStreamHandler streamHandler = new MyStreamHandler();
+    private OllamaGenerateTokenHandler streamHandler = new MyStreamHandler();
     private String model;
 
-    MyStreamingGenerator(String model, OllamaAPI ollamaAPI, OllamaStreamHandler streamHandler) {
+    MyStreamingGenerator(
+            String model, OllamaAPI ollamaAPI, OllamaGenerateTokenHandler streamHandler) {
         this.ollamaAPI = ollamaAPI;
         this.model = model;
         this.streamHandler = streamHandler;
@@ -43,8 +44,13 @@ class MyStreamingGenerator extends Thread {
     @Override
     public void run() {
         try {
-            ollamaAPI.generate(model,
-                    "What is the capital of France", false, new OptionsBuilder().build(), streamHandler);
+            ollamaAPI.generate(
+                    model,
+                    "What is the capital of France",
+                    false,
+                    false,
+                    new OptionsBuilder().build(),
+                    new OllamaGenerateStreamObserver(null, streamHandler));
         } catch (OllamaBaseException | InterruptedException | IOException e) {
             throw new RuntimeException(e);
         }

@@ -1,20 +1,17 @@
 package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
-import io.github.ollama4j.exceptions.OllamaBaseException;
 import io.github.ollama4j.models.response.Model;
-
-import java.io.IOException;
-import java.net.URISyntaxException;
+import io.github.ollama4j.utils.Utilities;
 import java.util.List;
 
 public class ListLocalModels {
 
-    public static void main(String[] args) throws OllamaBaseException, IOException, URISyntaxException, InterruptedException {
+    public static void main(String[] args) throws Exception {
 
         String host = "http://localhost:11434/";
 
-        OllamaAPI ollamaAPI = new OllamaAPI(host);
+        OllamaAPI ollamaAPI = Utilities.setUp();
 
         List<Model> models = ollamaAPI.listModels();
 

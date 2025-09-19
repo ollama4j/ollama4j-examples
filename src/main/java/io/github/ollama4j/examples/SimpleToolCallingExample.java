@@ -7,34 +7,43 @@ import io.github.ollama4j.exceptions.ToolInvocationException;
 import io.github.ollama4j.tools.OllamaToolsResult;
 import io.github.ollama4j.tools.Tools;
 import io.github.ollama4j.utils.OptionsBuilder;
-
+import io.github.ollama4j.utils.Utilities;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
 public class SimpleToolCallingExample {
     public static void main(String[] args) throws Exception {
-        String host = "http://192.168.29.223:11434/";
+        OllamaAPI ollamaAPI = Utilities.setUp();
         String model = "mistral:7b";
-        askModel(host, model);
+        askModel(ollamaAPI, model);
     }
 
-    public static void askModel(String ollamaHost, String modelName) throws ToolInvocationException, OllamaBaseException, IOException, InterruptedException, URISyntaxException {
-        OllamaAPI ollamaAPI = new OllamaAPI();
-        ollamaAPI.setRequestTimeoutSeconds(60);
+    public static void askModel(OllamaAPI ollamaAPI, String modelName)
+            throws ToolInvocationException,
+                    OllamaBaseException,
+                    IOException,
+                    InterruptedException,
+                    URISyntaxException {
+
         ollamaAPI.pullModel(modelName);
 
-        Tools.ToolSpecification databaseQueryToolSpecification = DatabaseQueryToolSpec.getSpecification();
+        Tools.ToolSpecification databaseQueryToolSpecification =
+                DatabaseQueryToolSpec.getSpecification();
 
         ollamaAPI.registerTool(databaseQueryToolSpecification);
 
-        String prompt = new Tools.PromptBuilder()
-                .withToolSpecification(databaseQueryToolSpecification)
-                .withPrompt("Give me the details of the employee named 'Rahul Kumar'?")
-                .build();
+        String prompt =
+                new Tools.PromptBuilder()
+                        .withToolSpecification(databaseQueryToolSpecification)
+                        .withPrompt("Give me the details of the employee named 'Rahul Kumar'?")
+                        .build();
 
-        OllamaToolsResult toolsResult = ollamaAPI.generateWithTools(modelName, prompt, new OptionsBuilder().build(), null);
+        OllamaToolsResult toolsResult =
+                ollamaAPI.generateWithTools(modelName, prompt, new OptionsBuilder().build(), null);
         for (OllamaToolsResult.ToolResult r : toolsResult.getToolResults()) {
-            System.out.printf("[Result of executing tool '%s']: %s%n", r.getFunctionName(), r.getResult().toString());
+            System.out.printf(
+                    "[Result of executing tool '%s']: %s%n",
+                    r.getFunctionName(), r.getResult().toString());
         }
     }
 }

@@ -1,23 +1,24 @@
 package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
-import io.github.ollama4j.exceptions.OllamaBaseException;
 import io.github.ollama4j.models.embeddings.OllamaEmbedRequestModel;
 import io.github.ollama4j.models.embeddings.OllamaEmbedResponseModel;
 import io.github.ollama4j.utils.OptionsBuilder;
-
-import java.io.IOException;
+import io.github.ollama4j.utils.Utilities;
 import java.util.Arrays;
 
 public class GenerateEmbeddingsWithRequestModel {
 
-    public static void main(String[] args) throws IOException, OllamaBaseException, InterruptedException {
-        String host = "http://192.168.29.223:11434/";
+    public static void main(String[] args) throws Exception {
 
-        OllamaAPI ollamaAPI = new OllamaAPI(host);
+        OllamaAPI ollamaAPI = Utilities.setUp();
 
-        OllamaEmbedRequestModel requestModel = new OllamaEmbedRequestModel("all-minilm", Arrays.asList("Why is the sky blue?", "Why is the grass green?"));
-        requestModel.setOptions(new OptionsBuilder().setSeed(42).setTemperature(0.7f).build().getOptionsMap());
+        OllamaEmbedRequestModel requestModel =
+                new OllamaEmbedRequestModel(
+                        "all-minilm",
+                        Arrays.asList("Why is the sky blue?", "Why is the grass green?"));
+        requestModel.setOptions(
+                new OptionsBuilder().setSeed(42).setTemperature(0.7f).build().getOptionsMap());
 
         OllamaEmbedResponseModel embeddings = ollamaAPI.embed(requestModel);
 

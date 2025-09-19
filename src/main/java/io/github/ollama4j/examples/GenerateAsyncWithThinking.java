@@ -2,23 +2,22 @@ package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.models.response.OllamaAsyncResultStreamer;
+import io.github.ollama4j.utils.Utilities;
 
 public class GenerateAsyncWithThinking {
 
     public static void main(String[] args) throws Exception {
-        String host = "http://192.168.29.223:11434/";
         String modelName = "gpt-oss:20b";
 
-        OllamaAPI ollamaAPI = new OllamaAPI();
-        
-        ollamaAPI.setRequestTimeoutSeconds(60);
+        OllamaAPI ollamaAPI = Utilities.setUp();
 
         String prompt = "How long does it take for the light from the Sun to reach Earth?";
 
         boolean raw = false;
         boolean think = true;
 
-        OllamaAsyncResultStreamer resultStreamer = ollamaAPI.generate(modelName, prompt, raw, think);
+        OllamaAsyncResultStreamer resultStreamer =
+                ollamaAPI.generate(modelName, prompt, raw, think);
 
         int pollIntervalMilliseconds = 1000;
         while (true) {
@@ -27,10 +26,10 @@ public class GenerateAsyncWithThinking {
             System.out.print(thinkingTokens != null ? thinkingTokens.toUpperCase() : "");
             System.out.print(responseTokens != null ? responseTokens.toLowerCase() : "");
             Thread.sleep(pollIntervalMilliseconds);
-            if (!resultStreamer.isAlive())
-                break;
+            if (!resultStreamer.isAlive()) break;
         }
-        System.out.println("Complete thinking response: " + resultStreamer.getCompleteThinkingResponse());
+        System.out.println(
+                "Complete thinking response: " + resultStreamer.getCompleteThinkingResponse());
         System.out.println("Complete response: " + resultStreamer.getCompleteResponse());
     }
 }

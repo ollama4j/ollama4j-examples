@@ -1,29 +1,34 @@
 package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
-import io.github.ollama4j.impl.ConsoleOutputStreamHandler;
+import io.github.ollama4j.impl.ConsoleOutputGenerateTokenHandler;
 import io.github.ollama4j.models.chat.OllamaChatMessageRole;
 import io.github.ollama4j.models.chat.OllamaChatRequest;
 import io.github.ollama4j.models.chat.OllamaChatRequestBuilder;
 import io.github.ollama4j.models.chat.OllamaChatStreamObserver;
-import io.github.ollama4j.models.generate.OllamaStreamHandler;
+import io.github.ollama4j.models.generate.OllamaGenerateTokenHandler;
+import io.github.ollama4j.utils.Utilities;
 
 public class ConsoleOutputStreamHandlerExample {
     public static void main(String[] args) throws Exception {
-        String host = "http://192.168.29.223:11434/";
+
         String modelName = "mistral:7b";
 
-        OllamaAPI ollamaAPI = new OllamaAPI(host);
-        
+        OllamaAPI ollamaAPI = Utilities.setUp();
 
         OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance(modelName);
-        OllamaChatRequest requestModel = builder.withMessage(OllamaChatMessageRole.USER, "List all cricket world cup teams of 2019. Name the teams!")
-                .build();
+        OllamaChatRequest requestModel =
+                builder.withMessage(
+                                OllamaChatMessageRole.USER,
+                                "List all cricket world cup teams of 2019. Name the teams!")
+                        .build();
 
         // Define a stream handlers.
-        OllamaStreamHandler thinkingStreamHandler = new ConsoleOutputStreamHandler();
-        OllamaStreamHandler responseStreamHandler = new ConsoleOutputStreamHandler();
+        OllamaGenerateTokenHandler thinkingStreamHandler = new ConsoleOutputGenerateTokenHandler();
+        OllamaGenerateTokenHandler responseStreamHandler = new ConsoleOutputGenerateTokenHandler();
 
-        ollamaAPI.chat(requestModel, new OllamaChatStreamObserver(thinkingStreamHandler, responseStreamHandler));
+        ollamaAPI.chat(
+                requestModel,
+                new OllamaChatStreamObserver(thinkingStreamHandler, responseStreamHandler));
     }
 }

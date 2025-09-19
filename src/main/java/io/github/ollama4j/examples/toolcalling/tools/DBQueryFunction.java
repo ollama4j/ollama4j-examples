@@ -1,7 +1,6 @@
 package io.github.ollama4j.examples.toolcalling.tools;
 
 import io.github.ollama4j.tools.ToolFunction;
-
 import java.util.Map;
 import java.util.UUID;
 
