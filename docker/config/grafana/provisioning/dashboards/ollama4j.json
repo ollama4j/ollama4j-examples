@@ -35,7 +35,7 @@
       "options": { "legend": { "showLegend": true } },
       "targets": [
         {
-          "expr": "sum(ollama_api_requests_total{endpoint=~\"$endpoint\",http_status=~\"$status\"}) by (endpoint, model, options, raw, streaming, format, thinking, http_status)",
+          "expr": "sum(ollama_api_requests_total{endpoint=~\"$endpoint\",http_status=~\"$status\",model=~\"$model\"}) by (endpoint, model, options, raw, streaming, format, thinking, http_status)",
           "legendFormat": "{{endpoint}} - {{model}} - {{http_status}}",
           "refId": "A"
         }
@@ -51,7 +51,7 @@
       "options": { "legend": { "showLegend": true } },
       "targets": [
         {
-          "expr": "avg(ollama_api_request_duration_seconds_sum{endpoint=~\"$endpoint\",http_status=~\"$status\"} / ollama_api_request_duration_seconds_count{endpoint=~\"$endpoint\",http_status=~\"$status\"}) by (endpoint, model, options, raw, streaming, format, thinking, http_status)",
+          "expr": "avg(ollama_api_request_duration_seconds_sum{endpoint=~\"$endpoint\",http_status=~\"$status\",model=~\"$model\"} / ollama_api_request_duration_seconds_count{endpoint=~\"$endpoint\",http_status=~\"$status\",model=~\"$model\"}) by (endpoint, model, options, raw, streaming, format, thinking, http_status)",
           "legendFormat": "{{endpoint}} - {{model}} - {{http_status}}",
           "refId": "B"
         }
@@ -67,7 +67,7 @@
       "options": { "legend": { "showLegend": true } },
       "targets": [
         {
-          "expr": "histogram_quantile(0.95, sum(rate(ollama_api_request_duration_seconds_bucket{endpoint=~\"$endpoint\",http_status=~\"$status\"}[5m])) by (le, endpoint, model, options, raw, streaming, format, thinking, http_status))",
+          "expr": "histogram_quantile(0.95, sum(rate(ollama_api_request_duration_seconds_bucket{endpoint=~\"$endpoint\",http_status=~\"$status\",model=~\"$model\"}[5m])) by (le, endpoint, model, options, raw, streaming, format, thinking, http_status))",
           "legendFormat": "{{endpoint}} - {{model}} - {{http_status}}",
           "refId": "C"
         }
@@ -83,7 +83,7 @@
       "options": { "legend": { "showLegend": true } },
       "targets": [
         {
-          "expr": "sum(ollama_api_response_size_bytes_sum{endpoint=~\"$endpoint\",http_status=~\"$status\"}) by (endpoint, model, options, raw, streaming, format, thinking, http_status)",
+          "expr": "sum(ollama_api_response_size_bytes_sum{endpoint=~\"$endpoint\",http_status=~\"$status\",model=~\"$model\"}) by (endpoint, model, options, raw, streaming, format, thinking, http_status)",
           "legendFormat": "{{endpoint}} - {{model}}",
           "refId": "D"
         }
@@ -99,7 +99,7 @@
       "options": { "legend": { "showLegend": true } },
       "targets": [
         {
-          "expr": "sum by (endpoint, model, options, raw, streaming, format, thinking, http_status) (rate(ollama_api_requests_total{endpoint=~\"$endpoint\",http_status=~\"$status\"}[1m]))",
+          "expr": "sum by (endpoint, model, options, raw, streaming, format, thinking, http_status) (rate(ollama_api_requests_total{endpoint=~\"$endpoint\",http_status=~\"$status\",model=~\"$model\"}[1m]))",
           "legendFormat": "{{endpoint}} - {{model}} - {{http_status}}",
           "refId": "E"
         }
@@ -138,6 +138,19 @@
         "sort": 1,
         "hide": 0,
         "label": "HTTP Status"
+      },
+      {
+        "name": "model",
+        "type": "query",
+        "datasource": "Prometheus",
+        "refresh": 1,
+        "query": "label_values(ollama_api_requests_total, model)",
+        "multi": true,
+        "includeAll": true,
+        "allValue": ".*",
+        "sort": 1,
+        "hide": 0,
+        "label": "Model"
       }
     ]
   },
