@@ -5,12 +5,14 @@
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  *
-*/
+ */
 package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.models.embeddings.OllamaEmbedRequestModel;
 import io.github.ollama4j.models.embeddings.OllamaEmbedResponseModel;
+import io.github.ollama4j.models.response.OllamaResult;
+import io.github.ollama4j.utils.OptionsBuilder;
 import io.prometheus.client.exporter.HTTPServer;
 
 import java.util.HashMap;
@@ -96,6 +98,21 @@ public class MetricsExample {
                 } catch (Exception e) {
                     System.out.println(
                             "Embed failed (this is expected if qwen3:0.6b model is not available): "
+                                    + e.getMessage());
+                }
+
+                try {
+                    OllamaResult res = ollamaAPI.generate("qwen3:0.6b",
+                            "who are you?",
+                            false,
+                            true,
+                            new OptionsBuilder().setTemperature(0.6f).build(), null);
+                    System.out.println(
+                            "Generated response "
+                                    + res.getResponse());
+                } catch (Exception e) {
+                    System.out.println(
+                            "Generate failed"
                                     + e.getMessage());
                 }
             }

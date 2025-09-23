@@ -106,11 +106,54 @@
       ],
       "title": "Request Rate (requests per second)",
       "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "type": "table",
+      "title": "Failed Requests (Non-2xx Status)",
+      "id": 6,
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 18 },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "expr": "sum(ollama_api_requests_total{http_status!~\"2..\",endpoint=~\"$endpoint\",model=~\"$model\"}) by (endpoint, model, options, raw, streaming, format, thinking, http_status)",
+          "legendFormat": "",
+          "refId": "F"
+        }
+      ]
+    },
+    {
+      "datasource": "Prometheus",
+      "type": "table",
+      "title": "Failed Response Details (Experimental)",
+      "id": 7,
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 26 },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "expr": "topk(10, ollama_api_response_size_bytes_sum{http_status!~\"2..\",endpoint=~\"$endpoint\",model=~\"$model\"})",
+          "legendFormat": "",
+          "refId": "G"
+        }
+      ],
+      "description": "Shows the largest failed responses. For actual response content, see application logs or enable logging of error responses."
     }
   ],
   "refresh": "5s",
   "schemaVersion": 41,
-  "tags": ["HTTP", "API", "Performance", "Latency", "Throughput"],
+  "tags": ["HTTP", "API", "Performance", "Latency", "Throughput", "Errors", "Failures"],
   "templating": {
     "list": [
       {
@@ -155,7 +198,7 @@
     ]
   },
   "time": { "from": "now-5m", "to": "now" },
-  "title": "Ollama API Stats",
-  "uid": "ollama-api-stats",
-  "version": 2
+  "title": "Ollama4J API Stats",
+  "uid": "ollama4j-api-stats",
+  "version": 3
 }
