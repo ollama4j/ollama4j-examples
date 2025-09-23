@@ -22,3 +22,7 @@ run: apply-formatting
 build: apply-formatting
 	@echo "\033[0;34mBuilding...\033[0m"
 	@mvn clean install
+
+start-services:
+	@echo "\033[0;34mStarting services...\033[0m"
+	@docker-compose -f ./docker/docker-compose.yml down -v && docker-compose -f ./docker/docker-compose.yml rm -fsv && docker-compose -f ./docker/docker-compose.yml up --remove-orphans
