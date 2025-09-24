@@ -85,21 +85,21 @@ public class MetricsExample {
                                     + e.getMessage());
                 }
 
-                // Test embed endpoint
-                System.out.println("Testing embed...");
-                try {
-                    OllamaEmbedRequestModel embedRequest =
-                            new OllamaEmbedRequestModel("qwen3:0.6b", List.of("Hello world"));
-                    OllamaEmbedResponseModel embedResponse = ollamaAPI.embed(embedRequest);
-                    System.out.println(
-                            "Embedding generated with "
-                                    + embedResponse.getEmbeddings().size()
-                                    + " embeddings");
-                } catch (Exception e) {
-                    System.out.println(
-                            "Embed failed (this is expected if qwen3:0.6b model is not available): "
-                                    + e.getMessage());
-                }
+//                // Test embed endpoint
+//                System.out.println("Testing embed...");
+//                try {
+//                    OllamaEmbedRequestModel embedRequest =
+//                            new OllamaEmbedRequestModel("qwen3:0.6b", List.of("Hello world"));
+//                    OllamaEmbedResponseModel embedResponse = ollamaAPI.embed(embedRequest);
+//                    System.out.println(
+//                            "Embedding generated with "
+//                                    + embedResponse.getEmbeddings().size()
+//                                    + " embeddings");
+//                } catch (Exception e) {
+//                    System.out.println(
+//                            "Embed failed (this is expected if qwen3:0.6b model is not available): "
+//                                    + e.getMessage());
+//                }
 
                 try {
                     OllamaResult res = ollamaAPI.generate("qwen3:0.6b",
