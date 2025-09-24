@@ -1,6 +1,7 @@
 package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
+import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
 import io.github.ollama4j.models.generate.OllamaGenerateStreamObserver;
 import io.github.ollama4j.models.response.OllamaResult;
 import io.github.ollama4j.utils.OptionsBuilder;
@@ -41,13 +42,7 @@ public class PromptingExample {
 
         boolean raw = false;
         OllamaResult response =
-                ollamaAPI.generate(
-                        model,
-                        prompt,
-                        raw,
-                        false,
-                        new OptionsBuilder().build(),
-                        new OllamaGenerateStreamObserver(null, null));
+                ollamaAPI.generate(OllamaGenerateRequestBuilder.builder().withModel(model).withPrompt(prompt).withRaw(raw).build(), null);
         System.out.println(response.getResponse());
     }
 }

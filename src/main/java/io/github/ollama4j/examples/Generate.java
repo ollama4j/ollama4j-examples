@@ -1,6 +1,7 @@
 package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
+import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
 import io.github.ollama4j.models.generate.OllamaGenerateStreamObserver;
 import io.github.ollama4j.models.response.OllamaResult;
 import io.github.ollama4j.utils.OptionsBuilder;
@@ -15,13 +16,7 @@ public class Generate {
         OllamaAPI ollamaAPI = Utilities.setUp();
 
         OllamaResult result =
-                ollamaAPI.generate(
-                        modelName,
-                        "Who are you?",
-                        false,
-                        false,
-                        new OptionsBuilder().build(),
-                        new OllamaGenerateStreamObserver(null, null));
+                ollamaAPI.generate(OllamaGenerateRequestBuilder.builder().withModel(modelName).withPrompt("Who are you?").build(), null);
 
         System.out.println(result.getResponse());
     }

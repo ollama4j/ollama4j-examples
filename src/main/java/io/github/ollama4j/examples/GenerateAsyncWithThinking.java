@@ -17,7 +17,7 @@ public class GenerateAsyncWithThinking {
         boolean think = true;
 
         OllamaAsyncResultStreamer resultStreamer =
-                ollamaAPI.generate(modelName, prompt, raw, think);
+                ollamaAPI.generateAsync(modelName, prompt, raw, think);
 
         int pollIntervalMilliseconds = 1000;
         while (true) {

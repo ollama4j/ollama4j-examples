@@ -2,6 +2,8 @@ package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.exceptions.OllamaBaseException;
+import io.github.ollama4j.models.generate.OllamaGenerateRequest;
+import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
 import io.github.ollama4j.models.generate.OllamaGenerateStreamObserver;
 import io.github.ollama4j.models.generate.OllamaGenerateTokenHandler;
 import io.github.ollama4j.utils.OptionsBuilder;
@@ -45,13 +47,10 @@ class MyStreamingGenerator extends Thread {
     public void run() {
         try {
             ollamaAPI.generate(
-                    model,
-                    "What is the capital of France",
-                    false,
-                    false,
-                    new OptionsBuilder().build(),
+                    OllamaGenerateRequestBuilder.builder().withModel(model).withPrompt("What is the capital of France")
+                            .withRaw(false).withThink(false).build(),
                     new OllamaGenerateStreamObserver(null, streamHandler));
-        } catch (OllamaBaseException | InterruptedException | IOException e) {
+        } catch (OllamaBaseException e) {
             throw new RuntimeException(e);
         }
     }

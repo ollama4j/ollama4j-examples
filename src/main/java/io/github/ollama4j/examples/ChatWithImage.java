@@ -21,7 +21,7 @@ public class ChatWithImage {
 
         OllamaAPI ollamaAPI = Utilities.setUp();
 
-        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance(imageModel);
+        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.builder().withModel(imageModel);
 
         // Load image from resources and copy to a temporary file
         InputStream is =

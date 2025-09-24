@@ -16,7 +16,7 @@ public class ConsoleOutputStreamHandlerExample {
 
         OllamaAPI ollamaAPI = Utilities.setUp();
 
-        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance(modelName);
+        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.builder().withModel(modelName);
         OllamaChatRequest requestModel =
                 builder.withMessage(
                                 OllamaChatMessageRole.USER,

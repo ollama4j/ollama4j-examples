@@ -3,7 +3,10 @@ package io.github.ollama4j.examples;
 import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.exceptions.OllamaBaseException;
 import io.github.ollama4j.exceptions.ToolInvocationException;
+import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
+import io.github.ollama4j.models.generate.OllamaGenerateStreamObserver;
 import io.github.ollama4j.models.generate.OllamaGenerateTokenHandler;
+import io.github.ollama4j.models.response.OllamaResult;
 import io.github.ollama4j.tools.OllamaToolsResult;
 import io.github.ollama4j.tools.ToolFunction;
 import io.github.ollama4j.tools.Tools;
@@ -47,14 +50,14 @@ public class SimpleToolCallingWithStreamingExample {
                         System.out.print(message.toUpperCase());
                     }
                 };
-        OllamaToolsResult toolsResult =
-                ollamaAPI.generateWithTools(
-                        modelName, prompt, new OptionsBuilder().build(), handler);
-        for (OllamaToolsResult.ToolResult r : toolsResult.getToolResults()) {
-            System.out.printf(
-                    "[Result of executing tool '%s']: %s%n",
-                    r.getFunctionName(), r.getResult().toString());
-        }
+        OllamaResult toolsResult =
+                ollamaAPI.generate(OllamaGenerateRequestBuilder.builder().withModel(modelName).withPrompt(prompt).withOptions(new OptionsBuilder().build()).build(), new OllamaGenerateStreamObserver(null, handler));
+        System.out.println(toolsResult.getResponse());
+        // for (OllamaToolsResult.ToolResult r : toolsResult.getToolResults()) {
+        //     System.out.printf(
+        //             "[Result of executing tool '%s']: %s%n",
+        //             r.getFunctionName(), r.getResult().toString());
+        // }
     }
 
     private static Tools.ToolSpecification employeeFinderTool() {

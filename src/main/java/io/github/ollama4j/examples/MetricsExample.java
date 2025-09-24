@@ -11,6 +11,7 @@ package io.github.ollama4j.examples;
 import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.models.embeddings.OllamaEmbedRequestModel;
 import io.github.ollama4j.models.embeddings.OllamaEmbedResponseModel;
+import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
 import io.github.ollama4j.models.response.OllamaResult;
 import io.github.ollama4j.utils.OptionsBuilder;
 import io.prometheus.client.exporter.HTTPServer;
@@ -22,20 +23,22 @@ import java.util.Map;
 /**
  * Example demonstrating how to use Ollama4j with Prometheus metrics collection.
  *
- * <p>This example shows how to:
+ * <p>
+ * This example shows how to:
  * <ul>
- *   <li>Enable metrics collection on the OllamaAPI</li>
- *   <li>Start a Prometheus metrics HTTP server</li>
- *   <li>Make API calls that will be automatically instrumented</li>
- *   <li>View metrics at http://localhost:8080/metrics</li>
+ * <li>Enable metrics collection on the OllamaAPI</li>
+ * <li>Start a Prometheus metrics HTTP server</li>
+ * <li>Make API calls that will be automatically instrumented</li>
+ * <li>View metrics at http://localhost:8080/metrics</li>
  * </ul>
  *
- * <p>To run this example:
+ * <p>
+ * To run this example:
  * <ol>
- *   <li>Make sure you have Ollama running locally</li>
- *   <li>Pull a model: <code>ollama pull qwen3:0.6b</code></li>
- *   <li>Run this example</li>
- *   <li>Visit http://localhost:8080/metrics to see the metrics</li>
+ * <li>Make sure you have Ollama running locally</li>
+ * <li>Pull a model: <code>ollama pull qwen3:0.6b</code></li>
+ * <li>Run this example</li>
+ * <li>Visit http://localhost:8080/metrics to see the metrics</li>
  * </ol>
  */
 public class MetricsExample {
@@ -66,17 +69,16 @@ public class MetricsExample {
             System.out.println("Ollama server reachable: " + isReachable);
 
             if (isReachable) {
-//                 Test generate with format
+                // Test generate with format
                 System.out.println("Testing generate with format...");
                 Map<String, Object> format = new HashMap<>();
                 format.put("type", "json");
 
                 try {
-                    var result =
-                            ollamaAPI.generateWithFormat(
-                                    "qwen3:0.6b",
-                                    "Generate a simple JSON object with name and age fields",
-                                    format);
+                    var result = ollamaAPI.generate(OllamaGenerateRequestBuilder.builder().withModel("qwen3:0.6b")
+                            .withPrompt("Generate a simple JSON object with name and age fields").withFormat(format)
+                            .build(), null);
+
                     System.out.println("Generated response: " + result.getResponse());
                 } catch (Exception e) {
                     System.out.println(
@@ -85,28 +87,26 @@ public class MetricsExample {
                                     + e.getMessage());
                 }
 
-//                // Test embed endpoint
-//                System.out.println("Testing embed...");
-//                try {
-//                    OllamaEmbedRequestModel embedRequest =
-//                            new OllamaEmbedRequestModel("qwen3:0.6b", List.of("Hello world"));
-//                    OllamaEmbedResponseModel embedResponse = ollamaAPI.embed(embedRequest);
-//                    System.out.println(
-//                            "Embedding generated with "
-//                                    + embedResponse.getEmbeddings().size()
-//                                    + " embeddings");
-//                } catch (Exception e) {
-//                    System.out.println(
-//                            "Embed failed (this is expected if qwen3:0.6b model is not available): "
-//                                    + e.getMessage());
-//                }
+                // // Test embed endpoint
+                // System.out.println("Testing embed...");
+                // try {
+                // OllamaEmbedRequestModel embedRequest =
+                // new OllamaEmbedRequestModel("qwen3:0.6b", List.of("Hello world"));
+                // OllamaEmbedResponseModel embedResponse = ollamaAPI.embed(embedRequest);
+                // System.out.println(
+                // "Embedding generated with "
+                // + embedResponse.getEmbeddings().size()
+                // + " embeddings");
+                // } catch (Exception e) {
+                // System.out.println(
+                // "Embed failed (this is expected if qwen3:0.6b model is not available): "
+                // + e.getMessage());
+                // }
 
                 try {
-                    OllamaResult res = ollamaAPI.generate("qwen3:0.6b",
-                            "who are you?",
-                            false,
-                            true,
-                            new OptionsBuilder().setTemperature(0.6f).build(), null);
+                    OllamaResult res = ollamaAPI.generate(OllamaGenerateRequestBuilder.builder().withModel("qwen3:0.6b")
+                            .withPrompt("who are you?").withRaw(false).withThink(true)
+                            .withOptions(new OptionsBuilder().setTemperature(0.6f).build()).build(), null);
                     System.out.println(
                             "Generated response "
                                     + res.getResponse());

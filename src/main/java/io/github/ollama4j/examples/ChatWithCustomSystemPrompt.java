@@ -13,7 +13,7 @@ public class ChatWithCustomSystemPrompt {
 
         OllamaAPI ollamaAPI = Utilities.setUp();
 
-        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance("qwen3:0.6b");
+        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.builder().withModel("qwen3:0.6b");
 
         // create request with system-prompt (overriding the model defaults) and user question
         OllamaChatRequest requestModel =

@@ -16,7 +16,7 @@ public class ChatWithTools {
 
         OllamaAPI ollamaAPI = Utilities.setUp();
 
-        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance(modelName);
+        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.builder().withModel(modelName);
 
         final Tools.ToolSpecification databaseQueryToolSpecification =
                 DatabaseQueryToolSpec.getSpecification();

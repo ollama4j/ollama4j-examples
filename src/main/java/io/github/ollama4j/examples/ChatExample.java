@@ -12,7 +12,7 @@ public class ChatExample {
     public static void main(String[] args) throws Exception {
         OllamaAPI ollamaAPI = Utilities.setUp();
 
-        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.getInstance("gemma3:270m");
+        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.builder().withModel("gemma3:270m");
 
         // create first user question
         OllamaChatRequest requestModel =

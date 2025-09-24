@@ -1,6 +1,7 @@
 package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
+import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
 import io.github.ollama4j.models.response.OllamaResult;
 import io.github.ollama4j.utils.Utilities;
 import java.util.Arrays;
@@ -44,7 +45,7 @@ public class GenerateStructuredOutputMappedToObject {
                 });
         format.put("required", Arrays.asList("ageOfPerson", "heroName"));
 
-        OllamaResult result = api.generateWithFormat(model, prompt, format);
+        OllamaResult result = api.generate(OllamaGenerateRequestBuilder.builder().withModel(model).withPrompt(prompt).withFormat(format).build(), null);
 
         HeroInfo hero = result.as(HeroInfo.class);
         System.out.println(hero);
