@@ -8,25 +8,31 @@ import io.github.ollama4j.models.generate.OllamaGenerateStreamObserver;
 import io.github.ollama4j.models.generate.OllamaGenerateTokenHandler;
 import io.github.ollama4j.utils.OptionsBuilder;
 import io.github.ollama4j.utils.Utilities;
+
 import java.io.IOException;
 
 public class GenerateStreaming {
     public static void main(String[] args) throws Exception {
-
-        String modelName = "mistral:7b";
-
         OllamaAPI ollamaAPI = Utilities.setUp();
+        String model = "mistral:7b";
+        ollamaAPI.pullModel(model);
 
         OllamaGenerateTokenHandler streamHandler = new MyStreamHandler();
 
-        new MyStreamingGenerator(modelName, ollamaAPI, streamHandler).start();
+        new MyStreamingGenerator(model, ollamaAPI, streamHandler).start();
     }
 }
 
 class MyStreamHandler implements OllamaGenerateTokenHandler {
 
+    private boolean firstToken = true;
+
     @Override
     public void accept(String message) {
+        if (firstToken) {
+            System.out.println("\n--- Streaming response begins ---\n");
+            firstToken = false;
+        }
         System.out.print(message);
     }
 }
@@ -47,7 +53,7 @@ class MyStreamingGenerator extends Thread {
     public void run() {
         try {
             ollamaAPI.generate(
-                    OllamaGenerateRequestBuilder.builder().withModel(model).withPrompt("What is the capital of France")
+                    OllamaGenerateRequestBuilder.builder().withModel(model).withPrompt("Give me the summary of learnings from Bhagawad Gita point wise.")
                             .withRaw(false).withThink(false).build(),
                     new OllamaGenerateStreamObserver(null, streamHandler));
         } catch (OllamaBaseException e) {

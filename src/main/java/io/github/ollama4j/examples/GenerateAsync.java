@@ -7,10 +7,9 @@ import io.github.ollama4j.utils.Utilities;
 public class GenerateAsync {
 
     public static void main(String[] args) throws Exception {
-
-        String modelName = "mistral:7b";
-
         OllamaAPI ollamaAPI = Utilities.setUp();
+        String model = "mistral:7b";
+        ollamaAPI.pullModel(model);
 
         String prompt = "List all cricket world cup teams of 2019.";
 
@@ -18,7 +17,7 @@ public class GenerateAsync {
         boolean think = false;
 
         OllamaAsyncResultStreamer resultStreamer =
-                ollamaAPI.generateAsync(modelName, prompt, raw, think);
+                ollamaAPI.generateAsync(model, prompt, raw, think);
 
         int pollIntervalMilliseconds = 1000;
         while (true) {

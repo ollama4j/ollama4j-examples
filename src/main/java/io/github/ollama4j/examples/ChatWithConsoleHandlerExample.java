@@ -9,7 +9,7 @@ import io.github.ollama4j.models.chat.OllamaChatStreamObserver;
 import io.github.ollama4j.models.generate.OllamaGenerateTokenHandler;
 import io.github.ollama4j.utils.Utilities;
 
-public class ConsoleOutputStreamHandlerExample {
+public class ChatWithConsoleHandlerExample {
     public static void main(String[] args) throws Exception {
         OllamaAPI ollamaAPI = Utilities.setUp();
         String model = "mistral:7b";

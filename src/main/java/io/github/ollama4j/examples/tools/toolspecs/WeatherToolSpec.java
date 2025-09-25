@@ -1,48 +1,37 @@
-package io.github.ollama4j.examples.toolcalling.toolspecs;
+package io.github.ollama4j.examples.tools.toolspecs;
 
-import io.github.ollama4j.examples.toolcalling.tools.WeatherTool;
 import io.github.ollama4j.tools.Tools;
+
 import java.util.Map;
 
 public class WeatherToolSpec {
+    private WeatherToolSpec() { /* empty constructor */ }
 
-    public static Tools.ToolSpecification getSpecification() {
-        return Tools.ToolSpecification.builder()
-                .functionName("current-weather")
-                .functionDescription("Get current weather")
-                .toolFunction(WeatherTool::getCurrentWeather)
-                .toolPrompt(
-                        Tools.PromptFuncDefinition.builder()
-                                .type("prompt")
-                                .function(
-                                        Tools.PromptFuncDefinition.PromptFuncSpec.builder()
-                                                .name("get-location-weather-info")
-                                                .description("Get location details")
-                                                .parameters(
-                                                        Tools.PromptFuncDefinition.Parameters
-                                                                .builder()
-                                                                .type("object")
-                                                                .properties(
-                                                                        Map.of(
-                                                                                "city",
-                                                                                Tools
-                                                                                        .PromptFuncDefinition
-                                                                                        .Property
-                                                                                        .builder()
-                                                                                        .type(
-                                                                                                "string")
-                                                                                        .description(
-                                                                                                "The city,"
-                                                                                                    + " e.g."
-                                                                                                    + " New Delhi,"
-                                                                                                    + " India")
-                                                                                        .required(
-                                                                                                true)
-                                                                                        .build()))
-                                                                .required(java.util.List.of("city"))
-                                                                .build())
-                                                .build())
+    public static Tools.Tool getSpecification() {
+        return Tools.Tool.builder()
+                .toolSpec(
+                        Tools.ToolSpec.builder()
+                                .name("weather-reporter")
+                                .description("Gets the weather for a given city")
+                                .parameters(
+                                        Tools.Parameters.of(
+                                                Map.of(
+                                                        "city",
+                                                        Tools.Property.builder()
+                                                                .type("string")
+                                                                .description(
+                                                                        "The city to get"
+                                                                                + " the weather"
+                                                                                + " details"
+                                                                                + " for.")
+                                                                .required(true)
+                                                                .build())))
                                 .build())
+                .toolFunction(
+                        arguments -> {
+                            String location = arguments.get("city").toString();
+                            return "Currently " + location + "'s weather is beautiful.";
+                        })
                 .build();
     }
 }

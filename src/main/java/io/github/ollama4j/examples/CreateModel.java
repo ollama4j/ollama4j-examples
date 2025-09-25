@@ -6,15 +6,14 @@ import io.github.ollama4j.utils.Utilities;
 
 public class CreateModel {
     public static void main(String[] args) throws Exception {
-
-        String modelName = "mistral:7b";
-
         OllamaAPI ollamaAPI = Utilities.setUp();
+        String model = "mistral:7b";
+        ollamaAPI.pullModel(model);
 
         ollamaAPI.createModel(
                 CustomModelRequest.builder()
                         .model("mario")
-                        .from(modelName)
+                        .from(model)
                         .system("You are Mario from Super Mario Bros.")
                         .build());
     }

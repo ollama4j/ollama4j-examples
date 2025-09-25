@@ -4,15 +4,17 @@ import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.models.chat.OllamaChatMessageRole;
 import io.github.ollama4j.models.chat.OllamaChatRequest;
 import io.github.ollama4j.models.chat.OllamaChatRequestBuilder;
+import io.github.ollama4j.models.chat.OllamaChatStreamObserver;
+import io.github.ollama4j.models.generate.OllamaGenerateTokenHandler;
 import io.github.ollama4j.utils.Utilities;
 
 public class ChatStreamingExample {
 
     public static void main(String[] args) throws Exception {
-
         OllamaAPI ollamaAPI = Utilities.setUp();
-
-        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.builder().withModel("gemma3:270m");
+        String model = "gemma3:270m";
+        ollamaAPI.pullModel(model);
+        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.builder().withModel(model);
 
         OllamaChatRequest chatRequest =
                 builder.withMessage(
@@ -20,9 +22,24 @@ public class ChatStreamingExample {
                                 "Give me a summary of the book 'The Great Gatsby'")
                         .build();
 
-        // Define a stream handler.
-        // Note: This API will allow a handler to receive each token separately without
-        // concatenating with previously received tokens.
-        ollamaAPI.chat(chatRequest, token -> System.out.print(token.getMessage().getResponse()));
+        // Define a stream observer.
+        OllamaChatStreamObserver streamObserver = new OllamaChatStreamObserver();
+
+        // If thinking tokens are found, print them in lowercase :)
+        streamObserver.setThinkingStreamHandler(new OllamaGenerateTokenHandler() {
+            @Override
+            public void accept(String message) {
+                System.out.print(message.toUpperCase());
+            }
+        });
+        // Response tokens to be printed in lowercase
+        streamObserver.setResponseStreamHandler(new OllamaGenerateTokenHandler() {
+            @Override
+            public void accept(String message) {
+                System.out.print(message.toLowerCase());
+            }
+        });
+
+        ollamaAPI.chat(chatRequest, streamObserver);
     }
 }

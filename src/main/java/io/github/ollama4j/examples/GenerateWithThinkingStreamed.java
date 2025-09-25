@@ -7,21 +7,21 @@ import io.github.ollama4j.models.generate.OllamaGenerateStreamObserver;
 import io.github.ollama4j.models.generate.OllamaGenerateTokenHandler;
 import io.github.ollama4j.utils.OptionsBuilder;
 import io.github.ollama4j.utils.Utilities;
+
 import java.io.IOException;
 
 public class GenerateWithThinkingStreamed {
 
     public static void main(String[] args) throws Exception {
-
-        String modelName = "qwen3:0.6b";
-
         OllamaAPI ollamaAPI = Utilities.setUp();
+        String model = "qwen3:0.6b";
+        ollamaAPI.pullModel(model);
 
         OllamaGenerateTokenHandler thinkingStreamHandler = new ThinkingStreamHandler();
-        OllamaGenerateTokenHandler responseStreamHandler = new ThinkingStreamHandler();
+        OllamaGenerateTokenHandler responseStreamHandler = new ResponseStreamHandler();
 
         new ThinkingModelStreamingGenerator(
-                modelName, ollamaAPI, thinkingStreamHandler, responseStreamHandler)
+                model, ollamaAPI, thinkingStreamHandler, responseStreamHandler)
                 .start();
     }
 }
@@ -29,7 +29,14 @@ public class GenerateWithThinkingStreamed {
 class ThinkingStreamHandler implements OllamaGenerateTokenHandler {
     @Override
     public void accept(String message) {
-        System.out.print(message);
+        System.out.print(message.toUpperCase());
+    }
+}
+
+class ResponseStreamHandler implements OllamaGenerateTokenHandler {
+    @Override
+    public void accept(String message) {
+        System.out.print(message.toLowerCase());
     }
 }
 

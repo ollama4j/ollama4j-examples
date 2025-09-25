@@ -12,10 +12,9 @@ import lombok.*;
 public class GenerateStructuredOutputMappedToObject {
 
     public static void main(String[] args) throws Exception {
-
-        String model = "mistral:7b";
-
-        OllamaAPI api = Utilities.setUp();
+        OllamaAPI ollamaAPI = Utilities.setUp();
+        String model = "qwen3:0.6b";
+        ollamaAPI.pullModel(model);
 
         String prompt =
                 "Batman is thirty years old and is busy saving Gotham. Respond using JSON in the"
@@ -28,24 +27,24 @@ public class GenerateStructuredOutputMappedToObject {
                 new HashMap<String, Object>() {
                     {
                         put(
-                                "ageOfPerson",
+                                "age",
                                 new HashMap<String, Object>() {
                                     {
-                                        put("type", "number");
+                                        put("type",  Integer.class.getSimpleName().toLowerCase());
                                     }
                                 });
                         put(
-                                "heroName",
+                                "name",
                                 new HashMap<String, Object>() {
                                     {
-                                        put("type", "string");
+                                        put("type",  String.class.getSimpleName().toLowerCase());
                                     }
                                 });
                     }
                 });
-        format.put("required", Arrays.asList("ageOfPerson", "heroName"));
+        format.put("required", Arrays.asList("age", "name"));
 
-        OllamaResult result = api.generate(OllamaGenerateRequestBuilder.builder().withModel(model).withPrompt(prompt).withFormat(format).build(), null);
+        OllamaResult result = ollamaAPI.generate(OllamaGenerateRequestBuilder.builder().withModel(model).withPrompt(prompt).withFormat(format).build(), null);
 
         HeroInfo hero = result.as(HeroInfo.class);
         System.out.println(hero);
@@ -58,8 +57,8 @@ public class GenerateStructuredOutputMappedToObject {
 @Getter
 @Setter
 class HeroInfo {
-    private String heroName;
+    private String name;
     private String
-            ageOfPerson; // using string here as the model can spit out wierd value for age. It does
+            age; // using string here as the model can spit out wierd value for age. It does
     // not always return a number :)
 }

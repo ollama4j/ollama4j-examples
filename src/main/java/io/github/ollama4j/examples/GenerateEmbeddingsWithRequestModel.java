@@ -10,12 +10,13 @@ import java.util.Arrays;
 public class GenerateEmbeddingsWithRequestModel {
 
     public static void main(String[] args) throws Exception {
-
         OllamaAPI ollamaAPI = Utilities.setUp();
+        String model = "all-minilm";
+        ollamaAPI.pullModel(model);
 
         OllamaEmbedRequestModel requestModel =
                 new OllamaEmbedRequestModel(
-                        "all-minilm",
+                        model,
                         Arrays.asList("Why is the sky blue?", "Why is the grass green?"));
         requestModel.setOptions(
                 new OptionsBuilder().setSeed(42).setTemperature(0.7f).build().getOptionsMap());

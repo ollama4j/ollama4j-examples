@@ -9,12 +9,12 @@ import io.github.ollama4j.utils.Utilities;
 public class ChatStreamingWithThinkingExample {
 
     public static void main(String[] args) throws Exception {
-
         OllamaAPI ollamaAPI = Utilities.setUp();
+        String model = "qwen3:0.6b";
+        ollamaAPI.pullModel(model);
+        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.builder().withModel(model);
 
-        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.builder().withModel("qwen3:0.6b");
-
-        OllamaChatRequest chatRequest =
+        OllamaChatRequest chatRequest1 =
                 builder.withMessage(OllamaChatMessageRole.USER, "What is the capital of France?")
                         .withThinking(true)
                         .build();
@@ -30,21 +30,23 @@ public class ChatStreamingWithThinkingExample {
                     System.out.print(s.toLowerCase());
                 };
         // pass the stream handlers to the chat method
-        OllamaChatResult chatResult =
+        OllamaChatResult chatResult1 =
                 ollamaAPI.chat(
-                        chatRequest,
+                        chatRequest1,
                         new OllamaChatStreamObserver(thinkingStreamHandler, responseStreamHandler));
-        chatRequest =
-                builder.withMessages(chatResult.getChatHistory())
+        OllamaChatRequest chatRequest2 =
+                builder.withMessages(chatResult1.getChatHistory())
                         .withMessage(
                                 OllamaChatMessageRole.USER, "And what is the second largest city?")
                         .withThinking(true)
                         .build();
 
         // "continue" conversation with model
-        chatResult =
+        OllamaChatResult chatResult2 =
                 ollamaAPI.chat(
-                        chatRequest,
+                        chatRequest2,
                         new OllamaChatStreamObserver(thinkingStreamHandler, responseStreamHandler));
+        boolean done = chatResult2.getResponseModel().isDone();
+
     }
 }

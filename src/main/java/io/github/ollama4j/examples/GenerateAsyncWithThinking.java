@@ -7,9 +7,9 @@ import io.github.ollama4j.utils.Utilities;
 public class GenerateAsyncWithThinking {
 
     public static void main(String[] args) throws Exception {
-        String modelName = "qwen3:0.6b";
-
         OllamaAPI ollamaAPI = Utilities.setUp();
+        String model = "qwen3:0.6b";
+        ollamaAPI.pullModel(model);
 
         String prompt = "How long does it take for the light from the Sun to reach Earth?";
 
@@ -17,7 +17,7 @@ public class GenerateAsyncWithThinking {
         boolean think = true;
 
         OllamaAsyncResultStreamer resultStreamer =
-                ollamaAPI.generateAsync(modelName, prompt, raw, think);
+                ollamaAPI.generateAsync(model, prompt, raw, think);
 
         int pollIntervalMilliseconds = 1000;
         while (true) {

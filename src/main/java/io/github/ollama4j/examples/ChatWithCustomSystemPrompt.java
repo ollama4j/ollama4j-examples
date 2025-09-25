@@ -10,10 +10,10 @@ import io.github.ollama4j.utils.Utilities;
 public class ChatWithCustomSystemPrompt {
 
     public static void main(String[] args) throws Exception {
-
         OllamaAPI ollamaAPI = Utilities.setUp();
-
-        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.builder().withModel("qwen3:0.6b");
+        String model = "qwen3:0.6b";
+        ollamaAPI.pullModel(model);
+        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.builder().withModel(model);
 
         // create request with system-prompt (overriding the model defaults) and user question
         OllamaChatRequest requestModel =

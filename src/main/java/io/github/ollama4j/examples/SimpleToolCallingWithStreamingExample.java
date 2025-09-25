@@ -12,6 +12,7 @@ import io.github.ollama4j.tools.ToolFunction;
 import io.github.ollama4j.tools.Tools;
 import io.github.ollama4j.utils.OptionsBuilder;
 import io.github.ollama4j.utils.Utilities;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -26,11 +27,9 @@ public class SimpleToolCallingWithStreamingExample {
     }
 
     public static void askModel(OllamaAPI ollamaAPI, String modelName)
-            throws ToolInvocationException,
-                    OllamaBaseException,
-                    IOException,
-                    InterruptedException,
-                    URISyntaxException {
+            throws
+            OllamaBaseException,
+            IOException {
 
         ollamaAPI.pullModel(modelName);
 
@@ -52,7 +51,6 @@ public class SimpleToolCallingWithStreamingExample {
                 };
         OllamaResult toolsResult =
                 ollamaAPI.generate(OllamaGenerateRequestBuilder.builder().withModel(modelName).withPrompt(prompt).withOptions(new OptionsBuilder().build()).build(), new OllamaGenerateStreamObserver(null, handler));
-        System.out.println(toolsResult.getResponse());
         // for (OllamaToolsResult.ToolResult r : toolsResult.getToolResults()) {
         //     System.out.printf(
         //             "[Result of executing tool '%s']: %s%n",
@@ -88,11 +86,11 @@ public class SimpleToolCallingWithStreamingExample {
                                                                                                         "string")
                                                                                                 .description(
                                                                                                         "The name"
-                                                                                                            + " of the"
-                                                                                                            + " employee,"
-                                                                                                            + " e.g."
-                                                                                                            + " John"
-                                                                                                            + " Doe")
+                                                                                                                + " of the"
+                                                                                                                + " employee,"
+                                                                                                                + " e.g."
+                                                                                                                + " John"
+                                                                                                                + " Doe")
                                                                                                 .required(
                                                                                                         true)
                                                                                                 .build())
@@ -106,16 +104,16 @@ public class SimpleToolCallingWithStreamingExample {
                                                                                                         "string")
                                                                                                 .description(
                                                                                                         "The address"
-                                                                                                            + " of the"
-                                                                                                            + " employee,"
-                                                                                                            + " Always"
-                                                                                                            + " eturns"
-                                                                                                            + " a random"
-                                                                                                            + " address."
-                                                                                                            + " For example,"
-                                                                                                            + " Church"
-                                                                                                            + " St, Bengaluru,"
-                                                                                                            + " India")
+                                                                                                                + " of the"
+                                                                                                                + " employee,"
+                                                                                                                + " Always"
+                                                                                                                + " eturns"
+                                                                                                                + " a random"
+                                                                                                                + " address."
+                                                                                                                + " For example,"
+                                                                                                                + " Church"
+                                                                                                                + " St, Bengaluru,"
+                                                                                                                + " India")
                                                                                                 .required(
                                                                                                         true)
                                                                                                 .build())
@@ -129,16 +127,16 @@ public class SimpleToolCallingWithStreamingExample {
                                                                                                         "string")
                                                                                                 .description(
                                                                                                         "The phone"
-                                                                                                            + " number"
-                                                                                                            + " of the"
-                                                                                                            + " employee."
-                                                                                                            + " Always"
-                                                                                                            + " returns"
-                                                                                                            + " a random"
-                                                                                                            + " phone"
-                                                                                                            + " number."
-                                                                                                            + " For example,"
-                                                                                                            + " 9911002233")
+                                                                                                                + " number"
+                                                                                                                + " of the"
+                                                                                                                + " employee."
+                                                                                                                + " Always"
+                                                                                                                + " returns"
+                                                                                                                + " a random"
+                                                                                                                + " phone"
+                                                                                                                + " number."
+                                                                                                                + " For example,"
+                                                                                                                + " 9911002233")
                                                                                                 .required(
                                                                                                         true)
                                                                                                 .build())
@@ -151,9 +149,9 @@ public class SimpleToolCallingWithStreamingExample {
                         new ToolFunction() {
                             @Override
                             public Object apply(Map<String, Object> arguments) {
-                                System.out.println(
-                                        "Invoking employee finder tool with arguments: "
-                                                + arguments);
+//                                System.out.println(
+//                                        "Invoking employee finder tool with arguments: "
+//                                                + arguments);
                                 String employeeName = "Random Employee";
                                 if (arguments.containsKey("employee-name")) {
                                     employeeName = arguments.get("employee-name").toString();

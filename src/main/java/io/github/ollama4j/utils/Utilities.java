@@ -56,7 +56,6 @@ public class Utilities {
         } catch (Exception e) {
             throw new Exception("Could not setup Ollama API: " + e.getMessage());
         }
-        System.out.println("Setting request timeout seconds to: " + requestTimeoutSeconds);
         api.setRequestTimeoutSeconds(requestTimeoutSeconds);
         api.setNumberOfRetriesForModelPull(numberOfRetriesForModelPull);
         return api;

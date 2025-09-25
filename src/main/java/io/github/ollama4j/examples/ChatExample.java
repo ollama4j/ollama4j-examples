@@ -11,8 +11,10 @@ public class ChatExample {
 
     public static void main(String[] args) throws Exception {
         OllamaAPI ollamaAPI = Utilities.setUp();
+        String model = "gemma3:270m";
+        ollamaAPI.pullModel(model);
 
-        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.builder().withModel("gemma3:270m");
+        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.builder().withModel(model);
 
         // create first user question
         OllamaChatRequest requestModel =

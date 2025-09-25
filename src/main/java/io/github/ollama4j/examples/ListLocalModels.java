@@ -8,9 +8,6 @@ import java.util.List;
 public class ListLocalModels {
 
     public static void main(String[] args) throws Exception {
-
-        String host = "http://localhost:11434/";
-
         OllamaAPI ollamaAPI = Utilities.setUp();
 
         List<Model> models = ollamaAPI.listModels();

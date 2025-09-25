@@ -1,8 +1,10 @@
-package io.github.ollama4j.examples.toolcalling.tools;
+package io.github.ollama4j.examples.tools.toolfunctions;
 
 import java.util.Map;
 
-public class WeatherTool {
+public class WeatherToolFunction {
+    private WeatherToolFunction() { /* empty constructor */ }
+
     public static String getCurrentWeather(Map<String, Object> arguments) {
         // Get details from weather API
         String location = arguments.get("city").toString();

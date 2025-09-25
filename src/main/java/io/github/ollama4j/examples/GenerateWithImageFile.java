@@ -20,13 +20,13 @@ import java.util.Map;
 public class GenerateWithImageFile {
 
     public static void main(String[] args) throws Exception {
-        String modelName = "moondream:1.8b";
-
         OllamaAPI ollamaAPI = Utilities.setUp();
+        String model = "moondream:1.8b";
+        ollamaAPI.pullModel(model);
 
-        nonStreamingWithFile(ollamaAPI, modelName);
-        streamingWithFile(ollamaAPI, modelName);
-        nonStreamingWithFileAndFormat(ollamaAPI, modelName);
+        nonStreamingWithFile(ollamaAPI, model);
+        streamingWithFile(ollamaAPI, model);
+        nonStreamingWithFileAndFormat(ollamaAPI, model);
     }
 
     public static void nonStreamingWithFile(OllamaAPI ollamaAPI, String modelName)
@@ -77,14 +77,14 @@ public class GenerateWithImageFile {
                                 "title",
                                 new HashMap<String, Object>() {
                                     {
-                                        put("type", "string");
+                                        put("type",  String.class.getSimpleName().toLowerCase());
                                     }
                                 });
                         put(
                                 "description",
                                 new HashMap<String, Object>() {
                                     {
-                                        put("type", "string");
+                                        put("type", String.class.getSimpleName().toLowerCase());
                                     }
                                 });
                     }

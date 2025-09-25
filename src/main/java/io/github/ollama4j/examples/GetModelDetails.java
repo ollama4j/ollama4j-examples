@@ -8,8 +8,10 @@ public class GetModelDetails {
 
     public static void main(String[] args) throws Exception {
         OllamaAPI ollamaAPI = Utilities.setUp();
+        String model = "mistral:7b";
+        ollamaAPI.pullModel(model);
 
-        ModelDetail modelDetails = ollamaAPI.getModelDetails("mistral:7b");
+        ModelDetail modelDetails = ollamaAPI.getModelDetails(model);
 
         System.out.println(modelDetails);
     }

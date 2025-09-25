@@ -1,13 +1,16 @@
-package io.github.ollama4j.examples.toolcalling.tools;
+package io.github.ollama4j.examples.tools.toolfunctions;
 
 import io.github.ollama4j.tools.ToolFunction;
+
 import java.util.Map;
 import java.util.UUID;
 
-public class DBQueryFunction implements ToolFunction {
+public class EmployeeFinderToolFunction implements ToolFunction {
     @Override
     public Object apply(Map<String, Object> arguments) {
-        System.out.println("Invoking employee finder tool with arguments: " + arguments);
+        if (arguments.size() != 1) {
+            return "Not enough data!";
+        }
         String employeeName = arguments.get("employee-name").toString();
         String address = null;
         String phone = null;

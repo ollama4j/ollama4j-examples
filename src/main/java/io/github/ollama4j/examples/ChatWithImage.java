@@ -6,6 +6,7 @@ import io.github.ollama4j.models.chat.OllamaChatRequest;
 import io.github.ollama4j.models.chat.OllamaChatRequestBuilder;
 import io.github.ollama4j.models.chat.OllamaChatResult;
 import io.github.ollama4j.utils.Utilities;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -16,12 +17,11 @@ import java.util.List;
 public class ChatWithImage {
 
     public static void main(String[] args) throws Exception {
-
-        String imageModel = "moondream:1.8b";
-
         OllamaAPI ollamaAPI = Utilities.setUp();
+        String model = "moondream:1.8b";
+        ollamaAPI.pullModel(model);
 
-        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.builder().withModel(imageModel);
+        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.builder().withModel(model);
 
         // Load image from resources and copy to a temporary file
         InputStream is =

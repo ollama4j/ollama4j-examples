@@ -4,21 +4,19 @@ import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.models.embeddings.OllamaEmbedRequestModel;
 import io.github.ollama4j.models.embeddings.OllamaEmbedResponseModel;
 import io.github.ollama4j.utils.Utilities;
+
 import java.util.Arrays;
 
 public class EmbeddingsGenerationExample {
     public static void main(String[] args) throws Exception {
-
-        String modelName = "mistral:7b";
-
         OllamaAPI ollamaAPI = Utilities.setUp();
-
-        ollamaAPI.pullModel(modelName);
-        OllamaEmbedRequestModel model =
+        String model = "mistral:7b";
+        ollamaAPI.pullModel(model);
+        OllamaEmbedRequestModel requestModel =
                 new OllamaEmbedRequestModel(
-                        modelName,
+                        model,
                         Arrays.asList("Why is the sky blue?", "Why is the grass green?"));
-        OllamaEmbedResponseModel embeddings = ollamaAPI.embed(model);
+        OllamaEmbedResponseModel embeddings = ollamaAPI.embed(requestModel);
 
         System.out.println(embeddings);
     }

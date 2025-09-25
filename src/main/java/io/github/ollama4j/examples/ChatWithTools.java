@@ -1,7 +1,7 @@
 package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
-import io.github.ollama4j.examples.toolcalling.toolspecs.DatabaseQueryToolSpec;
+import io.github.ollama4j.examples.tools.toolspecs.EmployeeFinderToolSpec;
 import io.github.ollama4j.models.chat.OllamaChatMessageRole;
 import io.github.ollama4j.models.chat.OllamaChatRequest;
 import io.github.ollama4j.models.chat.OllamaChatRequestBuilder;
@@ -11,22 +11,20 @@ import io.github.ollama4j.utils.Utilities;
 
 public class ChatWithTools {
     public static void main(String[] args) throws Exception {
-
-        String modelName = "mistral:7b";
-
         OllamaAPI ollamaAPI = Utilities.setUp();
+        String model = "mistral:7b";
+        ollamaAPI.pullModel(model);
+        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.builder().withModel(model);
 
-        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.builder().withModel(modelName);
+        final Tools.Tool employeeFinderToolSpecification =
+                EmployeeFinderToolSpec.getSpecification();
 
-        final Tools.ToolSpecification databaseQueryToolSpecification =
-                DatabaseQueryToolSpec.getSpecification();
-
-        ollamaAPI.registerTool(databaseQueryToolSpecification);
+        ollamaAPI.registerTool(employeeFinderToolSpecification);
 
         OllamaChatRequest requestModel =
                 builder.withMessage(
                                 OllamaChatMessageRole.USER,
-                                "Give me the ID of the employee named 'Rahul Kumar'?")
+                                "Give me the ID of the employee named Rahul Kumar?")
                         .build();
 
         OllamaChatResult chatResult = ollamaAPI.chat(requestModel, null);
@@ -35,7 +33,7 @@ public class ChatWithTools {
 
         requestModel =
                 builder.withMessages(chatResult.getChatHistory())
-                        .withMessage(OllamaChatMessageRole.USER, "What's his last name?")
+                        .withMessage(OllamaChatMessageRole.USER, "What's his address and phone number?")
                         .build();
 
         chatResult = ollamaAPI.chat(requestModel, null);

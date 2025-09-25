@@ -5,9 +5,10 @@
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  *
-*/
-package io.github.ollama4j;
+ */
+package io.github.ollama4j.examples;
 
+import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.exceptions.OllamaBaseException;
 import io.github.ollama4j.models.generate.OllamaGenerateRequest;
 import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
@@ -15,13 +16,15 @@ import io.github.ollama4j.models.generate.OllamaGenerateStreamObserver;
 import io.github.ollama4j.models.response.OllamaResult;
 import io.github.ollama4j.tools.Tools;
 import io.github.ollama4j.utils.OptionsBuilder;
+import io.github.ollama4j.utils.Utilities;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class SimpleToolCallingExample {
+public class SimpleToolCallingExampleNew {
     public static void main(String[] args) throws Exception {
-        OllamaAPI ollamaAPI = new OllamaAPI("http://192.168.29.229:11434");
+        OllamaAPI ollamaAPI = Utilities.setUp();
         String model = "mistral:7b";
         askModel(ollamaAPI, model);
     }
@@ -29,7 +32,8 @@ public class SimpleToolCallingExample {
     public static void askModel(OllamaAPI ollamaAPI, String modelName) throws OllamaBaseException {
         ollamaAPI.pullModel(modelName);
 
-        String prompt = "How is the weather in Bengaluru";
+        String prompt1 = "How is the weather in Bengaluru";
+        String prompt2 = "How much does diesel cost in Bengaluru";
 
         Tools.Tool weatherTool =
                 Tools.Tool.builder()
@@ -45,9 +49,9 @@ public class SimpleToolCallingExample {
                                                                         .type("string")
                                                                         .description(
                                                                                 "The city to get"
-                                                                                    + " the weather"
-                                                                                    + " details"
-                                                                                    + " for.")
+                                                                                        + " the weather"
+                                                                                        + " details"
+                                                                                        + " for.")
                                                                         .required(true)
                                                                         .build())))
                                         .build())
@@ -73,8 +77,8 @@ public class SimpleToolCallingExample {
                                                                         .type("string")
                                                                         .description(
                                                                                 "The city to get"
-                                                                                    + " the fuel"
-                                                                                    + " price for.")
+                                                                                        + " the fuel"
+                                                                                        + " price for.")
                                                                         .required(true)
                                                                         .build(),
                                                                 "fuelType",
@@ -82,32 +86,50 @@ public class SimpleToolCallingExample {
                                                                         .type("string")
                                                                         .description(
                                                                                 "The fuel type -"
-                                                                                    + " either"
-                                                                                    + " petrol or"
-                                                                                    + " diesel.")
+                                                                                        + " either"
+                                                                                        + " petrol or"
+                                                                                        + " diesel.")
                                                                         .required(true)
                                                                         .build())))
                                         .build())
                         .toolFunction(
                                 arguments -> {
                                     String location = arguments.get("city").toString();
-                                    return "Currently " + location + "'s weather is beautiful.";
+                                    String fuelType = arguments.get("fuelType").toString();
+                                    return "Price of "
+                                            + fuelType
+                                            + " in "
+                                            + location
+                                            + " is Rs.103/L.";
                                 })
                         .build();
         List<Tools.Tool> tools = new ArrayList<>();
         tools.add(weatherTool);
         tools.add(fuelPriceTool);
-        OllamaGenerateRequest request =
+        ollamaAPI.registerTools(tools);
+
+        OllamaGenerateRequest request1 =
                 OllamaGenerateRequestBuilder.builder()
                         .withModel(modelName)
-                        .withPrompt(prompt)
+                        .withPrompt(prompt1)
                         .withOptions(new OptionsBuilder().build())
                         //                        .withTools(tools)
                         .withUseTools(true)
                         .build();
-        ollamaAPI.registerTools(tools);
+        OllamaGenerateRequest request2 =
+                OllamaGenerateRequestBuilder.builder()
+                        .withModel(modelName)
+                        .withPrompt(prompt2)
+                        .withOptions(new OptionsBuilder().build())
+                        //                        .withTools(tools)
+                        .withUseTools(true)
+                        .build();
+
         OllamaGenerateStreamObserver handler = new OllamaGenerateStreamObserver(null, null);
-        OllamaResult toolsResult = ollamaAPI.generate(request, handler);
-        System.out.printf("[Result of executing tool]: %s%n", toolsResult.getResponse());
+        OllamaResult toolsResult1 = ollamaAPI.generate(request1, handler);
+        OllamaResult toolsResult2 = ollamaAPI.generate(request2, handler);
+        System.out.printf("[Result of executing tool]: %s%n", toolsResult1.getResponse());
+        System.out.printf("[Result of executing tool]: %s%n", toolsResult2.getResponse());
+
     }
 }

@@ -1,97 +1,60 @@
-package io.github.ollama4j.examples.toolcalling.toolspecs;
+package io.github.ollama4j.examples.tools.toolspecs;
 
-import io.github.ollama4j.examples.toolcalling.tools.DBQueryFunction;
 import io.github.ollama4j.tools.Tools;
-import java.util.Map;
 
-public class DatabaseQueryToolSpec {
-    public static Tools.ToolSpecification getSpecification() {
-        return Tools.ToolSpecification.builder()
-                .functionName("get-employee-details")
-                .functionDescription("Get employee details from the database")
-                .toolFunction(new DBQueryFunction())
-                .toolPrompt(
-                        Tools.PromptFuncDefinition.builder()
-                                .type("prompt")
-                                .function(
-                                        Tools.PromptFuncDefinition.PromptFuncSpec.builder()
-                                                .name("get-employee-details")
-                                                .description(
-                                                        "Get employee details from the database")
-                                                .parameters(
-                                                        Tools.PromptFuncDefinition.Parameters
-                                                                .builder()
-                                                                .type("object")
-                                                                .properties(
-                                                                        Map.of(
-                                                                                "employee-name",
-                                                                                        Tools
-                                                                                                .PromptFuncDefinition
-                                                                                                .Property
-                                                                                                .builder()
-                                                                                                .type(
-                                                                                                        "string")
-                                                                                                .description(
-                                                                                                        "The name"
-                                                                                                            + " of the"
-                                                                                                            + " employee,"
-                                                                                                            + " e.g."
-                                                                                                            + " John"
-                                                                                                            + " Doe")
-                                                                                                .required(
-                                                                                                        true)
-                                                                                                .build(),
-                                                                                "employee-address",
-                                                                                        Tools
-                                                                                                .PromptFuncDefinition
-                                                                                                .Property
-                                                                                                .builder()
-                                                                                                .type(
-                                                                                                        "string")
-                                                                                                .description(
-                                                                                                        "The address"
-                                                                                                            + " of the"
-                                                                                                            + " employee,"
-                                                                                                            + " Always"
-                                                                                                            + " return"
-                                                                                                            + " a random"
-                                                                                                            + " value."
-                                                                                                            + " e.g."
-                                                                                                            + " Roy St,"
-                                                                                                            + " Bengaluru,"
-                                                                                                            + " India")
-                                                                                                .required(
-                                                                                                        true)
-                                                                                                .build(),
-                                                                                "employee-phone",
-                                                                                        Tools
-                                                                                                .PromptFuncDefinition
-                                                                                                .Property
-                                                                                                .builder()
-                                                                                                .type(
-                                                                                                        "string")
-                                                                                                .description(
-                                                                                                        "The phone"
-                                                                                                            + " number"
-                                                                                                            + " of the"
-                                                                                                            + " employee."
-                                                                                                            + " Always"
-                                                                                                            + " return"
-                                                                                                            + " a random"
-                                                                                                            + " value."
-                                                                                                            + " e.g."
-                                                                                                            + " 9911002233")
-                                                                                                .required(
-                                                                                                        true)
-                                                                                                .build()))
-                                                                .required(
-                                                                        java.util.List.of(
-                                                                                "employee-name",
-                                                                                "employee-address",
-                                                                                "employee-phone"))
-                                                                .build())
-                                                .build())
+import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
+
+public class EmployeeFinderToolSpec {
+    private EmployeeFinderToolSpec() { /* empty constructor */ }
+
+    public static Tools.Tool getSpecification() {
+        return Tools.Tool.builder()
+                .toolSpec(
+                        Tools.ToolSpec.builder()
+                                .name("get-employee-details")
+                                .description("Get employee details from the company database")
+                                .parameters(
+                                        Tools.Parameters.of(
+                                                Map.of(
+                                                        "employee-name",
+                                                        Tools.Property.builder()
+                                                                .type("string")
+                                                                .description(
+                                                                        "The name of the employee.")
+                                                                .required(true)
+                                                                .build(),
+                                                        "employee-address",
+                                                        Tools.Property.builder()
+                                                                .type("string")
+                                                                .description(
+                                                                        "The address of the employee.")
+                                                                .required(true)
+                                                                .build(),
+                                                        "employee-phone", Tools.Property.builder()
+                                                                .type("string")
+                                                                .description(
+                                                                        "The phone number of the employee.")
+                                                                .required(true)
+                                                                .build()
+                                                )
+                                        ))
                                 .build())
+                .toolFunction(
+                        arguments -> {
+                            String employeeName = arguments.get("employee-name").toString();
+                            String address = arguments.get("employee-address").toString();
+
+                            Random random = new Random();
+                            long min = 1_000_000_000L;
+                            long max = 9_999_999_999L;
+                            String phone = String.valueOf(min + ((long) (random.nextDouble() * (max - min))));
+
+                            return String.format(
+                                    "Employee Details {ID: %s, Name: %s, Address: %s, Phone: %s}",
+                                    UUID.randomUUID(), employeeName, address, phone);
+                        })
                 .build();
     }
 }
