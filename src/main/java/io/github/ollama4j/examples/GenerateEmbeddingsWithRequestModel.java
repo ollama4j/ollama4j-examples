@@ -1,8 +1,8 @@
 package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
-import io.github.ollama4j.models.embeddings.OllamaEmbedRequestModel;
-import io.github.ollama4j.models.embeddings.OllamaEmbedResponseModel;
+import io.github.ollama4j.models.embed.OllamaEmbedRequestModel;
+import io.github.ollama4j.models.embed.OllamaEmbedResponseModel;
 import io.github.ollama4j.utils.OptionsBuilder;
 import io.github.ollama4j.utils.Utilities;
 import java.util.Arrays;

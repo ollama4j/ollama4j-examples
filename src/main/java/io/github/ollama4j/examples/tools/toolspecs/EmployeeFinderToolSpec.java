@@ -44,7 +44,12 @@ public class EmployeeFinderToolSpec {
                 .toolFunction(
                         arguments -> {
                             String employeeName = arguments.get("employee-name").toString();
-                            String address = arguments.get("employee-address").toString();
+                            String address = null;
+                            try {
+                                address = arguments.get("employee-address").toString();
+                            }catch (Exception e){
+                                address = "Somewhere on earth.";
+                            }
 
                             Random random = new Random();
                             long min = 1_000_000_000L;

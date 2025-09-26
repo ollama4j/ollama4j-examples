@@ -24,15 +24,88 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
+  "id": 1,
   "links": [],
   "panels": [
     {
       "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] },
-      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 0 },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
       "id": 1,
-      "options": { "legend": { "showLegend": true } },
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "expr": "sum(ollama_api_requests_total{endpoint=~\"$endpoint\",http_status=~\"$status\",model=~\"$model\"}) by (endpoint, model, options, raw, streaming, format, thinking, http_status)",
@@ -45,10 +118,83 @@
     },
     {
       "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "unit": "s" }, "overrides": [] },
-      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 0 },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
       "id": 2,
-      "options": { "legend": { "showLegend": true } },
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "expr": "avg(ollama_api_request_duration_seconds_sum{endpoint=~\"$endpoint\",http_status=~\"$status\",model=~\"$model\"} / ollama_api_request_duration_seconds_count{endpoint=~\"$endpoint\",http_status=~\"$status\",model=~\"$model\"}) by (endpoint, model, options, raw, streaming, format, thinking, http_status)",
@@ -61,10 +207,83 @@
     },
     {
       "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "unit": "s" }, "overrides": [] },
-      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 6 },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 6
+      },
       "id": 3,
-      "options": { "legend": { "showLegend": true } },
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "expr": "histogram_quantile(0.95, sum(rate(ollama_api_request_duration_seconds_bucket{endpoint=~\"$endpoint\",http_status=~\"$status\",model=~\"$model\"}[5m])) by (le, endpoint, model, options, raw, streaming, format, thinking, http_status))",
@@ -77,10 +296,83 @@
     },
     {
       "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "unit": "bytes" }, "overrides": [] },
-      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 6 },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 6
+      },
       "id": 4,
-      "options": { "legend": { "showLegend": true } },
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "expr": "sum(ollama_api_response_size_bytes_sum{endpoint=~\"$endpoint\",http_status=~\"$status\",model=~\"$model\"}) by (endpoint, model, options, raw, streaming, format, thinking, http_status)",
@@ -93,10 +385,83 @@
     },
     {
       "datasource": "Prometheus",
-      "fieldConfig": { "defaults": { "unit": "req/s" }, "overrides": [] },
-      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 12 },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "req/s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 12
+      },
       "id": 5,
-      "options": { "legend": { "showLegend": true } },
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "expr": "sum by (endpoint, model, options, raw, streaming, format, thinking, http_status) (rate(ollama_api_requests_total{endpoint=~\"$endpoint\",http_status=~\"$status\",model=~\"$model\"}[1m]))",
@@ -109,95 +474,128 @@
     },
     {
       "datasource": "Prometheus",
-      "type": "table",
-      "title": "Failed Requests (Non-2xx Status)",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "orange",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 12
+      },
       "id": 6,
-      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 18 },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
       "options": {
-        "showHeader": true
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": false,
+        "sizing": "auto"
       },
+      "pluginVersion": "12.1.1",
       "targets": [
         {
-          "expr": "sum(ollama_api_requests_total{http_status!~\"2..\",endpoint=~\"$endpoint\",model=~\"$model\"}) by (endpoint, model, options, raw, streaming, format, thinking, http_status)",
-          "legendFormat": "",
-          "refId": "F"
-        }
-      ]
-    },
-    {
-      "datasource": "Prometheus",
-      "type": "table",
-      "title": "Failed Response Details (Experimental)",
-      "id": 7,
-      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 26 },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
-      "options": {
-        "showHeader": true
-      },
-      "targets": [
-        {
-          "expr": "topk(10, ollama_api_response_size_bytes_sum{http_status!~\"2..\",endpoint=~\"$endpoint\",model=~\"$model\"})",
-          "legendFormat": "",
-          "refId": "G"
+          "disableTextWrap": false,
+          "editorMode": "code",
+          "expr": "count by(endpoint) (increase(ollama_api_requests_total{endpoint=~\"$endpoint\", http_status=~\"$status\", model=~\"$model\"}[$__range]))",
+          "format": "time_series",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "legendFormat": "{{endpoint}}",
+          "range": true,
+          "refId": "F",
+          "useBackend": false
         }
       ],
-      "description": "Shows the largest failed responses. For actual response content, see application logs or enable logging of error responses."
+      "title": "# Calls by API",
+      "type": "gauge"
     }
   ],
+  "preload": false,
   "refresh": "5s",
   "schemaVersion": 41,
-  "tags": ["HTTP", "API", "Performance", "Latency", "Throughput", "Errors", "Failures"],
+  "tags": [
+    "HTTP",
+    "API",
+    "Performance",
+    "Latency",
+    "Throughput",
+    "Errors",
+    "Failures"
+  ],
   "templating": {
     "list": [
       {
+        "allValue": ".*",
+        "datasource": "Prometheus",
+        "includeAll": true,
+        "label": "Endpoint",
+        "multi": true,
         "name": "endpoint",
-        "type": "query",
-        "datasource": "Prometheus",
-        "refresh": 1,
         "query": "label_values(ollama_api_requests_total, endpoint)",
-        "multi": true,
-        "includeAll": true,
-        "allValue": ".*",
+        "refresh": 1,
         "sort": 1,
-        "hide": 0,
-        "label": "Endpoint"
+        "type": "query"
       },
       {
+        "allValue": ".*",
+        "datasource": "Prometheus",
+        "includeAll": true,
+        "label": "HTTP Status",
+        "multi": true,
         "name": "status",
-        "type": "query",
-        "datasource": "Prometheus",
-        "refresh": 1,
         "query": "label_values(ollama_api_requests_total, http_status)",
-        "multi": true,
-        "includeAll": true,
-        "allValue": ".*",
+        "refresh": 1,
         "sort": 1,
-        "hide": 0,
-        "label": "HTTP Status"
+        "type": "query"
       },
       {
-        "name": "model",
-        "type": "query",
-        "datasource": "Prometheus",
-        "refresh": 1,
-        "query": "label_values(ollama_api_requests_total, model)",
-        "multi": true,
-        "includeAll": true,
         "allValue": ".*",
+        "datasource": "Prometheus",
+        "includeAll": true,
+        "label": "Model",
+        "multi": true,
+        "name": "model",
+        "query": "label_values(ollama_api_requests_total, model)",
+        "refresh": 1,
         "sort": 1,
-        "hide": 0,
-        "label": "Model"
+        "type": "query"
       }
     ]
   },
-  "time": { "from": "now-5m", "to": "now" },
+  "time": {
+    "from": "now-5m",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
   "title": "Ollama4J API Stats",
   "uid": "ollama4j-api-stats",
   "version": 3
