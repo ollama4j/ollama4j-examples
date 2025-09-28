@@ -1,6 +1,6 @@
 package io.github.ollama4j.examples;
 
-import io.github.ollama4j.OllamaAPI;
+import io.github.ollama4j.Ollama;
 import io.github.ollama4j.impl.ConsoleOutputGenerateTokenHandler;
 import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
 import io.github.ollama4j.models.generate.OllamaGenerateStreamObserver;
@@ -20,20 +20,19 @@ public class GenerateWithImageFile {
 
     public static void main(String[] args) throws Exception {
 
-        OllamaAPI ollamaAPI = Utilities.setUp();
+        Ollama ollama = Utilities.setUp();
         // We're just using our quick-setup utility here to instantiate OllamaAPI. Use the following
         // to set it up with your Ollama configuration.
-        // OllamaAPI ollamaAPI = new OllamaAPI("http://your-ollama-host:11434/");
+        // Ollama ollama = new OllamaAPI("http://your-ollama-host:11434/");
         String model = "moondream:1.8b";
-        ollamaAPI.pullModel(model);
+        ollama.pullModel(model);
 
-        nonStreamingWithFile(ollamaAPI, model);
-        streamingWithFile(ollamaAPI, model);
-        nonStreamingWithFileAndFormat(ollamaAPI, model);
+        nonStreamingWithFile(ollama, model);
+        streamingWithFile(ollama, model);
+        nonStreamingWithFileAndFormat(ollama, model);
     }
 
-    public static void nonStreamingWithFile(OllamaAPI ollamaAPI, String modelName)
-            throws Exception {
+    public static void nonStreamingWithFile(Ollama ollama, String modelName) throws Exception {
         // Load image from resources and copy to a temporary file
         InputStream is =
                 GenerateWithImageFile.class.getClassLoader().getResourceAsStream("dog-on-boat.jpg");
@@ -44,7 +43,7 @@ public class GenerateWithImageFile {
         Files.copy(is, tempImageFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
         OllamaResult result =
-                ollamaAPI.generate(
+                ollama.generate(
                         OllamaGenerateRequestBuilder.builder()
                                 .withModel(modelName)
                                 .withPrompt("What's in this image?")
@@ -54,7 +53,7 @@ public class GenerateWithImageFile {
         System.out.println(result.getResponse());
     }
 
-    public static void streamingWithFile(OllamaAPI ollamaAPI, String modelName) throws Exception {
+    public static void streamingWithFile(Ollama ollama, String modelName) throws Exception {
         // Load image from resources and copy to a temporary file
         InputStream is =
                 GenerateWithImageFile.class.getClassLoader().getResourceAsStream("dog-on-boat.jpg");
@@ -65,7 +64,7 @@ public class GenerateWithImageFile {
         Files.copy(is, tempImageFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
         OllamaResult result =
-                ollamaAPI.generate(
+                ollama.generate(
                         OllamaGenerateRequestBuilder.builder()
                                 .withModel(modelName)
                                 .withPrompt("What's in this image?")
@@ -76,7 +75,7 @@ public class GenerateWithImageFile {
         System.out.println(result.getResponse());
     }
 
-    public static void nonStreamingWithFileAndFormat(OllamaAPI ollamaAPI, String modelName)
+    public static void nonStreamingWithFileAndFormat(Ollama ollama, String modelName)
             throws Exception {
         // Load image from resources and copy to a temporary file
         InputStream is =
@@ -112,7 +111,7 @@ public class GenerateWithImageFile {
         format.put("required", Arrays.asList("title", "description"));
 
         OllamaResult result =
-                ollamaAPI.generate(
+                ollama.generate(
                         OllamaGenerateRequestBuilder.builder()
                                 .withModel(modelName)
                                 .withPrompt(

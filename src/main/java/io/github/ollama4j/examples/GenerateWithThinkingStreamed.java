@@ -1,6 +1,6 @@
 package io.github.ollama4j.examples;
 
-import io.github.ollama4j.OllamaAPI;
+import io.github.ollama4j.Ollama;
 import io.github.ollama4j.exceptions.OllamaException;
 import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
 import io.github.ollama4j.models.generate.OllamaGenerateStreamObserver;
@@ -11,18 +11,18 @@ public class GenerateWithThinkingStreamed {
 
     public static void main(String[] args) throws Exception {
 
-        OllamaAPI ollamaAPI = Utilities.setUp();
+        Ollama ollama = Utilities.setUp();
         // We're just using our quick-setup utility here to instantiate OllamaAPI. Use the following
         // to set it up with your Ollama configuration.
-        // OllamaAPI ollamaAPI = new OllamaAPI("http://your-ollama-host:11434/");
+        // Ollama ollama = new OllamaAPI("http://your-ollama-host:11434/");
         String model = "qwen3:0.6b";
-        ollamaAPI.pullModel(model);
+        ollama.pullModel(model);
 
         OllamaGenerateTokenHandler thinkingStreamHandler = new ThinkingStreamHandler();
         OllamaGenerateTokenHandler responseStreamHandler = new ResponseStreamHandler();
 
         new ThinkingModelStreamingGenerator(
-                        model, ollamaAPI, thinkingStreamHandler, responseStreamHandler)
+                        model, ollama, thinkingStreamHandler, responseStreamHandler)
                 .start();
     }
 }
@@ -42,17 +42,17 @@ class ResponseStreamHandler implements OllamaGenerateTokenHandler {
 }
 
 class ThinkingModelStreamingGenerator extends Thread {
-    private final OllamaAPI ollamaAPI;
+    private final Ollama ollama;
     private final OllamaGenerateTokenHandler thinkingStreamHandler;
     private final OllamaGenerateTokenHandler responseStreamHandler;
     private final String model;
 
     ThinkingModelStreamingGenerator(
             String model,
-            OllamaAPI ollamaAPI,
+            Ollama ollama,
             OllamaGenerateTokenHandler thinkingStreamHandler,
             OllamaGenerateTokenHandler responseStreamHandler) {
-        this.ollamaAPI = ollamaAPI;
+        this.ollama = ollama;
         this.model = model;
         this.thinkingStreamHandler = thinkingStreamHandler;
         this.responseStreamHandler = responseStreamHandler;
@@ -61,7 +61,7 @@ class ThinkingModelStreamingGenerator extends Thread {
     @Override
     public void run() {
         try {
-            ollamaAPI.generate(
+            ollama.generate(
                     OllamaGenerateRequestBuilder.builder()
                             .withModel(model)
                             .withPrompt("What is the capital of France")

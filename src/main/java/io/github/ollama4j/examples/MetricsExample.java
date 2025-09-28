@@ -1,6 +1,6 @@
 package io.github.ollama4j.examples;
 
-import io.github.ollama4j.OllamaAPI;
+import io.github.ollama4j.Ollama;
 import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
 import io.github.ollama4j.models.response.OllamaResult;
 import io.github.ollama4j.utils.OptionsBuilder;
@@ -33,9 +33,9 @@ public class MetricsExample {
 
     public static void main(String[] args) {
         try {
-            // Create OllamaAPI instance with metrics enabled
-            OllamaAPI ollamaAPI = new OllamaAPI("http://192.168.29.229:11434/");
-            ollamaAPI.setMetricsEnabled(true);
+            // Create Ollama instance with metrics enabled
+            Ollama ollama = new Ollama("http://192.168.29.229:11434/");
+            ollama.setMetricsEnabled(true);
 
             // Start Prometheus metrics HTTP server
             HTTPServer metricsServer = new HTTPServer(8080);
@@ -53,7 +53,7 @@ public class MetricsExample {
 
             // Test ping endpoint
             System.out.println("Testing ping...");
-            boolean isReachable = ollamaAPI.ping();
+            boolean isReachable = ollama.ping();
             System.out.println("Ollama server reachable: " + isReachable);
 
             if (isReachable) {
@@ -64,7 +64,7 @@ public class MetricsExample {
 
                 try {
                     var result =
-                            ollamaAPI.generate(
+                            ollama.generate(
                                     OllamaGenerateRequestBuilder.builder()
                                             .withModel("qwen3:0.6b")
                                             .withPrompt(
@@ -87,7 +87,7 @@ public class MetricsExample {
                 // try {
                 // OllamaEmbedRequest embedRequest =
                 // new OllamaEmbedRequest("qwen3:0.6b", List.of("Hello world"));
-                // OllamaEmbedResult embedResponse = ollamaAPI.embed(embedRequest);
+                // OllamaEmbedResult embedResponse = ollama.embed(embedRequest);
                 // System.out.println(
                 // "Embedding generated with "
                 // + embedResponse.getEmbeddings().size()
@@ -100,7 +100,7 @@ public class MetricsExample {
 
                 try {
                     OllamaResult res =
-                            ollamaAPI.generate(
+                            ollama.generate(
                                     OllamaGenerateRequestBuilder.builder()
                                             .withModel("qwen3:0.6b")
                                             .withPrompt("who are you?")

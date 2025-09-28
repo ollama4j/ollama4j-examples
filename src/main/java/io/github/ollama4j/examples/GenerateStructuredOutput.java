@@ -1,6 +1,6 @@
 package io.github.ollama4j.examples;
 
-import io.github.ollama4j.OllamaAPI;
+import io.github.ollama4j.Ollama;
 import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
 import io.github.ollama4j.models.response.OllamaResult;
 import io.github.ollama4j.utils.Utilities;
@@ -12,12 +12,12 @@ public class GenerateStructuredOutput {
 
     public static void main(String[] args) throws Exception {
 
-        OllamaAPI ollamaAPI = Utilities.setUp();
+        Ollama ollama = Utilities.setUp();
         // We're just using our quick-setup utility here to instantiate OllamaAPI. Use the following
         // to set it up with your Ollama configuration.
-        // OllamaAPI ollamaAPI = new OllamaAPI("http://your-ollama-host:11434/");
+        // Ollama ollama = new OllamaAPI("http://your-ollama-host:11434/");
         String model = "qwen3:0.6b";
-        ollamaAPI.pullModel(model);
+        ollama.pullModel(model);
 
         String prompt =
                 "Batman is thirty years old and is busy saving Gotham. Respond using a formatted"
@@ -39,7 +39,7 @@ public class GenerateStructuredOutput {
         format.put("required", Arrays.asList("ageOfPerson", "heroName"));
 
         OllamaResult result =
-                ollamaAPI.generate(
+                ollama.generate(
                         OllamaGenerateRequestBuilder.builder()
                                 .withModel(model)
                                 .withPrompt(prompt)

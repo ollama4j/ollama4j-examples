@@ -1,11 +1,11 @@
 package io.github.ollama4j.utils;
 
-import io.github.ollama4j.OllamaAPI;
+import io.github.ollama4j.Ollama;
 import java.util.Properties;
 
 public class Utilities {
-    public static OllamaAPI setUp() throws Exception {
-        OllamaAPI api;
+    public static Ollama setUp() throws Exception {
+        Ollama api;
         int requestTimeoutSeconds = 60;
         int numberOfRetriesForModelPull = 5;
 
@@ -44,7 +44,7 @@ public class Utilities {
 
             if (useExternalOllamaHost) {
                 System.out.println("Using external Ollama host...");
-                api = new OllamaAPI(ollamaHost);
+                api = new Ollama(ollamaHost);
             } else {
                 throw new RuntimeException(
                         "USE_EXTERNAL_OLLAMA_HOST is not set so, we will be using Testcontainers"

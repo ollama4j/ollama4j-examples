@@ -1,6 +1,6 @@
 package io.github.ollama4j.examples;
 
-import io.github.ollama4j.OllamaAPI;
+import io.github.ollama4j.Ollama;
 import io.github.ollama4j.examples.tools.toolspecs.EmployeeFinderToolSpec;
 import io.github.ollama4j.exceptions.OllamaException;
 import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
@@ -15,22 +15,22 @@ import java.io.IOException;
 public class SimpleToolCallingWithStreamingExample {
     public static void main(String[] args) throws Exception {
 
-        OllamaAPI ollamaAPI = Utilities.setUp();
+        Ollama ollama = Utilities.setUp();
         // We're just using our quick-setup utility here to instantiate OllamaAPI. Use the following
         // to set it up with your Ollama configuration.
-        // OllamaAPI ollamaAPI = new OllamaAPI("http://your-ollama-host:11434/");
+        // Ollama ollama = new OllamaAPI("http://your-ollama-host:11434/");
         String model = "mistral:7b";
-        askModel(ollamaAPI, model);
+        askModel(ollama, model);
     }
 
-    public static void askModel(OllamaAPI ollamaAPI, String modelName)
+    public static void askModel(Ollama ollama, String modelName)
             throws OllamaException, IOException {
 
-        ollamaAPI.pullModel(modelName);
+        ollama.pullModel(modelName);
 
         Tools.Tool toolSpecification = EmployeeFinderToolSpec.getSpecification();
 
-        ollamaAPI.registerTool(toolSpecification);
+        ollama.registerTool(toolSpecification);
 
         String prompt = "Give me the details of the employee named 'Rahul Kumar'?";
         OllamaGenerateTokenHandler handler =
@@ -41,7 +41,7 @@ public class SimpleToolCallingWithStreamingExample {
                     }
                 };
         OllamaResult toolsResult =
-                ollamaAPI.generate(
+                ollama.generate(
                         OllamaGenerateRequestBuilder.builder()
                                 .withModel(modelName)
                                 .withPrompt(prompt)

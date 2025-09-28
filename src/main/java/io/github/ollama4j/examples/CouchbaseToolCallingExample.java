@@ -74,30 +74,30 @@ public class CouchbaseToolCallingExample {
     //                                        }));
     //
     //
-    // OllamaAPI ollamaAPI = Utilities.setUp();
+    // Ollama ollama = Utilities.setUp();
     // We're just using our quick-setup utility here to instantiate OllamaAPI. Use the following to
     // set it up with your Ollama configuration.
-    // OllamaAPI ollamaAPI = new OllamaAPI("http://your-ollama-host:11434/");
+    // Ollama ollama = new OllamaAPI("http://your-ollama-host:11434/");
     //
     //        Tools.ToolSpecification callSignFinderToolSpec =
     //                getCallSignFinderToolSpec(cluster, bucketName);
     //        Tools.ToolSpecification callSignUpdaterToolSpec =
     //                getCallSignUpdaterToolSpec(cluster, bucketName);
     //
-    //        ollamaAPI.registerTool(callSignFinderToolSpec);
-    //        ollamaAPI.registerTool(callSignUpdaterToolSpec);
+    //        ollama.registerTool(callSignFinderToolSpec);
+    //        ollama.registerTool(callSignUpdaterToolSpec);
     //
     //        OllamaGenerateRequestBuilder builder =
     // OllamaGenerateRequestBuilder.builder().withModel(modelName);
     //
     //        String prompt1 = "What is the call-sign of Astraeus?";
     //        OllamaResult res1 =
-    // ollamaAPI.generate(builder.withPrompt(prompt1).withUseTools(true).build(), null);
+    // ollama.generate(builder.withPrompt(prompt1).withUseTools(true).build(), null);
     //        System.out.println("Result 1: " + res1.getResponse());
     //
     //
     //        // for (OllamaToolsResult.ToolResult r :
-    //        //         ollamaAPI
+    //        //         ollama
     //        //                 .generateWithTools(
     //        //                         modelName,
     //        //                         new Tools.PromptBuilder()
@@ -118,10 +118,10 @@ public class CouchbaseToolCallingExample {
     //
     //        String prompt2 = "I want to code name Astraeus as STARBOUND";
     //        OllamaResult res2 =
-    // ollamaAPI.generate(builder.withPrompt(prompt2).withUseTools(true).build(), null);
+    // ollama.generate(builder.withPrompt(prompt2).withUseTools(true).build(), null);
     //        System.out.println("Result 2: " + res2.getResponse());
     //        // for (OllamaToolsResult.ToolResult r :
-    //        //         ollamaAPI
+    //        //         ollama
     //        //                 .generateWithTools(
     //        //                         modelName,
     //        //                         new Tools.PromptBuilder()
@@ -140,10 +140,10 @@ public class CouchbaseToolCallingExample {
     //
     //        String prompt3 = "What is the call-sign of Astraeus?";
     //        OllamaResult res3 =
-    // ollamaAPI.generate(builder.withPrompt(prompt3).withUseTools(true).build(), null);
+    // ollama.generate(builder.withPrompt(prompt3).withUseTools(true).build(), null);
     //        System.out.println("Result 3: " + res3.getResponse());
     //        // for (OllamaToolsResult.ToolResult r :
-    //        //         ollamaAPI
+    //        //         ollama
     //        //                 .generateWithTools(
     //        //                         modelName,
     //        //                         new Tools.PromptBuilder()

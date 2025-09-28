@@ -1,6 +1,6 @@
 package io.github.ollama4j.examples;
 
-import io.github.ollama4j.OllamaAPI;
+import io.github.ollama4j.Ollama;
 import io.github.ollama4j.exceptions.OllamaException;
 import io.github.ollama4j.models.chat.*;
 import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
@@ -14,21 +14,21 @@ import java.io.IOException;
 public class NewStructure {
     public static void main(String[] args) throws Exception {
 
-        OllamaAPI ollamaAPI = Utilities.setUp();
+        Ollama ollama = Utilities.setUp();
         // We're just using our quick-setup utility here to instantiate OllamaAPI. Use the following
         // to set it up with your Ollama configuration.
-        // OllamaAPI ollamaAPI = new OllamaAPI("http://your-ollama-host:11434/");
-        generateStreaming(ollamaAPI);
-        generateStreamingThinking(ollamaAPI);
-        generateAsync(ollamaAPI);
-        generate(ollamaAPI);
-        chat(ollamaAPI);
-        chatStreaming(ollamaAPI);
+        // Ollama ollama = new OllamaAPI("http://your-ollama-host:11434/");
+        generateStreaming(ollama);
+        generateStreamingThinking(ollama);
+        generateAsync(ollama);
+        generate(ollama);
+        chat(ollama);
+        chatStreaming(ollama);
     }
 
-    public static void generateAsync(OllamaAPI ollamaAPI) throws Exception {
+    public static void generateAsync(Ollama ollama) throws Exception {
         OllamaAsyncResultStreamer resultStreamer =
-                ollamaAPI.generateAsync("qwen3:0.6b", "Who are you", false, true);
+                ollama.generateAsync("qwen3:0.6b", "Who are you", false, true);
         int pollIntervalMilliseconds = 1000;
         while (true) {
             String thinkingTokens = resultStreamer.getThinkingResponseStream().poll();
@@ -43,7 +43,7 @@ public class NewStructure {
         System.out.println("Complete response: " + resultStreamer.getCompleteResponse());
     }
 
-    public static void chat(OllamaAPI ollamaAPI) throws Exception {
+    public static void chat(Ollama ollama) throws Exception {
         OllamaChatRequestBuilder builder =
                 OllamaChatRequestBuilder.builder().withModel("qwen3:0.6b");
 
@@ -53,7 +53,7 @@ public class NewStructure {
                         .withThinking(true)
                         .build();
         // start conversation with model
-        OllamaChatResult chatResult = ollamaAPI.chat(requestModel, null);
+        OllamaChatResult chatResult = ollama.chat(requestModel, null);
         System.out.println(
                 "First thinking: "
                         + chatResult.getResponseModel().getMessage().getThinking().toUpperCase());
@@ -67,7 +67,7 @@ public class NewStructure {
                         .withMessage(OllamaChatMessageRole.USER, "And tell me more")
                         .build();
         // "continue" conversation with model
-        chatResult = ollamaAPI.chat(requestModel, null);
+        chatResult = ollama.chat(requestModel, null);
         System.out.println(
                 "Second thinking: "
                         + chatResult.getResponseModel().getMessage().getThinking().toUpperCase());
@@ -77,7 +77,7 @@ public class NewStructure {
         System.out.println("Chat History: " + chatResult.getChatHistory());
     }
 
-    public static void chatStreaming(OllamaAPI ollamaAPI) throws Exception {
+    public static void chatStreaming(Ollama ollama) throws Exception {
         OllamaChatRequestBuilder builder =
                 OllamaChatRequestBuilder.builder().withModel("qwen3:0.6b");
 
@@ -100,19 +100,19 @@ public class NewStructure {
 
         // pass the stream handler to the chat method
         OllamaChatResult res =
-                ollamaAPI.chat(
+                ollama.chat(
                         chatRequest,
                         new OllamaChatStreamObserver(thinkingStreamHandler, responseStreamHandler));
         System.out.println(
                 "\n\n[Full response]: " + res.getResponseModel().getMessage().getResponse());
     }
 
-    public static void generate(OllamaAPI ollamaAPI)
+    public static void generate(Ollama ollama)
             throws OllamaException, IOException, InterruptedException {
         String model = "gemma3:270m";
         // String model = "qwen3:0.6b";
         OllamaResult ollamaResult =
-                ollamaAPI.generate(
+                ollama.generate(
                         OllamaGenerateRequestBuilder.builder()
                                 .withModel(model)
                                 .withPrompt("Who are you")
@@ -125,10 +125,10 @@ public class NewStructure {
         System.out.println(ollamaResult);
     }
 
-    public static void generateStreaming(OllamaAPI ollamaAPI)
+    public static void generateStreaming(Ollama ollama)
             throws OllamaException, IOException, InterruptedException {
         OllamaResult ollamaResult =
-                ollamaAPI.generate(
+                ollama.generate(
                         OllamaGenerateRequestBuilder.builder()
                                 .withModel("qwen3:0.6b")
                                 .withPrompt("Who are you")
@@ -140,10 +140,10 @@ public class NewStructure {
         System.out.println("Response: " + ollamaResult.getResponse());
     }
 
-    public static void generateStreamingThinking(OllamaAPI ollamaAPI)
+    public static void generateStreamingThinking(Ollama ollama)
             throws OllamaException, IOException, InterruptedException {
         OllamaResult ollamaResult =
-                ollamaAPI.generate(
+                ollama.generate(
                         OllamaGenerateRequestBuilder.builder()
                                 .withModel("qwen3:0.6b")
                                 .withPrompt("Who are you")

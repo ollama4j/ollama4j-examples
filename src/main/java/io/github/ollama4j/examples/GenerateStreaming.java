@@ -1,6 +1,6 @@
 package io.github.ollama4j.examples;
 
-import io.github.ollama4j.OllamaAPI;
+import io.github.ollama4j.Ollama;
 import io.github.ollama4j.exceptions.OllamaException;
 import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
 import io.github.ollama4j.models.generate.OllamaGenerateStreamObserver;
@@ -10,16 +10,16 @@ import io.github.ollama4j.utils.Utilities;
 public class GenerateStreaming {
     public static void main(String[] args) throws Exception {
 
-        OllamaAPI ollamaAPI = Utilities.setUp();
+        Ollama ollama = Utilities.setUp();
         // We're just using our quick-setup utility here to instantiate OllamaAPI. Use the following
         // to set it up with your Ollama configuration.
-        // OllamaAPI ollamaAPI = new OllamaAPI("http://your-ollama-host:11434/");
+        // Ollama ollama = new OllamaAPI("http://your-ollama-host:11434/");
         String model = "mistral:7b";
-        ollamaAPI.pullModel(model);
+        ollama.pullModel(model);
 
         OllamaGenerateTokenHandler streamHandler = new MyStreamHandler();
 
-        new MyStreamingGenerator(model, ollamaAPI, streamHandler).start();
+        new MyStreamingGenerator(model, ollama, streamHandler).start();
     }
 }
 
@@ -38,13 +38,12 @@ class MyStreamHandler implements OllamaGenerateTokenHandler {
 }
 
 class MyStreamingGenerator extends Thread {
-    private final OllamaAPI ollamaAPI;
+    private final Ollama ollama;
     private OllamaGenerateTokenHandler streamHandler = new MyStreamHandler();
     private String model;
 
-    MyStreamingGenerator(
-            String model, OllamaAPI ollamaAPI, OllamaGenerateTokenHandler streamHandler) {
-        this.ollamaAPI = ollamaAPI;
+    MyStreamingGenerator(String model, Ollama ollama, OllamaGenerateTokenHandler streamHandler) {
+        this.ollama = ollama;
         this.model = model;
         this.streamHandler = streamHandler;
     }
@@ -52,7 +51,7 @@ class MyStreamingGenerator extends Thread {
     @Override
     public void run() {
         try {
-            ollamaAPI.generate(
+            ollama.generate(
                     OllamaGenerateRequestBuilder.builder()
                             .withModel(model)
                             .withPrompt(

@@ -1,6 +1,6 @@
 package io.github.ollama4j.examples;
 
-import io.github.ollama4j.OllamaAPI;
+import io.github.ollama4j.Ollama;
 import io.github.ollama4j.exceptions.OllamaException;
 import io.github.ollama4j.models.generate.OllamaGenerateRequest;
 import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
@@ -16,16 +16,16 @@ import java.util.Map;
 public class SimpleToolCallingExampleNew {
     public static void main(String[] args) throws Exception {
 
-        OllamaAPI ollamaAPI = Utilities.setUp();
+        Ollama ollama = Utilities.setUp();
         // We're just using our quick-setup utility here to instantiate OllamaAPI. Use the following
         // to set it up with your Ollama configuration.
-        // OllamaAPI ollamaAPI = new OllamaAPI("http://your-ollama-host:11434/");
+        // Ollama ollama = new OllamaAPI("http://your-ollama-host:11434/");
         String model = "mistral:7b";
-        askModel(ollamaAPI, model);
+        askModel(ollama, model);
     }
 
-    public static void askModel(OllamaAPI ollamaAPI, String modelName) throws OllamaException {
-        ollamaAPI.pullModel(modelName);
+    public static void askModel(Ollama ollama, String modelName) throws OllamaException {
+        ollama.pullModel(modelName);
 
         String prompt1 = "How is the weather in Bengaluru";
         String prompt2 = "How much does diesel cost in Bengaluru";
@@ -101,7 +101,7 @@ public class SimpleToolCallingExampleNew {
         List<Tools.Tool> tools = new ArrayList<>();
         tools.add(weatherTool);
         tools.add(fuelPriceTool);
-        ollamaAPI.registerTools(tools);
+        ollama.registerTools(tools);
 
         OllamaGenerateRequest request1 =
                 OllamaGenerateRequestBuilder.builder()
@@ -121,8 +121,8 @@ public class SimpleToolCallingExampleNew {
                         .build();
 
         OllamaGenerateStreamObserver handler = new OllamaGenerateStreamObserver(null, null);
-        OllamaResult toolsResult1 = ollamaAPI.generate(request1, handler);
-        OllamaResult toolsResult2 = ollamaAPI.generate(request2, handler);
+        OllamaResult toolsResult1 = ollama.generate(request1, handler);
+        OllamaResult toolsResult2 = ollama.generate(request2, handler);
         System.out.printf("[Result of executing tool]: %s%n", toolsResult1.getResponse());
         System.out.printf("[Result of executing tool]: %s%n", toolsResult2.getResponse());
     }
