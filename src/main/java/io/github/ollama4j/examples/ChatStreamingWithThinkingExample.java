@@ -47,6 +47,5 @@ public class ChatStreamingWithThinkingExample {
                         chatRequest2,
                         new OllamaChatStreamObserver(thinkingStreamHandler, responseStreamHandler));
         boolean done = chatResult2.getResponseModel().isDone();
-
     }
 }

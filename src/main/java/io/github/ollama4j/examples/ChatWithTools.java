@@ -33,7 +33,8 @@ public class ChatWithTools {
 
         requestModel =
                 builder.withMessages(chatResult.getChatHistory())
-                        .withMessage(OllamaChatMessageRole.USER, "What's his address and phone number?")
+                        .withMessage(
+                                OllamaChatMessageRole.USER, "What's his address and phone number?")
                         .build();
 
         chatResult = ollamaAPI.chat(requestModel, null);

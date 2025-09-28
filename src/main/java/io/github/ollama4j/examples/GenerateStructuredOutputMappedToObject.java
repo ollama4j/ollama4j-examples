@@ -30,21 +30,28 @@ public class GenerateStructuredOutputMappedToObject {
                                 "age",
                                 new HashMap<String, Object>() {
                                     {
-                                        put("type",  Integer.class.getSimpleName().toLowerCase());
+                                        put("type", Integer.class.getSimpleName().toLowerCase());
                                     }
                                 });
                         put(
                                 "name",
                                 new HashMap<String, Object>() {
                                     {
-                                        put("type",  String.class.getSimpleName().toLowerCase());
+                                        put("type", String.class.getSimpleName().toLowerCase());
                                     }
                                 });
                     }
                 });
         format.put("required", Arrays.asList("age", "name"));
 
-        OllamaResult result = ollamaAPI.generate(OllamaGenerateRequestBuilder.builder().withModel(model).withPrompt(prompt).withFormat(format).build(), null);
+        OllamaResult result =
+                ollamaAPI.generate(
+                        OllamaGenerateRequestBuilder.builder()
+                                .withModel(model)
+                                .withPrompt(prompt)
+                                .withFormat(format)
+                                .build(),
+                        null);
 
         HeroInfo hero = result.as(HeroInfo.class);
         System.out.println(hero);
@@ -58,7 +65,6 @@ public class GenerateStructuredOutputMappedToObject {
 @Setter
 class HeroInfo {
     private String name;
-    private String
-            age; // using string here as the model can spit out wierd value for age. It does
+    private String age; // using string here as the model can spit out wierd value for age. It does
     // not always return a number :)
 }

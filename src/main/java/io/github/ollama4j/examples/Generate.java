@@ -2,9 +2,7 @@ package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
-import io.github.ollama4j.models.generate.OllamaGenerateStreamObserver;
 import io.github.ollama4j.models.response.OllamaResult;
-import io.github.ollama4j.utils.OptionsBuilder;
 import io.github.ollama4j.utils.Utilities;
 
 public class Generate {
@@ -15,7 +13,12 @@ public class Generate {
         ollamaAPI.pullModel(model);
 
         OllamaResult result =
-                ollamaAPI.generate(OllamaGenerateRequestBuilder.builder().withModel(model).withPrompt("Who are you?").build(), null);
+                ollamaAPI.generate(
+                        OllamaGenerateRequestBuilder.builder()
+                                .withModel(model)
+                                .withPrompt("Who are you?")
+                                .build(),
+                        null);
 
         System.out.println(result.getResponse());
     }

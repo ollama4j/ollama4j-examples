@@ -6,12 +6,10 @@ import com.couchbase.client.java.Scope;
 import com.couchbase.client.java.json.JsonObject;
 import com.couchbase.client.java.query.QueryResult;
 import io.github.ollama4j.tools.ToolFunction;
-
 import java.time.Duration;
 import java.util.Map;
 
-public
-class AirlineCallsignQueryToolFunction implements ToolFunction {
+public class AirlineCallsignQueryToolFunction implements ToolFunction {
     private final String bucketName;
     private final Cluster cluster;
 

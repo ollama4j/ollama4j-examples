@@ -26,20 +26,38 @@ public class MultiToolRegistryExample {
         ollamaAPI.registerTool(employeeFinderToolSpecification);
 
         // Use the fuel-price tool specifications in the prompt
-        OllamaResult res = ollamaAPI
-                .generate(OllamaGenerateRequestBuilder.builder().withModel(model).withUseTools(true)
-                        .withPrompt("How much does petrol cost in Bengaluru?").build(), null);
+        OllamaResult res =
+                ollamaAPI.generate(
+                        OllamaGenerateRequestBuilder.builder()
+                                .withModel(model)
+                                .withUseTools(true)
+                                .withPrompt("How much does petrol cost in Bengaluru?")
+                                .build(),
+                        null);
 
         // Use the weather tool specifications in the prompt
-        OllamaResult res2 = ollamaAPI
-                .generate(OllamaGenerateRequestBuilder.builder().withModel(model).withUseTools(true)
-                        .withPrompt("What is the current weather in Bengaluru?").build(), null);
+        OllamaResult res2 =
+                ollamaAPI.generate(
+                        OllamaGenerateRequestBuilder.builder()
+                                .withModel(model)
+                                .withUseTools(true)
+                                .withPrompt("What is the current weather in Bengaluru?")
+                                .build(),
+                        null);
 
         // Use the database query tool specifications in the prompt
-        OllamaResult res3 = ollamaAPI
-                .generate(OllamaGenerateRequestBuilder.builder().withModel(model).withUseTools(true)
-                        .withPrompt("Give me the details of the employee named Rahul Kumar and tell me if he would have like the weather in Bengaluru compared to his city and whether petrol is decently priced for him for his daily commute?")
-                        .build(), null);
+        OllamaResult res3 =
+                ollamaAPI.generate(
+                        OllamaGenerateRequestBuilder.builder()
+                                .withModel(model)
+                                .withUseTools(true)
+                                .withPrompt(
+                                        "Give me the details of the employee named Rahul Kumar and"
+                                            + " tell me if he would have like the weather in"
+                                            + " Bengaluru compared to his city and whether petrol"
+                                            + " is decently priced for him for his daily commute?")
+                                .build(),
+                        null);
 
         System.out.println("[Response 1]: " + res.getResponse());
         System.out.println("[Response 2]: " + res2.getResponse());

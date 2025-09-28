@@ -1,15 +1,11 @@
 package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
-import io.github.ollama4j.exceptions.OllamaBaseException;
-import io.github.ollama4j.models.generate.OllamaGenerateRequest;
+import io.github.ollama4j.exceptions.OllamaException;
 import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
 import io.github.ollama4j.models.generate.OllamaGenerateStreamObserver;
 import io.github.ollama4j.models.generate.OllamaGenerateTokenHandler;
-import io.github.ollama4j.utils.OptionsBuilder;
 import io.github.ollama4j.utils.Utilities;
-
-import java.io.IOException;
 
 public class GenerateStreaming {
     public static void main(String[] args) throws Exception {
@@ -53,10 +49,16 @@ class MyStreamingGenerator extends Thread {
     public void run() {
         try {
             ollamaAPI.generate(
-                    OllamaGenerateRequestBuilder.builder().withModel(model).withPrompt("Give me the summary of learnings from Bhagawad Gita point wise.")
-                            .withRaw(false).withThink(false).build(),
+                    OllamaGenerateRequestBuilder.builder()
+                            .withModel(model)
+                            .withPrompt(
+                                    "Give me the summary of learnings from Bhagawad Gita point"
+                                            + " wise.")
+                            .withRaw(false)
+                            .withThink(false)
+                            .build(),
                     new OllamaGenerateStreamObserver(null, streamHandler));
-        } catch (OllamaBaseException e) {
+        } catch (OllamaException e) {
             throw new RuntimeException(e);
         }
     }

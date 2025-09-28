@@ -26,19 +26,21 @@ public class ChatStreamingExample {
         OllamaChatStreamObserver streamObserver = new OllamaChatStreamObserver();
 
         // If thinking tokens are found, print them in lowercase :)
-        streamObserver.setThinkingStreamHandler(new OllamaGenerateTokenHandler() {
-            @Override
-            public void accept(String message) {
-                System.out.print(message.toUpperCase());
-            }
-        });
+        streamObserver.setThinkingStreamHandler(
+                new OllamaGenerateTokenHandler() {
+                    @Override
+                    public void accept(String message) {
+                        System.out.print(message.toUpperCase());
+                    }
+                });
         // Response tokens to be printed in lowercase
-        streamObserver.setResponseStreamHandler(new OllamaGenerateTokenHandler() {
-            @Override
-            public void accept(String message) {
-                System.out.print(message.toLowerCase());
-            }
-        });
+        streamObserver.setResponseStreamHandler(
+                new OllamaGenerateTokenHandler() {
+                    @Override
+                    public void accept(String message) {
+                        System.out.print(message.toLowerCase());
+                    }
+                });
 
         ollamaAPI.chat(chatRequest, streamObserver);
     }

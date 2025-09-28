@@ -3,7 +3,9 @@ package io.github.ollama4j.examples.tools.toolfunctions;
 import java.util.Map;
 
 public class FuelPriceToolFunction {
-    private FuelPriceToolFunction() { /* empty constructor */ }
+    private FuelPriceToolFunction() {
+        /* empty constructor */
+    }
 
     public static String getCurrentFuelPrice(Map<String, Object> arguments) {
         // Get details from fuel price API

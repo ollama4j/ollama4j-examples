@@ -6,7 +6,6 @@ import io.github.ollama4j.models.chat.OllamaChatRequest;
 import io.github.ollama4j.models.chat.OllamaChatRequestBuilder;
 import io.github.ollama4j.models.chat.OllamaChatResult;
 import io.github.ollama4j.utils.Utilities;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;

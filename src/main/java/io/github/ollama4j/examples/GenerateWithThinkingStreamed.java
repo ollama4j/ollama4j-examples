@@ -1,14 +1,11 @@
 package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
-import io.github.ollama4j.exceptions.OllamaBaseException;
+import io.github.ollama4j.exceptions.OllamaException;
 import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
 import io.github.ollama4j.models.generate.OllamaGenerateStreamObserver;
 import io.github.ollama4j.models.generate.OllamaGenerateTokenHandler;
-import io.github.ollama4j.utils.OptionsBuilder;
 import io.github.ollama4j.utils.Utilities;
-
-import java.io.IOException;
 
 public class GenerateWithThinkingStreamed {
 
@@ -21,7 +18,7 @@ public class GenerateWithThinkingStreamed {
         OllamaGenerateTokenHandler responseStreamHandler = new ResponseStreamHandler();
 
         new ThinkingModelStreamingGenerator(
-                model, ollamaAPI, thinkingStreamHandler, responseStreamHandler)
+                        model, ollamaAPI, thinkingStreamHandler, responseStreamHandler)
                 .start();
     }
 }
@@ -61,11 +58,15 @@ class ThinkingModelStreamingGenerator extends Thread {
     public void run() {
         try {
             ollamaAPI.generate(
-                    OllamaGenerateRequestBuilder.builder().withModel(model).withPrompt("What is the capital of France")
-                            .withRaw(false).withThink(true).build(),
+                    OllamaGenerateRequestBuilder.builder()
+                            .withModel(model)
+                            .withPrompt("What is the capital of France")
+                            .withRaw(false)
+                            .withThink(true)
+                            .build(),
                     new OllamaGenerateStreamObserver(
                             this.thinkingStreamHandler, this.responseStreamHandler));
-        } catch (OllamaBaseException e) {
+        } catch (OllamaException e) {
             throw new RuntimeException(e);
         }
     }

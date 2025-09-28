@@ -9,15 +9,11 @@
 package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
-import io.github.ollama4j.models.embeddings.OllamaEmbedRequestModel;
-import io.github.ollama4j.models.embeddings.OllamaEmbedResponseModel;
 import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
 import io.github.ollama4j.models.response.OllamaResult;
 import io.github.ollama4j.utils.OptionsBuilder;
 import io.prometheus.client.exporter.HTTPServer;
-
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -75,9 +71,16 @@ public class MetricsExample {
                 format.put("type", "json");
 
                 try {
-                    var result = ollamaAPI.generate(OllamaGenerateRequestBuilder.builder().withModel("qwen3:0.6b")
-                            .withPrompt("Generate a simple JSON object with name and age fields").withFormat(format)
-                            .build(), null);
+                    var result =
+                            ollamaAPI.generate(
+                                    OllamaGenerateRequestBuilder.builder()
+                                            .withModel("qwen3:0.6b")
+                                            .withPrompt(
+                                                    "Generate a simple JSON object with name and"
+                                                            + " age fields")
+                                            .withFormat(format)
+                                            .build(),
+                                    null);
 
                     System.out.println("Generated response: " + result.getResponse());
                 } catch (Exception e) {
@@ -90,9 +93,9 @@ public class MetricsExample {
                 // // Test embed endpoint
                 // System.out.println("Testing embed...");
                 // try {
-                // OllamaEmbedRequestModel embedRequest =
-                // new OllamaEmbedRequestModel("qwen3:0.6b", List.of("Hello world"));
-                // OllamaEmbedResponseModel embedResponse = ollamaAPI.embed(embedRequest);
+                // OllamaEmbedRequest embedRequest =
+                // new OllamaEmbedRequest("qwen3:0.6b", List.of("Hello world"));
+                // OllamaEmbedResponse embedResponse = ollamaAPI.embed(embedRequest);
                 // System.out.println(
                 // "Embedding generated with "
                 // + embedResponse.getEmbeddings().size()
@@ -104,16 +107,22 @@ public class MetricsExample {
                 // }
 
                 try {
-                    OllamaResult res = ollamaAPI.generate(OllamaGenerateRequestBuilder.builder().withModel("qwen3:0.6b")
-                            .withPrompt("who are you?").withRaw(false).withThink(true)
-                            .withOptions(new OptionsBuilder().setTemperature(0.6f).build()).build(), null);
-                    System.out.println(
-                            "Generated response "
-                                    + res.getResponse());
+                    OllamaResult res =
+                            ollamaAPI.generate(
+                                    OllamaGenerateRequestBuilder.builder()
+                                            .withModel("qwen3:0.6b")
+                                            .withPrompt("who are you?")
+                                            .withRaw(false)
+                                            .withThink(true)
+                                            .withOptions(
+                                                    new OptionsBuilder()
+                                                            .setTemperature(0.6f)
+                                                            .build())
+                                            .build(),
+                                    null);
+                    System.out.println("Generated response " + res.getResponse());
                 } catch (Exception e) {
-                    System.out.println(
-                            "Generate failed"
-                                    + e.getMessage());
+                    System.out.println("Generate failed" + e.getMessage());
                 }
             }
 

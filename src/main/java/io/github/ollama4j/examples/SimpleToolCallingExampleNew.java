@@ -9,7 +9,7 @@
 package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
-import io.github.ollama4j.exceptions.OllamaBaseException;
+import io.github.ollama4j.exceptions.OllamaException;
 import io.github.ollama4j.models.generate.OllamaGenerateRequest;
 import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
 import io.github.ollama4j.models.generate.OllamaGenerateStreamObserver;
@@ -17,7 +17,6 @@ import io.github.ollama4j.models.response.OllamaResult;
 import io.github.ollama4j.tools.Tools;
 import io.github.ollama4j.utils.OptionsBuilder;
 import io.github.ollama4j.utils.Utilities;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +28,7 @@ public class SimpleToolCallingExampleNew {
         askModel(ollamaAPI, model);
     }
 
-    public static void askModel(OllamaAPI ollamaAPI, String modelName) throws OllamaBaseException {
+    public static void askModel(OllamaAPI ollamaAPI, String modelName) throws OllamaException {
         ollamaAPI.pullModel(modelName);
 
         String prompt1 = "How is the weather in Bengaluru";
@@ -49,9 +48,9 @@ public class SimpleToolCallingExampleNew {
                                                                         .type("string")
                                                                         .description(
                                                                                 "The city to get"
-                                                                                        + " the weather"
-                                                                                        + " details"
-                                                                                        + " for.")
+                                                                                    + " the weather"
+                                                                                    + " details"
+                                                                                    + " for.")
                                                                         .required(true)
                                                                         .build())))
                                         .build())
@@ -77,8 +76,8 @@ public class SimpleToolCallingExampleNew {
                                                                         .type("string")
                                                                         .description(
                                                                                 "The city to get"
-                                                                                        + " the fuel"
-                                                                                        + " price for.")
+                                                                                    + " the fuel"
+                                                                                    + " price for.")
                                                                         .required(true)
                                                                         .build(),
                                                                 "fuelType",
@@ -86,9 +85,9 @@ public class SimpleToolCallingExampleNew {
                                                                         .type("string")
                                                                         .description(
                                                                                 "The fuel type -"
-                                                                                        + " either"
-                                                                                        + " petrol or"
-                                                                                        + " diesel.")
+                                                                                    + " either"
+                                                                                    + " petrol or"
+                                                                                    + " diesel.")
                                                                         .required(true)
                                                                         .build())))
                                         .build())
@@ -130,6 +129,5 @@ public class SimpleToolCallingExampleNew {
         OllamaResult toolsResult2 = ollamaAPI.generate(request2, handler);
         System.out.printf("[Result of executing tool]: %s%n", toolsResult1.getResponse());
         System.out.printf("[Result of executing tool]: %s%n", toolsResult2.getResponse());
-
     }
 }

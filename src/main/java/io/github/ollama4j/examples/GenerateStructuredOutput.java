@@ -4,7 +4,6 @@ import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
 import io.github.ollama4j.models.response.OllamaResult;
 import io.github.ollama4j.utils.Utilities;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,8 +16,9 @@ public class GenerateStructuredOutput {
         ollamaAPI.pullModel(model);
 
         String prompt =
-                "Batman is thirty years old and is busy saving Gotham. Respond using a formatted and prettified JSON in the"
-                        + " given format only. Be very precise about picking the values.";
+                "Batman is thirty years old and is busy saving Gotham. Respond using a formatted"
+                    + " and prettified JSON in the given format only. Be very precise about picking"
+                    + " the values.";
         Map<String, Object> ageOfPerson = new HashMap<>();
         ageOfPerson.put("type", Integer.class.getSimpleName().toLowerCase());
 
@@ -34,8 +34,15 @@ public class GenerateStructuredOutput {
         format.put("properties", properties);
         format.put("required", Arrays.asList("ageOfPerson", "heroName"));
 
-        OllamaResult result = ollamaAPI.generate(OllamaGenerateRequestBuilder.builder().withModel(model).withPrompt(prompt).withFormat(format).withThink(false
-        ).build(), null);
+        OllamaResult result =
+                ollamaAPI.generate(
+                        OllamaGenerateRequestBuilder.builder()
+                                .withModel(model)
+                                .withPrompt(prompt)
+                                .withFormat(format)
+                                .withThink(false)
+                                .build(),
+                        null);
         System.out.println(result.getResponse());
     }
 }

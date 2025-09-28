@@ -1,11 +1,12 @@
 package io.github.ollama4j.examples.tools.toolspecs;
 
 import io.github.ollama4j.tools.Tools;
-
 import java.util.Map;
 
 public class WeatherToolSpec {
-    private WeatherToolSpec() { /* empty constructor */ }
+    private WeatherToolSpec() {
+        /* empty constructor */
+    }
 
     public static Tools.Tool getSpecification() {
         return Tools.Tool.builder()
