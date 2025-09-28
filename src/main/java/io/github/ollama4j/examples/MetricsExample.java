@@ -95,7 +95,7 @@ public class MetricsExample {
                 // try {
                 // OllamaEmbedRequest embedRequest =
                 // new OllamaEmbedRequest("qwen3:0.6b", List.of("Hello world"));
-                // OllamaEmbedResponse embedResponse = ollamaAPI.embed(embedRequest);
+                // OllamaEmbedResult embedResponse = ollamaAPI.embed(embedRequest);
                 // System.out.println(
                 // "Embedding generated with "
                 // + embedResponse.getEmbeddings().size()

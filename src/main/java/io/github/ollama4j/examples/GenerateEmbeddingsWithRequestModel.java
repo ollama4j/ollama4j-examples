@@ -2,7 +2,7 @@ package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.models.embed.OllamaEmbedRequest;
-import io.github.ollama4j.models.embed.OllamaEmbedResponse;
+import io.github.ollama4j.models.embed.OllamaEmbedResult;
 import io.github.ollama4j.utils.OptionsBuilder;
 import io.github.ollama4j.utils.Utilities;
 import java.util.Arrays;
@@ -20,7 +20,7 @@ public class GenerateEmbeddingsWithRequestModel {
         requestModel.setOptions(
                 new OptionsBuilder().setSeed(42).setTemperature(0.7f).build().getOptionsMap());
 
-        OllamaEmbedResponse embeddings = ollamaAPI.embed(requestModel);
+        OllamaEmbedResult embeddings = ollamaAPI.embed(requestModel);
 
         System.out.println(embeddings.getEmbeddings());
     }
