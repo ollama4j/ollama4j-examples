@@ -1,4 +1,3 @@
-
 package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;

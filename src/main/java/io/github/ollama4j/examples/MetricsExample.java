@@ -1,4 +1,3 @@
-
 package io.github.ollama4j.examples;
 
 import io.github.ollama4j.OllamaAPI;
@@ -6,6 +5,7 @@ import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
 import io.github.ollama4j.models.response.OllamaResult;
 import io.github.ollama4j.utils.OptionsBuilder;
 import io.prometheus.client.exporter.HTTPServer;
+
 import java.util.HashMap;
 import java.util.Map;
 
