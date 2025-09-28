@@ -10,7 +10,11 @@ import io.github.ollama4j.utils.Utilities;
 public class ChatWithCustomSystemPrompt {
 
     public static void main(String[] args) throws Exception {
+
         OllamaAPI ollamaAPI = Utilities.setUp();
+        // We're just using our quick-setup utility here to instantiate OllamaAPI. Use the following
+        // to set it up with your Ollama configuration.
+        // OllamaAPI ollamaAPI = new OllamaAPI("http://your-ollama-host:11434/");
         String model = "qwen3:0.6b";
         ollamaAPI.pullModel(model);
         OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.builder().withModel(model);

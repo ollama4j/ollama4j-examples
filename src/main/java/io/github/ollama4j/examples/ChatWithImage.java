@@ -16,7 +16,11 @@ import java.util.List;
 public class ChatWithImage {
 
     public static void main(String[] args) throws Exception {
+
         OllamaAPI ollamaAPI = Utilities.setUp();
+        // We're just using our quick-setup utility here to instantiate OllamaAPI. Use the following
+        // to set it up with your Ollama configuration.
+        // OllamaAPI ollamaAPI = new OllamaAPI("http://your-ollama-host:11434/");
         String model = "moondream:1.8b";
         ollamaAPI.pullModel(model);
 
