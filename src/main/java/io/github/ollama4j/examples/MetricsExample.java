@@ -14,7 +14,7 @@ import java.util.Map;
  * <p>
  * This example shows how to:
  * <ul>
- * <li>Enable metrics collection on the OllamaAPI</li>
+ * <li>Enable metrics collection on the Ollama</li>
  * <li>Start a Prometheus metrics HTTP server</li>
  * <li>Make API calls that will be automatically instrumented</li>
  * <li>View metrics at http://localhost:8080/metrics</li>

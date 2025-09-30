@@ -11,9 +11,9 @@ public class ChatStreamingWithThinkingExample {
     public static void main(String[] args) throws Exception {
 
         Ollama ollama = Utilities.setUp();
-        // We're just using our quick-setup utility here to instantiate OllamaAPI. Use the following
+        // We're just using our quick-setup utility here to instantiate Ollama. Use the following
         // to set it up with your Ollama configuration.
-        // Ollama ollama = new OllamaAPI("http://your-ollama-host:11434/");
+        // Ollama ollama = new Ollama("http://your-ollama-host:11434/");
         String model = "qwen3:0.6b";
         ollama.pullModel(model);
         OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.builder().withModel(model);
