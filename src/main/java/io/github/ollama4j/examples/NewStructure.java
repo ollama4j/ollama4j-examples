@@ -3,7 +3,7 @@ package io.github.ollama4j.examples;
 import io.github.ollama4j.Ollama;
 import io.github.ollama4j.exceptions.OllamaException;
 import io.github.ollama4j.models.chat.*;
-import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
+import io.github.ollama4j.models.generate.OllamaGenerateRequest;
 import io.github.ollama4j.models.generate.OllamaGenerateStreamObserver;
 import io.github.ollama4j.models.generate.OllamaGenerateTokenHandler;
 import io.github.ollama4j.models.response.OllamaAsyncResultStreamer;
@@ -44,8 +44,7 @@ public class NewStructure {
     }
 
     public static void chat(Ollama ollama) throws Exception {
-        OllamaChatRequestBuilder builder =
-                OllamaChatRequestBuilder.builder().withModel("qwen3:0.6b");
+        OllamaChatRequest builder = OllamaChatRequest.builder().withModel("qwen3:0.6b");
 
         // create first user question
         OllamaChatRequest requestModel =
@@ -78,8 +77,7 @@ public class NewStructure {
     }
 
     public static void chatStreaming(Ollama ollama) throws Exception {
-        OllamaChatRequestBuilder builder =
-                OllamaChatRequestBuilder.builder().withModel("qwen3:0.6b");
+        OllamaChatRequest builder = OllamaChatRequest.builder().withModel("qwen3:0.6b");
 
         OllamaChatRequest chatRequest =
                 builder.withMessage(OllamaChatMessageRole.USER, "What is the capital of France?")
@@ -113,7 +111,7 @@ public class NewStructure {
         // String model = "qwen3:0.6b";
         OllamaResult ollamaResult =
                 ollama.generate(
-                        OllamaGenerateRequestBuilder.builder()
+                        OllamaGenerateRequest.builder()
                                 .withModel(model)
                                 .withPrompt("Who are you")
                                 .withRaw(false)
@@ -129,7 +127,7 @@ public class NewStructure {
             throws OllamaException, IOException, InterruptedException {
         OllamaResult ollamaResult =
                 ollama.generate(
-                        OllamaGenerateRequestBuilder.builder()
+                        OllamaGenerateRequest.builder()
                                 .withModel("qwen3:0.6b")
                                 .withPrompt("Who are you")
                                 .withRaw(false)
@@ -144,7 +142,7 @@ public class NewStructure {
             throws OllamaException, IOException, InterruptedException {
         OllamaResult ollamaResult =
                 ollama.generate(
-                        OllamaGenerateRequestBuilder.builder()
+                        OllamaGenerateRequest.builder()
                                 .withModel("qwen3:0.6b")
                                 .withPrompt("Who are you")
                                 .withRaw(false)

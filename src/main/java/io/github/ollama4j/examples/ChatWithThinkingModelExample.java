@@ -3,8 +3,8 @@ package io.github.ollama4j.examples;
 import io.github.ollama4j.Ollama;
 import io.github.ollama4j.models.chat.OllamaChatMessageRole;
 import io.github.ollama4j.models.chat.OllamaChatRequest;
-import io.github.ollama4j.models.chat.OllamaChatRequestBuilder;
 import io.github.ollama4j.models.chat.OllamaChatResult;
+import io.github.ollama4j.models.chat.OllamaChatRequest;
 import io.github.ollama4j.utils.Utilities;
 
 public class ChatWithThinkingModelExample {
@@ -17,7 +17,7 @@ public class ChatWithThinkingModelExample {
         // Ollama ollama = new Ollama("http://your-ollama-host:11434/");
         String model = "qwen3:0.6b";
         ollama.pullModel(model);
-        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.builder().withModel(model);
+        OllamaChatRequest builder = OllamaChatRequest.builder().withModel(model);
 
         // create first user question
         OllamaChatRequest requestModel =

@@ -1,7 +1,7 @@
 package io.github.ollama4j.examples;
 
 import io.github.ollama4j.Ollama;
-import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
+import io.github.ollama4j.models.generate.OllamaGenerateRequest;
 import io.github.ollama4j.models.response.OllamaResult;
 import io.github.ollama4j.utils.OptionsBuilder;
 import io.prometheus.client.exporter.HTTPServer;
@@ -65,7 +65,7 @@ public class MetricsExample {
                 try {
                     var result =
                             ollama.generate(
-                                    OllamaGenerateRequestBuilder.builder()
+                                    OllamaGenerateRequest.builder()
                                             .withModel("qwen3:0.6b")
                                             .withPrompt(
                                                     "Generate a simple JSON object with name and"
@@ -101,7 +101,7 @@ public class MetricsExample {
                 try {
                     OllamaResult res =
                             ollama.generate(
-                                    OllamaGenerateRequestBuilder.builder()
+                                    OllamaGenerateRequest.builder()
                                             .withModel("qwen3:0.6b")
                                             .withPrompt("who are you?")
                                             .withRaw(false)

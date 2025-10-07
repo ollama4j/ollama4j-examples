@@ -2,7 +2,7 @@ package io.github.ollama4j.examples;
 
 import io.github.ollama4j.Ollama;
 import io.github.ollama4j.impl.ConsoleOutputGenerateTokenHandler;
-import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
+import io.github.ollama4j.models.generate.OllamaGenerateRequest;
 import io.github.ollama4j.models.generate.OllamaGenerateStreamObserver;
 import io.github.ollama4j.models.response.OllamaResult;
 import io.github.ollama4j.utils.Utilities;
@@ -44,7 +44,7 @@ public class GenerateWithImageFile {
 
         OllamaResult result =
                 ollama.generate(
-                        OllamaGenerateRequestBuilder.builder()
+                        OllamaGenerateRequest.builder()
                                 .withModel(modelName)
                                 .withPrompt("What's in this image?")
                                 .withImages(List.of(tempImageFile))
@@ -65,7 +65,7 @@ public class GenerateWithImageFile {
 
         OllamaResult result =
                 ollama.generate(
-                        OllamaGenerateRequestBuilder.builder()
+                        OllamaGenerateRequest.builder()
                                 .withModel(modelName)
                                 .withPrompt("What's in this image?")
                                 .withImages(List.of(tempImageFile))
@@ -112,7 +112,7 @@ public class GenerateWithImageFile {
 
         OllamaResult result =
                 ollama.generate(
-                        OllamaGenerateRequestBuilder.builder()
+                        OllamaGenerateRequest.builder()
                                 .withModel(modelName)
                                 .withPrompt(
                                         "What's in this image? Give me response as JSON fields"

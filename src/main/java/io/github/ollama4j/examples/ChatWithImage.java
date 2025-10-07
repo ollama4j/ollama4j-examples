@@ -3,8 +3,8 @@ package io.github.ollama4j.examples;
 import io.github.ollama4j.Ollama;
 import io.github.ollama4j.models.chat.OllamaChatMessageRole;
 import io.github.ollama4j.models.chat.OllamaChatRequest;
-import io.github.ollama4j.models.chat.OllamaChatRequestBuilder;
 import io.github.ollama4j.models.chat.OllamaChatResult;
+import io.github.ollama4j.models.chat.OllamaChatRequest;
 import io.github.ollama4j.utils.Utilities;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,7 +24,7 @@ public class ChatWithImage {
         String model = "moondream:1.8b";
         ollama.pullModel(model);
 
-        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.builder().withModel(model);
+        OllamaChatRequest builder = OllamaChatRequest.builder().withModel(model);
 
         // Load image from resources and copy to a temporary file
         InputStream is =

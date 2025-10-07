@@ -4,7 +4,6 @@ import io.github.ollama4j.Ollama;
 import io.github.ollama4j.examples.tools.toolspecs.EmployeeFinderToolSpec;
 import io.github.ollama4j.models.chat.OllamaChatMessageRole;
 import io.github.ollama4j.models.chat.OllamaChatRequest;
-import io.github.ollama4j.models.chat.OllamaChatRequestBuilder;
 import io.github.ollama4j.models.chat.OllamaChatResult;
 import io.github.ollama4j.tools.Tools;
 import io.github.ollama4j.utils.Utilities;
@@ -18,7 +17,7 @@ public class ChatWithTools {
         // Ollama ollama = new Ollama("http://your-ollama-host:11434/");
         String model = "mistral:7b";
         ollama.pullModel(model);
-        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.builder().withModel(model);
+        OllamaChatRequest builder = OllamaChatRequest.builder().withModel(model);
 
         final Tools.Tool employeeFinderToolSpecification =
                 EmployeeFinderToolSpec.getSpecification();

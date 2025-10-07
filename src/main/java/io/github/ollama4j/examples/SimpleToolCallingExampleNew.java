@@ -3,7 +3,6 @@ package io.github.ollama4j.examples;
 import io.github.ollama4j.Ollama;
 import io.github.ollama4j.exceptions.OllamaException;
 import io.github.ollama4j.models.generate.OllamaGenerateRequest;
-import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
 import io.github.ollama4j.models.generate.OllamaGenerateStreamObserver;
 import io.github.ollama4j.models.response.OllamaResult;
 import io.github.ollama4j.tools.Tools;
@@ -104,7 +103,7 @@ public class SimpleToolCallingExampleNew {
         ollama.registerTools(tools);
 
         OllamaGenerateRequest request1 =
-                OllamaGenerateRequestBuilder.builder()
+                OllamaGenerateRequest.builder()
                         .withModel(modelName)
                         .withPrompt(prompt1)
                         .withOptions(new OptionsBuilder().build())
@@ -112,7 +111,7 @@ public class SimpleToolCallingExampleNew {
                         .withUseTools(true)
                         .build();
         OllamaGenerateRequest request2 =
-                OllamaGenerateRequestBuilder.builder()
+                OllamaGenerateRequest.builder()
                         .withModel(modelName)
                         .withPrompt(prompt2)
                         .withOptions(new OptionsBuilder().build())

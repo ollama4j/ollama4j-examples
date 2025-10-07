@@ -4,7 +4,7 @@ import io.github.ollama4j.Ollama;
 import io.github.ollama4j.examples.tools.toolspecs.EmployeeFinderToolSpec;
 import io.github.ollama4j.examples.tools.toolspecs.FuelPriceToolSpec;
 import io.github.ollama4j.examples.tools.toolspecs.WeatherToolSpec;
-import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
+import io.github.ollama4j.models.generate.OllamaGenerateRequest;
 import io.github.ollama4j.models.response.OllamaResult;
 import io.github.ollama4j.tools.Tools;
 import io.github.ollama4j.utils.Utilities;
@@ -32,7 +32,7 @@ public class MultiToolRegistryExample {
         // Use the fuel-price tool specifications in the prompt
         OllamaResult res =
                 ollama.generate(
-                        OllamaGenerateRequestBuilder.builder()
+                        OllamaGenerateRequest.builder()
                                 .withModel(model)
                                 .withUseTools(true)
                                 .withPrompt("How much does petrol cost in Bengaluru?")
@@ -42,7 +42,7 @@ public class MultiToolRegistryExample {
         // Use the weather tool specifications in the prompt
         OllamaResult res2 =
                 ollama.generate(
-                        OllamaGenerateRequestBuilder.builder()
+                        OllamaGenerateRequest.builder()
                                 .withModel(model)
                                 .withUseTools(true)
                                 .withPrompt("What is the current weather in Bengaluru?")
@@ -52,7 +52,7 @@ public class MultiToolRegistryExample {
         // Use the database query tool specifications in the prompt
         OllamaResult res3 =
                 ollama.generate(
-                        OllamaGenerateRequestBuilder.builder()
+                        OllamaGenerateRequest.builder()
                                 .withModel(model)
                                 .withUseTools(true)
                                 .withPrompt(

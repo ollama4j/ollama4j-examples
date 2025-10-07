@@ -1,7 +1,7 @@
 package io.github.ollama4j.examples;
 
 import io.github.ollama4j.Ollama;
-import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
+import io.github.ollama4j.models.generate.OllamaGenerateRequest;
 import io.github.ollama4j.models.response.OllamaResult;
 import io.github.ollama4j.utils.Utilities;
 
@@ -44,7 +44,7 @@ public class PromptingExample {
         boolean raw = false;
         OllamaResult response =
                 ollama.generate(
-                        OllamaGenerateRequestBuilder.builder()
+                        OllamaGenerateRequest.builder()
                                 .withModel(model)
                                 .withPrompt(prompt)
                                 .withRaw(raw)

@@ -4,8 +4,8 @@ import io.github.ollama4j.Ollama;
 import io.github.ollama4j.examples.tools.annotated.GlobalConstantGenerator;
 import io.github.ollama4j.models.chat.OllamaChatMessageRole;
 import io.github.ollama4j.models.chat.OllamaChatRequest;
-import io.github.ollama4j.models.chat.OllamaChatRequestBuilder;
 import io.github.ollama4j.models.chat.OllamaChatResult;
+import io.github.ollama4j.models.chat.OllamaChatRequest;
 import io.github.ollama4j.tools.annotations.OllamaToolService;
 import io.github.ollama4j.utils.Utilities;
 
@@ -27,7 +27,7 @@ public class AnnotatedToolCallingExample {
         // Alternatively, register a specific tool instance with annotated methods
         // ollama.registerAnnotatedTools(new GlobalConstantGenerator());
 
-        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.builder().withModel(model);
+        OllamaChatRequest builder = OllamaChatRequest.builder().withModel(model);
         OllamaChatRequest requestModel =
                 builder.withMessage(
                                 OllamaChatMessageRole.USER,

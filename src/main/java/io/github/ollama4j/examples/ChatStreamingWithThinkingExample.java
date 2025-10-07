@@ -16,7 +16,7 @@ public class ChatStreamingWithThinkingExample {
         // Ollama ollama = new Ollama("http://your-ollama-host:11434/");
         String model = "qwen3:0.6b";
         ollama.pullModel(model);
-        OllamaChatRequestBuilder builder = OllamaChatRequestBuilder.builder().withModel(model);
+        OllamaChatRequest builder = OllamaChatRequest.builder().withModel(model);
 
         OllamaChatRequest chatRequest1 =
                 builder.withMessage(OllamaChatMessageRole.USER, "What is the capital of France?")

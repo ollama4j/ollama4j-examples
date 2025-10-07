@@ -2,7 +2,7 @@ package io.github.ollama4j.examples;
 
 import io.github.ollama4j.Ollama;
 import io.github.ollama4j.exceptions.OllamaException;
-import io.github.ollama4j.models.generate.OllamaGenerateRequestBuilder;
+import io.github.ollama4j.models.generate.OllamaGenerateRequest;
 import io.github.ollama4j.models.generate.OllamaGenerateStreamObserver;
 import io.github.ollama4j.models.generate.OllamaGenerateTokenHandler;
 import io.github.ollama4j.utils.Utilities;
@@ -62,7 +62,7 @@ class ThinkingModelStreamingGenerator extends Thread {
     public void run() {
         try {
             ollama.generate(
-                    OllamaGenerateRequestBuilder.builder()
+                    OllamaGenerateRequest.builder()
                             .withModel(model)
                             .withPrompt("What is the capital of France")
                             .withRaw(false)

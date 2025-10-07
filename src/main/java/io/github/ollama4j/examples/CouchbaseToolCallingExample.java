@@ -87,8 +87,8 @@ public class CouchbaseToolCallingExample {
     //        ollama.registerTool(callSignFinderToolSpec);
     //        ollama.registerTool(callSignUpdaterToolSpec);
     //
-    //        OllamaGenerateRequestBuilder builder =
-    // OllamaGenerateRequestBuilder.builder().withModel(modelName);
+    //        OllamaGenerateRequest builder =
+    // OllamaGenerateRequest.builder().withModel(modelName);
     //
     //        String prompt1 = "What is the call-sign of Astraeus?";
     //        OllamaResult res1 =
