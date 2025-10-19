@@ -25,7 +25,7 @@ public class ChatWithImage {
 
         OllamaChatRequest builder = OllamaChatRequest.builder().withModel(model);
 
-        // Load image from resources and copy to a temporary file
+        // Load image from resources and copy to a temporary file - or load from your own file path directly
         InputStream is =
                 ChatWithImage.class.getClassLoader().getResourceAsStream("dog-on-boat.jpg");
         if (is == null) {

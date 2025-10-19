@@ -28,7 +28,7 @@ public class GenerateWithImageFileStreaming {
         String model = "moondream:1.8b";
         ollama.pullModel(model);
 
-        // Load image from resources and copy to a temporary file
+        // Load image from resources and copy to a temporary file - or load from your own file path directly
         InputStream is =
                 GenerateWithImageFileStreaming.class.getClassLoader().getResourceAsStream("dog-on-boat.jpg");
         if (is == null) {
