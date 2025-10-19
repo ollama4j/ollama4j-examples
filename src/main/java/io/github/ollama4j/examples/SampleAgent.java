@@ -10,11 +10,18 @@ package io.github.ollama4j.examples;
 
 import io.github.ollama4j.agent.Agent;
 import io.github.ollama4j.exceptions.OllamaException;
+import org.slf4j.LoggerFactory;
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 
 /** Example usage of the Agent API with some dummy tool functions. */
 public class SampleAgent {
     public static void main(String[] args) throws OllamaException {
-        Agent agent = Agent.fromYaml("agent.yaml");
+        // Disable debug logging and enable only INFO for logback
+        Logger rootLogger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+        rootLogger.setLevel(Level.INFO);
+
+        Agent agent = Agent.load("agent.yaml");
         agent.runInteractive();
     }
 }
