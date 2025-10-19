@@ -1,0 +1,54 @@
+name: Nimma Mitra
+host: http://192.168.29.224:11434
+model: mistral:7b
+requestTimeoutSeconds: 120
+customPrompt: >
+  Only use tools and do not use your creativity.
+  Do not ever tell me to call the tool or how to use the tool or command myself.
+  You do that for me. That is why you exist.
+  You call tool on my behalf and give me a response from the tool.
+tools:
+  - name: calculator-tool
+    toolFunctionFQCN: io.github.ollama4j.examples.tools.toolfunctions.CalculatorToolFunction
+    description: Performs a simple arithmetic operation between two numbers.
+    parameters:
+      properties:
+        operation:
+          type: string
+          description: The arithmetic operation to perform.
+          enum:
+            - add
+            - subtract
+            - multiply
+            - divide
+          required: true
+        a:
+          type: number
+          description: The first operand.
+          required: true
+        b:
+          type: number
+          description: The second operand.
+          required: true
+
+  - name: hotel-booking-tool
+    toolFunctionFQCN: io.github.ollama4j.examples.tools.toolfunctions.HotelBookingToolFunction
+    description: Books a hotel room in a specified city for a given period and number of guests.
+    parameters:
+      properties:
+        city:
+          type: string
+          description: The city where the hotel should be booked.
+          required: true
+        checkin_date:
+          type: string
+          description: The check-in date or from date.
+          required: true
+        checkout_date:
+          type: string
+          description: The check-out date or to date.
+          required: true
+        guests:
+          type: integer
+          description: Number of guests to book the hotel for.
+          required: true

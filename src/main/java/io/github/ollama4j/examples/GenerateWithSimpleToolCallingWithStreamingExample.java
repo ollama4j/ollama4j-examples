@@ -12,7 +12,7 @@ import io.github.ollama4j.utils.OptionsBuilder;
 import io.github.ollama4j.utils.Utilities;
 import java.io.IOException;
 
-public class SimpleToolCallingWithStreamingExample {
+public class GenerateWithSimpleToolCallingWithStreamingExample {
     public static void main(String[] args) throws Exception {
 
         Ollama ollama = Utilities.setUp();

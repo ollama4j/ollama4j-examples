@@ -4,6 +4,7 @@ import io.github.ollama4j.Ollama;
 import io.github.ollama4j.models.generate.OllamaGenerateRequest;
 import io.github.ollama4j.models.response.OllamaResult;
 import io.github.ollama4j.utils.OptionsBuilder;
+import io.github.ollama4j.utils.Utilities;
 import io.prometheus.client.exporter.HTTPServer;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +35,11 @@ public class MetricsExample {
     public static void main(String[] args) {
         try {
             // Create Ollama instance with metrics enabled
-            Ollama ollama = new Ollama("http://192.168.29.229:11434/");
+            Ollama ollama = Utilities.setUp();
+            // We're just using our quick-setup utility here to instantiate Ollama. Use the
+            // following
+            // to set it up with your Ollama configuration.
+            // Ollama ollama = new Ollama("http://your-ollama-host:11434/");
             ollama.setMetricsEnabled(true);
 
             // Start Prometheus metrics HTTP server

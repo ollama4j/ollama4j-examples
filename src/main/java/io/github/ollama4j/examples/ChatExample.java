@@ -4,7 +4,6 @@ import io.github.ollama4j.Ollama;
 import io.github.ollama4j.models.chat.OllamaChatMessageRole;
 import io.github.ollama4j.models.chat.OllamaChatRequest;
 import io.github.ollama4j.models.chat.OllamaChatResult;
-import io.github.ollama4j.models.chat.OllamaChatRequest;
 import io.github.ollama4j.utils.Utilities;
 
 public class ChatExample {

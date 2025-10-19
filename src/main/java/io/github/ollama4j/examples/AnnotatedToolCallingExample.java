@@ -5,7 +5,6 @@ import io.github.ollama4j.examples.tools.annotated.GlobalConstantGenerator;
 import io.github.ollama4j.models.chat.OllamaChatMessageRole;
 import io.github.ollama4j.models.chat.OllamaChatRequest;
 import io.github.ollama4j.models.chat.OllamaChatResult;
-import io.github.ollama4j.models.chat.OllamaChatRequest;
 import io.github.ollama4j.tools.annotations.OllamaToolService;
 import io.github.ollama4j.utils.Utilities;
 
