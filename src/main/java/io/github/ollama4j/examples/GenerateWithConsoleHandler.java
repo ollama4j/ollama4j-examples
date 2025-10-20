@@ -24,7 +24,9 @@ public class GenerateWithConsoleHandler {
                                 .withModel(model)
                                 .withPrompt("Who are you?")
                                 .build(),
-                        new OllamaGenerateStreamObserver(new ConsoleOutputGenerateTokenHandler(), new ConsoleOutputGenerateTokenHandler()));
+                        new OllamaGenerateStreamObserver(
+                                new ConsoleOutputGenerateTokenHandler(),
+                                new ConsoleOutputGenerateTokenHandler()));
 
         System.out.println(result.getResponse());
     }

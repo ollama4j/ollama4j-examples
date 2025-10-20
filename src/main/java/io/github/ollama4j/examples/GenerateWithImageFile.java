@@ -33,7 +33,8 @@ public class GenerateWithImageFile {
     }
 
     public static void nonStreamingWithFile(Ollama ollama, String modelName) throws Exception {
-        // Load image from resources and copy to a temporary file - or load from your own file path directly
+        // Load image from resources and copy to a temporary file - or load from your own file path
+        // directly
         InputStream is =
                 GenerateWithImageFile.class.getClassLoader().getResourceAsStream("dog-on-boat.jpg");
         if (is == null) {
@@ -54,7 +55,8 @@ public class GenerateWithImageFile {
     }
 
     public static void streamingWithFile(Ollama ollama, String modelName) throws Exception {
-        // Load image from resources and copy to a temporary file - or load from your own file path directly
+        // Load image from resources and copy to a temporary file - or load from your own file path
+        // directly
         InputStream is =
                 GenerateWithImageFile.class.getClassLoader().getResourceAsStream("dog-on-boat.jpg");
         if (is == null) {
@@ -77,7 +79,8 @@ public class GenerateWithImageFile {
 
     public static void nonStreamingWithFileAndFormat(Ollama ollama, String modelName)
             throws Exception {
-        // Load image from resources and copy to a temporary file - or load from your own file path directly
+        // Load image from resources and copy to a temporary file - or load from your own file path
+        // directly
         InputStream is =
                 GenerateWithImageFile.class.getClassLoader().getResourceAsStream("dog-on-boat.jpg");
         if (is == null) {
