@@ -3,10 +3,9 @@ host: http://192.168.29.224:11434
 model: mistral:7b
 requestTimeoutSeconds: 120
 customPrompt: >
-  Only use tools and do not use your creativity.
-  Do not ever tell me to call the tool or how to use the tool or command myself.
-  You do that for me. That is why you exist.
-  You call tool on my behalf and give me a response from the tool.
+  Always use the available tools to respond to my requests—never improvise, speculate, or generate responses from your own creativity.
+  Do not suggest or instruct me on tool usage; handle all tool calls directly and provide only the tool-derived results in your reply.
+  Your purpose is to operate tools on my behalf and deliver concise, relevant responses based solely on tool outputs.
 tools:
   - name: calculator-tool
     toolFunctionFQCN: io.github.ollama4j.examples.tools.toolfunctions.CalculatorToolFunction
