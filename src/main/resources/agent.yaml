@@ -1,4 +1,4 @@
-name: Nimma Mitra
+name: Nimma Booking Mitra
 host: http://192.168.29.224:11434
 model: mistral:7b
 requestTimeoutSeconds: 120
