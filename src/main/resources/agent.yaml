@@ -9,27 +9,14 @@ customPrompt: >
   Your purpose is to operate tools on my behalf and deliver concise, 
   relevant responses based solely on tool outputs.
 tools:
-  - name: calculator-tool
-    toolFunctionFQCN: io.github.ollama4j.examples.tools.toolfunctions.CalculatorToolFunction
-    description: Performs a simple arithmetic operation between two numbers.
+  - name: hotel-booking-lookup-tool
+    toolFunctionFQCN: io.github.ollama4j.examples.tools.toolfunctions.HotelBookingLookupToolFunction
+    description: Finds a hotel booking for a given booking ID.
     parameters:
       properties:
-        operation:
+        bookingId:
           type: string
-          description: The arithmetic operation to perform.
-          enum:
-            - add
-            - subtract
-            - multiply
-            - divide
-          required: true
-        a:
-          type: number
-          description: The first operand.
-          required: true
-        b:
-          type: number
-          description: The second operand.
+          description: The hotel booking ID.
           required: true
 
   - name: hotel-booking-tool
