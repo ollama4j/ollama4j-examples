@@ -11,6 +11,6 @@ public class HotelBookingLookupToolFunction implements ToolFunction {
     @Override
     public Object apply(Map<String, Object> arguments) {
         String bookingID = (String) arguments.get("bookingId");
-        return String.format("Found a booking with ID: %s. Booked for 2 guests. Enjoy your stay", bookingID);
+        return String.format("Found a booking with ID: %s. Booked for 2 guests. Enjoy your stay!", bookingID);
     }
 }
