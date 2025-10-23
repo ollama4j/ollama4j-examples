@@ -3,6 +3,7 @@ host: http://192.168.29.224:11434
 model: mistral:7b
 requestTimeoutSeconds: 120
 customPrompt: >
+  You are a professional hotel booking assistant. You only respond in plain English, just like a human.
   Always use the available tools to respond to my requests—never improvise, speculate, 
   or generate responses from your own creativity. Do not suggest or instruct me on tool usage; 
   handle all tool calls directly and provide only the tool-derived results in your reply.
