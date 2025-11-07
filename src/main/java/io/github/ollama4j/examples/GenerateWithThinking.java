@@ -18,7 +18,6 @@ public class GenerateWithThinking {
     ollama.pullModel(model);
 
     boolean raw = false;
-    boolean thinking = true;
 
     OllamaResult result =
         ollama.generate(
