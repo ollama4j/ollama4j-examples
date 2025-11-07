@@ -3,6 +3,7 @@ package io.github.ollama4j.examples;
 import io.github.ollama4j.Ollama;
 import io.github.ollama4j.models.chat.*;
 import io.github.ollama4j.models.generate.OllamaGenerateTokenHandler;
+import io.github.ollama4j.models.request.ThinkMode;
 import io.github.ollama4j.utils.Utilities;
 
 @SuppressWarnings("DuplicatedCode")
@@ -20,7 +21,7 @@ public class ChatStreamingWithThinkingExample {
 
         OllamaChatRequest chatRequest1 =
                 builder.withMessage(OllamaChatMessageRole.USER, "What is the capital of France?")
-                        .withThinking(true)
+                        .withThinking(ThinkMode.ENABLED)
                         .build();
 
         // Define a thinking stream handler
@@ -42,7 +43,7 @@ public class ChatStreamingWithThinkingExample {
                 builder.withMessages(chatResult1.getChatHistory())
                         .withMessage(
                                 OllamaChatMessageRole.USER, "And what is the second largest city?")
-                        .withThinking(true)
+                        .withThinking(ThinkMode.ENABLED)
                         .build();
 
         // "continue" conversation with model

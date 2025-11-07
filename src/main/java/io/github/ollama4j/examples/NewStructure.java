@@ -6,6 +6,7 @@ import io.github.ollama4j.models.chat.*;
 import io.github.ollama4j.models.generate.OllamaGenerateRequest;
 import io.github.ollama4j.models.generate.OllamaGenerateStreamObserver;
 import io.github.ollama4j.models.generate.OllamaGenerateTokenHandler;
+import io.github.ollama4j.models.request.ThinkMode;
 import io.github.ollama4j.models.response.OllamaAsyncResultStreamer;
 import io.github.ollama4j.models.response.OllamaResult;
 import io.github.ollama4j.utils.Utilities;
@@ -28,7 +29,7 @@ public class NewStructure {
 
     public static void generateAsync(Ollama ollama) throws Exception {
         OllamaAsyncResultStreamer resultStreamer =
-                ollama.generateAsync("qwen3:0.6b", "Who are you", false, true);
+                ollama.generateAsync("qwen3:0.6b", "Who are you", false, ThinkMode.ENABLED);
         int pollIntervalMilliseconds = 1000;
         while (true) {
             String thinkingTokens = resultStreamer.getThinkingResponseStream().poll();
@@ -49,7 +50,7 @@ public class NewStructure {
         // create first user question
         OllamaChatRequest requestModel =
                 builder.withMessage(OllamaChatMessageRole.USER, "Tell me a small story")
-                        .withThinking(true)
+                        .withThinking(ThinkMode.ENABLED)
                         .build();
         // start conversation with model
         OllamaChatResult chatResult = ollama.chat(requestModel, null);
@@ -62,7 +63,7 @@ public class NewStructure {
         // create next userQuestion
         requestModel =
                 builder.withMessages(chatResult.getChatHistory())
-                        .withThinking(true)
+                        .withThinking(ThinkMode.ENABLED)
                         .withMessage(OllamaChatMessageRole.USER, "And tell me more")
                         .build();
         // "continue" conversation with model
@@ -115,7 +116,7 @@ public class NewStructure {
                                 .withModel(model)
                                 .withPrompt("Who are you")
                                 .withRaw(false)
-                                .withThink(false)
+                                .withThink(ThinkMode.DISABLED)
                                 .build(),
                         null);
         // System.out.println("Thinking: " + ollamaResult.getThinking());
@@ -131,7 +132,7 @@ public class NewStructure {
                                 .withModel("qwen3:0.6b")
                                 .withPrompt("Who are you")
                                 .withRaw(false)
-                                .withThink(false)
+                                .withThink(ThinkMode.DISABLED)
                                 .build(),
                         new OllamaGenerateStreamObserver(null, null));
         System.out.println("Thinking: " + ollamaResult.getThinking());
@@ -146,7 +147,7 @@ public class NewStructure {
                                 .withModel("qwen3:0.6b")
                                 .withPrompt("Who are you")
                                 .withRaw(false)
-                                .withThink(true)
+                                .withThink(ThinkMode.ENABLED)
                                 .build(),
                         new OllamaGenerateStreamObserver(
                                 null,

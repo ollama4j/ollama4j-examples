@@ -5,6 +5,7 @@ import io.github.ollama4j.exceptions.OllamaException;
 import io.github.ollama4j.models.generate.OllamaGenerateRequest;
 import io.github.ollama4j.models.generate.OllamaGenerateStreamObserver;
 import io.github.ollama4j.models.generate.OllamaGenerateTokenHandler;
+import io.github.ollama4j.models.request.ThinkMode;
 import io.github.ollama4j.utils.Utilities;
 
 public class GenerateStreaming {
@@ -58,7 +59,7 @@ class MyStreamingGenerator extends Thread {
                                     "Give me the summary of learnings from Bhagawad Gita point"
                                             + " wise.")
                             .withRaw(false)
-                            .withThink(false)
+                            .withThink(ThinkMode.DISABLED)
                             .build(),
                     new OllamaGenerateStreamObserver(null, streamHandler));
         } catch (OllamaException e) {

@@ -5,6 +5,7 @@ import io.github.ollama4j.exceptions.OllamaException;
 import io.github.ollama4j.models.generate.OllamaGenerateRequest;
 import io.github.ollama4j.models.generate.OllamaGenerateStreamObserver;
 import io.github.ollama4j.models.generate.OllamaGenerateTokenHandler;
+import io.github.ollama4j.models.request.ThinkMode;
 import io.github.ollama4j.utils.Utilities;
 
 public class GenerateWithThinkingStreamed {
@@ -66,7 +67,7 @@ class ThinkingModelStreamingGenerator extends Thread {
                             .withModel(model)
                             .withPrompt("What is the capital of France")
                             .withRaw(false)
-                            .withThink(true)
+                            .withThink(ThinkMode.ENABLED)
                             .build(),
                     new OllamaGenerateStreamObserver(
                             this.thinkingStreamHandler, this.responseStreamHandler));

@@ -2,6 +2,7 @@ package io.github.ollama4j.examples;
 
 import io.github.ollama4j.Ollama;
 import io.github.ollama4j.models.generate.OllamaGenerateRequest;
+import io.github.ollama4j.models.request.ThinkMode;
 import io.github.ollama4j.models.response.OllamaResult;
 import io.github.ollama4j.utils.OptionsBuilder;
 import io.github.ollama4j.utils.Utilities;
@@ -110,7 +111,7 @@ public class MetricsExample {
                                             .withModel("qwen3:0.6b")
                                             .withPrompt("who are you?")
                                             .withRaw(false)
-                                            .withThink(true)
+                                            .withThink(ThinkMode.ENABLED)
                                             .withOptions(
                                                     new OptionsBuilder()
                                                             .setTemperature(0.6f)

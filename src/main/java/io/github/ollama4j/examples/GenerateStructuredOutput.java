@@ -2,6 +2,7 @@ package io.github.ollama4j.examples;
 
 import io.github.ollama4j.Ollama;
 import io.github.ollama4j.models.generate.OllamaGenerateRequest;
+import io.github.ollama4j.models.request.ThinkMode;
 import io.github.ollama4j.models.response.OllamaResult;
 import io.github.ollama4j.utils.Utilities;
 import java.util.Arrays;
@@ -44,7 +45,7 @@ public class GenerateStructuredOutput {
                                 .withModel(model)
                                 .withPrompt(prompt)
                                 .withFormat(format)
-                                .withThink(false)
+                                .withThink(ThinkMode.DISABLED)
                                 .build(),
                         null);
         System.out.println(result.getResponse());

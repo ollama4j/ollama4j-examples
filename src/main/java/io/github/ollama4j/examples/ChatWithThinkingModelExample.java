@@ -4,6 +4,7 @@ import io.github.ollama4j.Ollama;
 import io.github.ollama4j.models.chat.OllamaChatMessageRole;
 import io.github.ollama4j.models.chat.OllamaChatRequest;
 import io.github.ollama4j.models.chat.OllamaChatResult;
+import io.github.ollama4j.models.request.ThinkMode;
 import io.github.ollama4j.utils.Utilities;
 
 public class ChatWithThinkingModelExample {
@@ -21,7 +22,7 @@ public class ChatWithThinkingModelExample {
         // create first user question
         OllamaChatRequest requestModel =
                 builder.withMessage(OllamaChatMessageRole.USER, "What is the capital of France?")
-                        .withThinking(true)
+                        .withThinking(ThinkMode.ENABLED)
                         .build();
 
         // start conversation with model
@@ -38,7 +39,7 @@ public class ChatWithThinkingModelExample {
                 builder.withMessages(chatResult.getChatHistory())
                         .withMessage(
                                 OllamaChatMessageRole.USER, "And what is the second largest city?")
-                        .withThinking(true)
+                        .withThinking(ThinkMode.ENABLED)
                         .build();
 
         // "continue" conversation with model

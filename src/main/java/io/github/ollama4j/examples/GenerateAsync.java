@@ -1,6 +1,7 @@
 package io.github.ollama4j.examples;
 
 import io.github.ollama4j.Ollama;
+import io.github.ollama4j.models.request.ThinkMode;
 import io.github.ollama4j.models.response.OllamaAsyncResultStreamer;
 import io.github.ollama4j.utils.Utilities;
 
@@ -18,9 +19,8 @@ public class GenerateAsync {
         String prompt = "List all cricket world cup teams of 2019.";
 
         boolean raw = false;
-        boolean think = false;
 
-        OllamaAsyncResultStreamer resultStreamer = ollama.generateAsync(model, prompt, raw, think);
+        OllamaAsyncResultStreamer resultStreamer = ollama.generateAsync(model, prompt, raw, ThinkMode.DISABLED);
 
         int pollIntervalMilliseconds = 1000;
         while (true) {
