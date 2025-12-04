@@ -1,8 +1,8 @@
 package io.github.ollama4j.utils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.github.ollama4j.Ollama;
-import io.github.ollama4j.examples.ChatWithMCPToolExample;
-
 import java.util.Properties;
 
 public class Utilities {
@@ -76,5 +76,11 @@ public class Utilities {
      */
     public static String getResourcesFolderPath() {
         return Utilities.class.getResource("/").getPath();
+    }
+
+    public static ObjectMapper getObjectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        return objectMapper;
     }
 }

@@ -26,3 +26,4 @@ replay_pid*
 /target/
 src/main/java/io/github/ollama4j/.DS_Store
 **/.DS_Store
+.cache.sqlite
