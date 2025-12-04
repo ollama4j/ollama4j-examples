@@ -1,6 +1,8 @@
 package io.github.ollama4j.utils;
 
 import io.github.ollama4j.Ollama;
+import io.github.ollama4j.examples.ChatWithMCPToolExample;
+
 import java.util.Properties;
 
 public class Utilities {
@@ -67,5 +69,12 @@ public class Utilities {
             System.out.println("Environment variable " + key + " not found!");
         }
         return val;
+    }
+
+    /*
+     * Returns the path to the resources folder.
+     */
+    public static String getResourcesFolderPath() {
+        return Utilities.class.getResource("/").getPath();
     }
 }

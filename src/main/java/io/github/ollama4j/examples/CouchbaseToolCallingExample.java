@@ -64,9 +64,8 @@ import io.github.ollama4j.models.generate.OllamaGenerateRequest;
 import io.github.ollama4j.models.response.OllamaResult;
 import io.github.ollama4j.tools.Tools;
 import io.github.ollama4j.utils.Utilities;
-import org.slf4j.LoggerFactory;
-
 import java.util.Map;
+import org.slf4j.LoggerFactory;
 
 public class CouchbaseToolCallingExample {
 
@@ -86,11 +85,11 @@ public class CouchbaseToolCallingExample {
                 Cluster.connect(
                         connectionString,
                         ClusterOptions.clusterOptions(username, password)
-                                .environment(
-                                        env -> env.applyProfile("wan-development")));
+                                .environment(env -> env.applyProfile("wan-development")));
 
         Ollama ollama = Utilities.setUp();
-        // We 're just using our quick-setup utility here to instantiate Ollama. Use the following to
+        // We 're just using our quick-setup utility here to instantiate Ollama. Use the following
+        // to
         // set it up with your Ollama configuration.
         // Ollama ollama = new Ollama("http://your-ollama-host:11434/");
 
@@ -102,14 +101,12 @@ public class CouchbaseToolCallingExample {
         ollama.registerTool(callSignFinderToolSpec);
         ollama.registerTool(callSignUpdaterToolSpec);
 
-        OllamaGenerateRequest builder =
-                OllamaGenerateRequest.builder().withModel(modelName);
+        OllamaGenerateRequest builder = OllamaGenerateRequest.builder().withModel(modelName);
 
         String prompt1 = "What is the call-sign of Astraeus?";
         OllamaResult res1 =
                 ollama.generate(builder.withPrompt(prompt1).withUseTools(true).build(), null);
         System.out.println("Result 1: " + res1.getResponse());
-
 
         String prompt2 = "I want to code name Astraeus as STARBOUND";
         OllamaResult res2 =
@@ -129,15 +126,16 @@ public class CouchbaseToolCallingExample {
                                                         "airlineName",
                                                         Tools.Property.builder()
                                                                 .type("string")
-                                                                .description("The name of the airline. e.g. Emirates")
+                                                                .description(
+                                                                        "The name of the airline."
+                                                                                + " e.g. Emirates")
                                                                 .required(true)
-                                                                .build()
-                                                )
-                                        )
-                                )
-                                .build()
-                )
-                .toolFunction(arguments -> new AirlineCallsignQueryToolFunction(bucketName, cluster).apply(arguments))
+                                                                .build())))
+                                .build())
+                .toolFunction(
+                        arguments ->
+                                new AirlineCallsignQueryToolFunction(bucketName, cluster)
+                                        .apply(arguments))
                 .build();
     }
 
@@ -153,21 +151,25 @@ public class CouchbaseToolCallingExample {
                                                         "airlineName",
                                                         Tools.Property.builder()
                                                                 .type("string")
-                                                                .description("The name of the airline. e.g. Emirates")
+                                                                .description(
+                                                                        "The name of the airline."
+                                                                                + " e.g. Emirates")
                                                                 .required(true)
                                                                 .build(),
                                                         "airlineCallsign",
                                                         Tools.Property.builder()
                                                                 .type("string")
-                                                                .description("The callsign of the airline. e.g. Maverick")
+                                                                .description(
+                                                                        "The callsign of the"
+                                                                                + " airline. e.g."
+                                                                                + " Maverick")
                                                                 .required(true)
-                                                                .build()
-                                                )
-                                        )
-                                )
-                                .build()
-                )
-                .toolFunction(arguments -> new AirlineCallsignUpdateToolFunction(bucketName, cluster).apply(arguments))
+                                                                .build())))
+                                .build())
+                .toolFunction(
+                        arguments ->
+                                new AirlineCallsignUpdateToolFunction(bucketName, cluster)
+                                        .apply(arguments))
                 .build();
     }
 }

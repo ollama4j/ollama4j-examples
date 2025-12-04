@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "sample-mcp-tools"
+version = "0.1.0"
+description = "" # Add a description for your project
+authors = ["ABC <abc@xyz.com>"]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.10" # Specify your Python version
+fastmcp = "*"
+httpx = "*"
+requests-cache = "*"
+retry-requests = "*"
+pandas = "*"
+openmeteo-requests = "*"
+mcp = "*"hen

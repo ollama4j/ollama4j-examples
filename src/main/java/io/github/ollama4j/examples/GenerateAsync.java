@@ -20,7 +20,8 @@ public class GenerateAsync {
 
         boolean raw = false;
 
-        OllamaAsyncResultStreamer resultStreamer = ollama.generateAsync(model, prompt, raw, ThinkMode.DISABLED);
+        OllamaAsyncResultStreamer resultStreamer =
+                ollama.generateAsync(model, prompt, raw, ThinkMode.DISABLED);
 
         int pollIntervalMilliseconds = 1000;
         while (true) {

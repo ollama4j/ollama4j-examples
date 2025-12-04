@@ -1,0 +1,10 @@
+{
+    "mcpServers": {
+        "weather": {
+            "command": "/Users/amithkoujalgi/miniconda3/bin/python",
+            "args": [
+                "/Users/amithkoujalgi/Documents/GitHub/ollama4j-examples/src/main/resources/weather_open_meteo.py"
+            ]
+        }
+    }
+}
