@@ -22,7 +22,7 @@ public class ChatWithMCPToolExample {
         // Create a user message
         OllamaChatMessage userMessage =
                 new OllamaChatMessage(
-                        OllamaChatMessageRole.USER, "How's the weather in Bengaluru?");
+                        OllamaChatMessageRole.USER, "Give me geocode of Bengaluru.");
 
         // Create a chat request
         OllamaChatRequest chatRequest =

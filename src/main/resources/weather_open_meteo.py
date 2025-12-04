@@ -1,13 +1,6 @@
-# pip install openmeteo-requests
-# pip install requests-cache retry-requests numpy pandas
-
 from typing import Any
 import httpx
 from mcp.server.fastmcp import FastMCP
-
-
-# pip install fastmcp
-# curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Initialize FastMCP server
 mcp = FastMCP("weather")
